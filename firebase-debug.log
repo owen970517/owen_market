@@ -1,0 +1,73 @@
+[debug] [2022-06-14T09:22:50.989Z] ----------------------------------------------------------------------
+[debug] [2022-06-14T09:22:50.991Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\psj97\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js serve
+[debug] [2022-06-14T09:22:50.991Z] CLI Version:   11.1.0
+[debug] [2022-06-14T09:22:50.991Z] Platform:      win32
+[debug] [2022-06-14T09:22:50.991Z] Node Version:  v16.13.1
+[debug] [2022-06-14T09:22:50.992Z] Time:          Tue Jun 14 2022 18:22:50 GMT+0900 (대한민국 표준시)
+[debug] [2022-06-14T09:22:50.992Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2022-06-14T09:22:51.040Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2022-06-14T09:22:51.041Z] > authorizing via signed-in user (psj970917@gmail.com)
+[debug] [2022-06-14T09:22:51.041Z] [iam] checking project carrot-clone-bdc5d for permissions ["firebase.projects.get"]
+[debug] [2022-06-14T09:22:51.042Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/carrot-clone-bdc5d:testIamPermissions [none]
+[debug] [2022-06-14T09:22:51.043Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/carrot-clone-bdc5d:testIamPermissions {"permissions":["firebase.projects.get"]}
+[debug] [2022-06-14T09:22:52.180Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/carrot-clone-bdc5d:testIamPermissions 200
+[debug] [2022-06-14T09:22:52.180Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/carrot-clone-bdc5d:testIamPermissions {"permissions":["firebase.projects.get"]}
+[debug] [2022-06-14T09:22:52.181Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/carrot-clone-bdc5d [none]
+[debug] [2022-06-14T09:22:52.817Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/carrot-clone-bdc5d 200
+[debug] [2022-06-14T09:22:52.817Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/carrot-clone-bdc5d {"projectId":"carrot-clone-bdc5d","projectNumber":"819422656413","displayName":"carrot-clone","name":"projects/carrot-clone-bdc5d","resources":{"hostingSite":"carrot-clone-bdc5d","storageBucket":"carrot-clone-bdc5d.appspot.com","locationId":"asia-northeast3"},"state":"ACTIVE"}
+[info] 
+[info] === Serving from 'C:\Users\psj97\Documents\carrot_clone'...
+[info] 
+[debug] [2022-06-14T09:22:52.821Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/carrot-clone-bdc5d/sites 
+[debug] [2022-06-14T09:22:54.252Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/carrot-clone-bdc5d/sites 200
+[debug] [2022-06-14T09:22:54.252Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/carrot-clone-bdc5d/sites {"sites":[{"name":"projects/carrot-clone-bdc5d/sites/carrot-clone-bdc5d","defaultUrl":"https://carrot-clone-bdc5d.web.app","type":"DEFAULT_SITE"}]}
+[debug] [2022-06-14T09:22:54.253Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/carrot-clone-bdc5d/webApps/-/config [none]
+[debug] [2022-06-14T09:22:55.697Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/carrot-clone-bdc5d/webApps/-/config 200
+[debug] [2022-06-14T09:22:55.697Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/carrot-clone-bdc5d/webApps/-/config {"projectId":"carrot-clone-bdc5d","appId":"1:819422656413:web:74357650c4ad11ddca6174","storageBucket":"carrot-clone-bdc5d.appspot.com","locationId":"asia-northeast3","apiKey":"AIzaSyCRl4X-UjLH3PUbDRz4qQIDwLQAk7qJ-5M","authDomain":"carrot-clone-bdc5d.firebaseapp.com","messagingSenderId":"819422656413"}
+[info] i  hosting: Serving hosting files from: public {"metadata":{"emulator":{"name":"hosting"},"message":"Serving hosting files from: \u001b[1mpublic\u001b[22m"}}
+[info] +  hosting: Local server: http://localhost:5000 {"metadata":{"emulator":{"name":"hosting"},"message":"Local server: \u001b[4m\u001b[1mhttp://localhost:5000\u001b[22m\u001b[24m"}}
+[info] i  hosting: 127.0.0.1 - - [14/Jun/2022:09:23:06 +0000] "GET / HTTP/1.1" 200 1721 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.63 Safari/537.36" {"metadata":{"emulator":{"name":"hosting"},"message":"127.0.0.1 - - [14/Jun/2022:09:23:06 +0000] \"GET / HTTP/1.1\" 200 1721 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.63 Safari/537.36\""}}
+[info] i  hosting: 127.0.0.1 - - [14/Jun/2022:09:23:06 +0000] "GET /%PUBLIC_URL%/favicon.ico HTTP/1.1" 500 - "http://localhost:5000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.63 Safari/537.36" {"metadata":{"emulator":{"name":"hosting"},"message":"127.0.0.1 - - [14/Jun/2022:09:23:06 +0000] \"GET /%PUBLIC_URL%/favicon.ico HTTP/1.1\" 500 - \"http://localhost:5000/\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.63 Safari/537.36\""}}
+[info] i  hosting: 127.0.0.1 - - [14/Jun/2022:09:23:07 +0000] "GET /%PUBLIC_URL%/manifest.json HTTP/1.1" 500 - "http://localhost:5000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.63 Safari/537.36" {"metadata":{"emulator":{"name":"hosting"},"message":"127.0.0.1 - - [14/Jun/2022:09:23:07 +0000] \"GET /%PUBLIC_URL%/manifest.json HTTP/1.1\" 500 - \"http://localhost:5000/\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.63 Safari/537.36\""}}
+[info] i  hosting: 127.0.0.1 - - [14/Jun/2022:09:23:09 +0000] "GET /%PUBLIC_URL%/manifest.json HTTP/1.1" 500 - "http://localhost:5000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.63 Safari/537.36" {"metadata":{"emulator":{"name":"hosting"},"message":"127.0.0.1 - - [14/Jun/2022:09:23:09 +0000] \"GET /%PUBLIC_URL%/manifest.json HTTP/1.1\" 500 - \"http://localhost:5000/\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.63 Safari/537.36\""}}
+[info] i  hosting: 127.0.0.1 - - [14/Jun/2022:09:32:51 +0000] "GET / HTTP/1.1" 200 1721 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.63 Safari/537.36" {"metadata":{"emulator":{"name":"hosting"},"message":"127.0.0.1 - - [14/Jun/2022:09:32:51 +0000] \"GET / HTTP/1.1\" 200 1721 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.63 Safari/537.36\""}}
+[info] i  hosting: 127.0.0.1 - - [14/Jun/2022:09:32:51 +0000] "GET /%PUBLIC_URL%/favicon.ico HTTP/1.1" 500 - "http://localhost:5000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.63 Safari/537.36" {"metadata":{"emulator":{"name":"hosting"},"message":"127.0.0.1 - - [14/Jun/2022:09:32:51 +0000] \"GET /%PUBLIC_URL%/favicon.ico HTTP/1.1\" 500 - \"http://localhost:5000/\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.63 Safari/537.36\""}}
+[info] i  hosting: 127.0.0.1 - - [14/Jun/2022:09:32:51 +0000] "GET /%PUBLIC_URL%/manifest.json HTTP/1.1" 500 - "http://localhost:5000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.63 Safari/537.36" {"metadata":{"emulator":{"name":"hosting"},"message":"127.0.0.1 - - [14/Jun/2022:09:32:51 +0000] \"GET /%PUBLIC_URL%/manifest.json HTTP/1.1\" 500 - \"http://localhost:5000/\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.63 Safari/537.36\""}}
+[debug] [2022-06-14T09:38:26.583Z] ----------------------------------------------------------------------
+[debug] [2022-06-14T09:38:26.584Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\psj97\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js serve
+[debug] [2022-06-14T09:38:26.584Z] CLI Version:   11.1.0
+[debug] [2022-06-14T09:38:26.584Z] Platform:      win32
+[debug] [2022-06-14T09:38:26.584Z] Node Version:  v16.13.1
+[debug] [2022-06-14T09:38:26.585Z] Time:          Tue Jun 14 2022 18:38:26 GMT+0900 (대한민국 표준시)
+[debug] [2022-06-14T09:38:26.585Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2022-06-14T09:38:26.627Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2022-06-14T09:38:26.628Z] > authorizing via signed-in user (psj970917@gmail.com)
+[debug] [2022-06-14T09:38:26.628Z] [iam] checking project carrot-clone-bdc5d for permissions ["firebase.projects.get"]
+[debug] [2022-06-14T09:38:26.629Z] > refreshing access token with scopes: []
+[debug] [2022-06-14T09:38:26.630Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2022-06-14T09:38:26.630Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2022-06-14T09:38:27.042Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2022-06-14T09:38:27.042Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2022-06-14T09:38:27.051Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/carrot-clone-bdc5d:testIamPermissions [none]
+[debug] [2022-06-14T09:38:27.051Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/carrot-clone-bdc5d:testIamPermissions {"permissions":["firebase.projects.get"]}
+[debug] [2022-06-14T09:38:28.169Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/carrot-clone-bdc5d:testIamPermissions 200
+[debug] [2022-06-14T09:38:28.169Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/carrot-clone-bdc5d:testIamPermissions {"permissions":["firebase.projects.get"]}
+[debug] [2022-06-14T09:38:28.170Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/carrot-clone-bdc5d [none]
+[debug] [2022-06-14T09:38:28.807Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/carrot-clone-bdc5d 200
+[debug] [2022-06-14T09:38:28.808Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/carrot-clone-bdc5d {"projectId":"carrot-clone-bdc5d","projectNumber":"819422656413","displayName":"carrot-clone","name":"projects/carrot-clone-bdc5d","resources":{"hostingSite":"carrot-clone-bdc5d","storageBucket":"carrot-clone-bdc5d.appspot.com","locationId":"asia-northeast3"},"state":"ACTIVE"}
+[info] 
+[info] === Serving from 'C:\Users\psj97\Documents\carrot_clone'...
+[info] 
+[debug] [2022-06-14T09:38:28.812Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/carrot-clone-bdc5d/sites 
+[debug] [2022-06-14T09:38:29.455Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/carrot-clone-bdc5d/sites 200
+[debug] [2022-06-14T09:38:29.455Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/carrot-clone-bdc5d/sites {"sites":[{"name":"projects/carrot-clone-bdc5d/sites/carrot-clone-bdc5d","defaultUrl":"https://carrot-clone-bdc5d.web.app","type":"DEFAULT_SITE"}]}
+[debug] [2022-06-14T09:38:29.456Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/carrot-clone-bdc5d/webApps/-/config [none]
+[debug] [2022-06-14T09:38:30.727Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/carrot-clone-bdc5d/webApps/-/config 200
+[debug] [2022-06-14T09:38:30.727Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/carrot-clone-bdc5d/webApps/-/config {"projectId":"carrot-clone-bdc5d","appId":"1:819422656413:web:74357650c4ad11ddca6174","storageBucket":"carrot-clone-bdc5d.appspot.com","locationId":"asia-northeast3","apiKey":"AIzaSyCRl4X-UjLH3PUbDRz4qQIDwLQAk7qJ-5M","authDomain":"carrot-clone-bdc5d.firebaseapp.com","messagingSenderId":"819422656413"}
+[info] i  hosting: Serving hosting files from: public {"metadata":{"emulator":{"name":"hosting"},"message":"Serving hosting files from: \u001b[1mpublic\u001b[22m"}}
+[info] +  hosting: Local server: http://localhost:5000 {"metadata":{"emulator":{"name":"hosting"},"message":"Local server: \u001b[4m\u001b[1mhttp://localhost:5000\u001b[22m\u001b[24m"}}
+[info] i  hosting: 127.0.0.1 - - [14/Jun/2022:09:38:33 +0000] "GET /%PUBLIC_URL%/manifest.json HTTP/1.1" 500 - "http://localhost:5000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.63 Safari/537.36" {"metadata":{"emulator":{"name":"hosting"},"message":"127.0.0.1 - - [14/Jun/2022:09:38:33 +0000] \"GET /%PUBLIC_URL%/manifest.json HTTP/1.1\" 500 - \"http://localhost:5000/\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.63 Safari/537.36\""}}
+[info] i  hosting: 127.0.0.1 - - [14/Jun/2022:09:38:33 +0000] "GET /%PUBLIC_URL%/favicon.ico HTTP/1.1" 500 - "http://localhost:5000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.63 Safari/537.36" {"metadata":{"emulator":{"name":"hosting"},"message":"127.0.0.1 - - [14/Jun/2022:09:38:33 +0000] \"GET /%PUBLIC_URL%/favicon.ico HTTP/1.1\" 500 - \"http://localhost:5000/\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.63 Safari/537.36\""}}
+[info] i  hosting: 127.0.0.1 - - [14/Jun/2022:09:38:36 +0000] "GET /%PUBLIC_URL%/manifest.json HTTP/1.1" 500 - "http://localhost:5000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.63 Safari/537.36" {"metadata":{"emulator":{"name":"hosting"},"message":"127.0.0.1 - - [14/Jun/2022:09:38:36 +0000] \"GET /%PUBLIC_URL%/manifest.json HTTP/1.1\" 500 - \"http://localhost:5000/\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.63 Safari/537.36\""}}
