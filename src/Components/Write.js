@@ -1,5 +1,6 @@
 import { useForm } from "react-hook-form";
 import {db , storage} from '../firebase';
+import styled from "styled-components";
 
 function Write({userObj , isLogin}) {
     const {register , handleSubmit ,setFocus , watch} = useForm();
@@ -27,6 +28,7 @@ function Write({userObj , isLogin}) {
             uid : userObj.uid,
             상품명 : props.item, 
             가격 : props.price,
+            지역 : props.region,
             올린사람 : userObj.displayName,
             날짜 : `${years}년${month}월${day}일`,
             이미지 : url});
@@ -35,16 +37,35 @@ function Write({userObj , isLogin}) {
   );
     }
     return (
-        <div>
-            <form onSubmit={handleSubmit(onSubmit)}>
-                <input {...register("title" , {required :true , maxLength:20})} placeholder="제목"></input>
-                <input {...register("item" , {required :true , maxLength:10})} placeholder="상품명"></input>
-                <input {...register("price" , {required :true , maxLength:20})} placeholder="가격"></input>
-                <input {...register('image' , {required : true })} type="file"></input>
-                <input type="submit"></input>
-            </form>
-        </div>
+        <Wrapper>
+            <Form onSubmit={handleSubmit(onSubmit)}>
+                <Input {...register('image' , {required : true })} type="file"></Input>
+                <Input {...register("title" , {required :true , maxLength:20})} placeholder="제목"></Input>
+                <Input {...register("region" , {required : true})} placeholder='지역'></Input>
+                <Input {...register("item" , {required :true , maxLength:10})} placeholder="상품명"></Input>
+                <Input {...register("price" , {required :true , maxLength:20})} placeholder="가격"></Input>
+                <Input type="submit" value='올리기'></Input>
+            </Form>
+        </Wrapper>
     )
 }
+const Wrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;;
+`
+
+const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+`
+
+const Input = styled.input`
+width: 500px;
+height: 50px;
+  margin-bottom : 10px;
+  padding : 10px;
+  font-size: 20px;
+`
 
 export default Write

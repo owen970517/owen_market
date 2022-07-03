@@ -41,7 +41,7 @@ function Detail({userObj }) {
             <h5>올린사람 : {data.올린사람} </h5>
             <h5 >상품명 : {data.상품명}</h5>
             <p >올린날짜 : {data.날짜}</p>
-            <p >가격 : {data.가격.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}원</p>
+            <p >가격 : {data.가격}원</p>
             </div>
             {isOwner && <div>
                 <button onClick={onModify}>수정</button>
