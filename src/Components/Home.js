@@ -19,7 +19,7 @@ function Home({userObj}) {
     })
   },[db]);
   return (
-    <>
+    <div>
       <Region data={data} setFiltered={setFiltered} setActiveRegion={setActiveRegion} activeRegion={activeRegion}/>
       <Grid>
         {filtered.map((p) => {
@@ -36,7 +36,7 @@ function Home({userObj}) {
           )
         })}
       </Grid>
-    </>
+    </div>
   );
 }
 

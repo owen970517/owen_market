@@ -14,7 +14,7 @@ function Pages({userObj , isLogin}) {
             <Routes>
                 <Route path='/' element={<Home userObj={userObj}/>}></Route>
                 <Route path='/write' element={<Write userObj={userObj} isLogin = {isLogin}/>}></Route>
-                <Route path='/profile' element={<Profile/>}></Route>
+                <Route path='/profile/' element={<Profile userObj={userObj}/>}></Route>
                 <Route path='/detail/:id' element={<Detail userObj={userObj}/>}></Route>
                 <Route path='/login' element={<Sign/>}></Route>
                 <Route path='/chat' element={<Chat userObj={userObj}/>}></Route>

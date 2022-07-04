@@ -32,7 +32,6 @@ function Detail({userObj }) {
     const onModify = () => {
         nav('/modify/' + params.id)
     }
-    console.log(`${data.올린사람}` , `${userObj.displayName}`);
     
     return (
         <div>

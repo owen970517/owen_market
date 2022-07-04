@@ -1,9 +1,11 @@
 import { useForm } from "react-hook-form";
 import {db , storage} from '../firebase';
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
 function Write({userObj , isLogin}) {
     const {register , handleSubmit ,setFocus , watch} = useForm();
+    const nav = useNavigate();
     const onSubmit = (props) => {
       const Img = props.image[0];
       const storageRef = storage.ref();
@@ -35,7 +37,8 @@ function Write({userObj , isLogin}) {
         });
       }
   );
-    }
+  nav('/');
+  }
     return (
         <Wrapper>
             <Form onSubmit={handleSubmit(onSubmit)}>
