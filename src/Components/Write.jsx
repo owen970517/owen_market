@@ -31,6 +31,7 @@ function Write({userObj , isLogin}) {
             상품명 : props.item, 
             가격 : props.price,
             지역 : props.region,
+            상태 : '판매중',
             올린사람 : userObj.displayName,
             날짜 : `${years}년${month}월${day}일`,
             이미지 : url});

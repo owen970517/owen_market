@@ -1,10 +1,12 @@
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import styled from "styled-components"
 import { auth } from "../firebase";
 
 function Header({isLogin , userObj}) {
+  const nav = useNavigate();
   const onLogOut = () => {
     auth.signOut();
+    nav('/');
   }
     return (
       <Nav>

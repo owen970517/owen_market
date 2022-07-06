@@ -8,9 +8,9 @@ function Region({setActiveRegion , activeRegion , setFiltered , data}) {
             return;
         }
         const filtered = data.filter((region) => 
-            region.지역 === activeRegion);
+            region.지역 === activeRegion );
         setFiltered(filtered);
-    },[activeRegion]);
+    },[activeRegion , data ,setFiltered]);
     return (
         <Wrapper>
             <button onClick={() => setActiveRegion('전체')}>전체</button>

@@ -18,6 +18,7 @@ function Home({userObj}) {
       setFiltered(array);
     })
   },[db]);
+  console.log(filtered);
   return (
     <div>
       <Region data={data} setFiltered={setFiltered} setActiveRegion={setActiveRegion} activeRegion={activeRegion}/>
@@ -25,14 +26,14 @@ function Home({userObj}) {
         {filtered.map((p) => {
           return (
             <Item key={p.id}>
-              <img src={p.이미지 ? p.이미지 : 'https://via.placeholder.com/350'} alt='img' width ='200px' height='200px'/>
-              <div>
-                <Link to={`/detail/${p.id}`}><h3>{p.상품명}</h3></Link>
-                <h3>{p.날짜}</h3>
-                <h3>{p.지역}</h3>
-                <h3>{p.가격.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}원</h3>
-              </div>
-            </Item>
+            <img src={p.이미지 ? p.이미지 : 'https://via.placeholder.com/350'} alt='img' width ='200px' height='200px'/>
+            <div>
+              <Link to={`/detail/${p.id}`}><h3>{p.상품명}</h3></Link>
+              <h3>{p.날짜}</h3>
+              <h3>{p.지역}</h3>
+              <h3>{p.가격.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}원</h3>
+            </div>
+          </Item>
           )
         })}
       </Grid>
@@ -44,6 +45,7 @@ const Grid = styled.div`
     display : grid;
     grid-template-columns : repeat(auto-fit , minmax(20rem,1fr));
     grid-gap : 10px;
+    place-items: center;
 `;
 
 const Item = styled.div`

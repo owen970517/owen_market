@@ -9,7 +9,7 @@ function Detail({userObj }) {
     const nav = useNavigate();
     useEffect(() => {
         db.collection('Product').doc(params.id).get().then((result) => {
-            console.log(result.data());
+            console.log(result);
             setData(result.data());
         });
         if (data.올린사람 === userObj.displayName) {
@@ -18,8 +18,7 @@ function Detail({userObj }) {
             setIsOwner(false);
         }
     },[params.id ,data.올린사람,userObj.displayName ])
-    
-    console.log(isOwner);
+    console.log(data);
     const date = new Date()
     const onChat = () => {
         db.collection('chatroom').add({
@@ -32,19 +31,29 @@ function Detail({userObj }) {
     const onModify = () => {
         nav('/modify/' + params.id)
     }
-    
+    const onSoldOut = () => {
+        if (data.상태 === '판매중') {
+            db.collection('Product').doc(params.id).update({
+                상태 : '판매완료'
+            })
+        }
+        nav('/');
+    }
     return (
         <div>
             <BgImg style={{backgroundImage: `url(${data.이미지})`}}></BgImg>
             <div>
             <h5>올린사람 : {data.올린사람} </h5>
             <h5 >상품명 : {data.상품명}</h5>
-            <p >올린날짜 : {data.날짜}</p>
-            <p >가격 : {data.가격}원</p>
+            <p>올린날짜 : {data.날짜}</p>
+            <p>가격 : {data.가격}원</p>
+            <p>{data.상태}</p>
             </div>
+            <button onClick={onChat}>채팅</button>
             {isOwner && <div>
                 <button onClick={onModify}>수정</button>
-            <button onClick={onChat}>채팅</button></div> 
+                <button onClick={onSoldOut}>판매완료</button>
+            </div> 
             }
             
         </div>
