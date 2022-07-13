@@ -2,9 +2,20 @@ import { useForm } from "react-hook-form";
 import {db , storage} from '../firebase';
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import { useRef, useState } from "react";
+import { useEffect } from "react";
 
 function Write({userObj , isLogin}) {
-    const {register , handleSubmit ,setFocus , watch} = useForm();
+    const {register , handleSubmit , watch , getValues} = useForm();
+    const [imgPreview , setImgPreview] = useState('');
+    const imgSrc = watch('image');
+
+    useEffect(()=> {
+      if(imgSrc && imgSrc.length > 0) {
+        const file = imgSrc[0];
+        setImgPreview(URL.createObjectURL(file));
+      }
+    },[imgSrc])
     const nav = useNavigate();
     const onSubmit = (props) => {
       const Img = props.image[0];
@@ -40,8 +51,18 @@ function Write({userObj , isLogin}) {
   );
   nav('/');
   }
+  const onImgDel = () => {
+    setImgPreview('');
+  
+  }
     return (
         <Wrapper>
+              {imgPreview && 
+              <div>
+                <Preview src={imgPreview} alt="없음"/>
+                <button onClick={onImgDel}>삭제</button>
+              </div>
+              } 
             <Form onSubmit={handleSubmit(onSubmit)}>
                 <Input {...register('image' , {required : true })} type="file"></Input>
                 <Input {...register("title" , {required :true , maxLength:20})} placeholder="제목"></Input>
@@ -56,7 +77,8 @@ function Write({userObj , isLogin}) {
 const Wrapper = styled.div`
   display: flex;
   justify-content: center;
-  align-items: center;;
+  align-items: center;
+  flex-direction: column;
 `
 
 const Form = styled.form`
@@ -71,5 +93,9 @@ height: 50px;
   padding : 10px;
   font-size: 20px;
 `
+const Preview = styled.img`
+    width : 300px;
+    height : 300px;
 
+`
 export default Write
