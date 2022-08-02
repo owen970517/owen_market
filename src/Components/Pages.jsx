@@ -1,5 +1,6 @@
 import React from "react"
 import { BrowserRouter, Route, Routes } from "react-router-dom"
+import Cart from "./Cart"
 import Chat from "./Chat"
 import Detail from "./Detail"
 import Home from './Home'
@@ -19,6 +20,7 @@ function Pages({userObj , isLogin}) {
                 <Route path='/login' element={<Sign/>}></Route>
                 <Route path='/chat' element={<Chat userObj={userObj}/>}></Route>
                 <Route path='/modify/:uid' element={<Modify/>}></Route>
+                <Route path='/cart' element={<Cart/>}/>
             </Routes>
         </div>
     )

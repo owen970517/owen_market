@@ -39,6 +39,11 @@ function Detail({userObj }) {
         }
         nav('/');
     }
+    const onCart = () => {
+        db.collection('Cart').add({
+            ...data
+        })
+    }
     return (
         <div>
             <BgImg style={{backgroundImage: `url(${data.이미지})`}}></BgImg>
@@ -49,7 +54,11 @@ function Detail({userObj }) {
             <p>가격 : {data.가격}원</p>
             <p>{data.상태}</p>
             </div>
-            <button onClick={onChat}>채팅</button>
+            {!isOwner && 
+                <div>
+                    <button onClick={onChat}>채팅</button>
+                    <button onClick={onCart}>장바구니 담기</button>
+                </div>}
             {isOwner && <div>
                 <button onClick={onModify}>수정</button>
                 <button onClick={onSoldOut}>판매완료</button>

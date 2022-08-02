@@ -14,9 +14,14 @@ function Home({userObj}) {
         id : doc.id,
         ...doc.data(),
       }));
-      setData(array);
       setFiltered(array);
     })
+    db.collection('Product').where('상태' , '==' , '판매중').get().then((result) => {
+      setData(result.docs.map((doc) =>({
+          id : doc.id,
+          ...doc.data()
+      })));  
+  })
   },[db]);
   console.log(filtered);
   return (
@@ -43,7 +48,7 @@ function Home({userObj}) {
 
 const Grid = styled.div`
     display : grid;
-    grid-template-columns : repeat(auto-fit , minmax(20rem,1fr));
+    grid-template-columns : repeat(3 , minmax(20rem,1fr));
     grid-gap : 10px;
     place-items: center;
 `;

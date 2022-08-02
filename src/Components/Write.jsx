@@ -45,6 +45,7 @@ function Write({userObj , isLogin}) {
             상태 : '판매중',
             올린사람 : userObj.displayName,
             날짜 : `${years}년${month}월${day}일`,
+            시간 : new Date(),
             이미지 : url});
         });
       }
@@ -69,7 +70,7 @@ function Write({userObj , isLogin}) {
                 <Input {...register("region" , {required : true})} placeholder='지역'></Input>
                 <Input {...register("item" , {required :true , maxLength:10})} placeholder="상품명"></Input>
                 <Input {...register("price" , {required :true , maxLength:20})} placeholder="가격"></Input>
-                <Input type="submit" value='올리기'></Input>
+                <Input type="submit" value='올리기' onClick={onSubmit}></Input>
             </Form>
         </Wrapper>
     )
