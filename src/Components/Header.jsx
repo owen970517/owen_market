@@ -15,7 +15,7 @@ function Header({isLogin , userObj}) {
           <LI>{isLogin ? <Link to='/profile'>{userObj.displayName}</Link> : ""}</LI>
           <LI><Link to='/'>중고거래</Link></LI>
           <LI><Link to='/write'>글쓰기</Link></LI>
-          <LI><Link to='/cart'>장바구니</Link></LI>
+          {isLogin && <LI><Link to='/cart'>장바구니</Link></LI> }
           {isLogin ? <Btn onClick={onLogOut}>로그아웃</Btn> : <LI><Link to='/login'>회원가입</Link></LI> }
         </UL>
       </Nav>

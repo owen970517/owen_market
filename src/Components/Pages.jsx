@@ -9,7 +9,7 @@ import Profile from "./Profile"
 import Sign from "./Sign"
 import Write from "./Write"
 
-function Pages({userObj , isLogin}) {
+function Pages({userObj , isLogin , len}) {
     return ( 
         <div>
             <Routes>
@@ -20,7 +20,7 @@ function Pages({userObj , isLogin}) {
                 <Route path='/login' element={<Sign/>}></Route>
                 <Route path='/chat' element={<Chat userObj={userObj}/>}></Route>
                 <Route path='/modify/:uid' element={<Modify/>}></Route>
-                <Route path='/cart' element={<Cart/>}/>
+                <Route path='/cart' element={<Cart len={len}/>}/>
             </Routes>
         </div>
     )

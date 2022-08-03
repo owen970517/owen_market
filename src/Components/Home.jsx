@@ -3,7 +3,7 @@ import {db } from '../firebase';
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import Region from "./Region";
-
+import noImg from '../ImgSrc/noimage.jpg'
 function Home({userObj}) {
   const [data , setData] = useState([]);
   const [filtered , setFiltered] = useState([]);
@@ -31,7 +31,7 @@ function Home({userObj}) {
         {filtered.map((p) => {
           return (
             <Item key={p.id}>
-            <img src={p.이미지 ? p.이미지 : 'https://via.placeholder.com/350'} alt='img' width ='200px' height='200px'/>
+            <img src={p.이미지 ? p.이미지 : {noImg}} alt='img' width ='200px' height='200px'/>
             <div>
               <Link to={`/detail/${p.id}`}><h3>{p.상품명}</h3></Link>
               <h3>{p.날짜}</h3>

@@ -9,7 +9,9 @@ import { auth } from "./firebase";
 function App() {
   const [isLogin , setIsLogin] = useState(false);
   const [userObj , setUserObj] = useState('');
-
+  const itemlength = (x) => {
+    return x;
+  }
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       if(user) {
@@ -28,8 +30,8 @@ function App() {
   return (
     <>
     <BrowserRouter>
-      <Header userObj={userObj} isLogin={isLogin}></Header>
-      <Pages userObj={userObj} isLogin={isLogin}/>
+      <Header userObj={userObj} isLogin={isLogin} len={itemlength}></Header>
+      <Pages userObj={userObj} isLogin={isLogin} len={itemlength}/>
     </BrowserRouter>
     </>
   );
