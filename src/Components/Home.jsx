@@ -22,7 +22,7 @@ function Home({userObj}) {
           ...doc.data()
       })));  
   })
-  },[db]);
+  },[]);
   console.log(filtered);
   return (
     <div>

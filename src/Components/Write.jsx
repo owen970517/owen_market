@@ -2,11 +2,11 @@ import { useForm } from "react-hook-form";
 import {db , storage} from '../firebase';
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { useRef, useState } from "react";
+import {  useState } from "react";
 import { useEffect } from "react";
 
 function Write({userObj , isLogin}) {
-    const {register , handleSubmit , watch , getValues} = useForm();
+    const {register , handleSubmit , watch } = useForm();
     const [imgPreview , setImgPreview] = useState('');
     const imgSrc = watch('image');
 

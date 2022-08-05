@@ -1,7 +1,6 @@
-import styled from "styled-components";
 import Header from "./Components/Header";
 import Pages from './Components/Pages';
-import { BrowserRouter, useNavigate } from "react-router-dom";
+import { BrowserRouter} from "react-router-dom";
 import Home from "./Components/Home";
 import { useEffect, useState } from "react";
 import { auth } from "./firebase";
@@ -9,9 +8,6 @@ import { auth } from "./firebase";
 function App() {
   const [isLogin , setIsLogin] = useState(false);
   const [userObj , setUserObj] = useState('');
-  const itemlength = (x) => {
-    return x;
-  }
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       if(user) {
@@ -30,8 +26,8 @@ function App() {
   return (
     <>
     <BrowserRouter>
-      <Header userObj={userObj} isLogin={isLogin} len={itemlength}></Header>
-      <Pages userObj={userObj} isLogin={isLogin} len={itemlength}/>
+      <Header userObj={userObj} isLogin={isLogin}></Header>
+      <Pages userObj={userObj} isLogin={isLogin}/>
     </BrowserRouter>
     </>
   );

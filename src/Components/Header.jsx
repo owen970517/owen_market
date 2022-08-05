@@ -1,17 +1,25 @@
 import { Link, useNavigate } from "react-router-dom"
 import styled from "styled-components"
 import { auth } from "../firebase";
+import { useForm } from "react-hook-form";
 
 function Header({isLogin , userObj}) {
+  const {register , handleSubmit} = useForm();
   const nav = useNavigate();
   const onLogOut = () => {
     auth.signOut();
     nav('/');
   }
+  const onSearch = (e) => {
+    nav('/search/' + e.search);
+  }
     return (
       <Nav>
         <h1>중고사이트</h1>
         <UL>
+          <form onSubmit={handleSubmit(onSearch)}>
+            <input {...register("search" , {required : true})} placeholder='찾을 상품 입력하시오'></input>
+          </form>
           <LI>{isLogin ? <Link to='/profile'>{userObj.displayName}</Link> : ""}</LI>
           <LI><Link to='/'>중고거래</Link></LI>
           <LI><Link to='/write'>글쓰기</Link></LI>

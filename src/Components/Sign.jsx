@@ -9,8 +9,6 @@ function Sign() {
     const [login , setLogin] = useState(false);
     const nav = useNavigate();
     const onSubmit = (props) => {
-        console.log(props.mail);
-        console.log(props.password);
         auth.createUserWithEmailAndPassword(props.mail,props.password).then((result) => {
             db.collection('user').doc(result.user.uid).set({
                 name : props.name,

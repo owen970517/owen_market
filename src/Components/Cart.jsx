@@ -1,7 +1,7 @@
 import React, { useEffect ,useState} from 'react'
 import { db } from '../firebase';
 import styled from 'styled-components';
-const Cart = ({len}) => {
+const Cart = () => {
   const [data,setData] = useState([]);
   let sum=0;
   useEffect(()=> {
@@ -12,7 +12,6 @@ const Cart = ({len}) => {
         })));  
     })
   },[])
-  len(data.length);
   for(let i =0; i<data.length; i++) {
     sum += parseInt(data[i].가격)
   }

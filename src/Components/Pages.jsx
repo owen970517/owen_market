@@ -6,10 +6,11 @@ import Detail from "./Detail"
 import Home from './Home'
 import Modify from "./Modify"
 import Profile from "./Profile"
+import Search from "./Search"
 import Sign from "./Sign"
 import Write from "./Write"
 
-function Pages({userObj , isLogin , len}) {
+function Pages({userObj , isLogin , prop }) {
     return ( 
         <div>
             <Routes>
@@ -20,7 +21,8 @@ function Pages({userObj , isLogin , len}) {
                 <Route path='/login' element={<Sign/>}></Route>
                 <Route path='/chat' element={<Chat userObj={userObj}/>}></Route>
                 <Route path='/modify/:uid' element={<Modify/>}></Route>
-                <Route path='/cart' element={<Cart len={len}/>}/>
+                <Route path='/cart' element={<Cart/>}/>
+                <Route path='/search/:input' element={<Search />}/>
             </Routes>
         </div>
     )
