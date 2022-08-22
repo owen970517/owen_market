@@ -3,7 +3,16 @@ import styled from "styled-components"
 import { auth } from "../firebase";
 import { useForm } from "react-hook-form";
 
-function Header({isLogin , userObj}) {
+/* interface IProps {
+  isLogin : boolean;
+  userObj : {
+    displayName : string;
+    uid : string;
+    email :string;
+  }
+} */
+
+function Header({isLogin , userObj} ) {
   const {register , handleSubmit} = useForm();
   const nav = useNavigate();
   const onLogOut = () => {

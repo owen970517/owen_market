@@ -16,12 +16,12 @@ function Home({userObj}) {
       }));
       setFiltered(array);
     })
-    db.collection('Product').where('상태' , '==' , '판매중').get().then((result) => {
-      setData(result.docs.map((doc) =>({
-          id : doc.id,
-          ...doc.data()
-      })));  
-  })
+  //   db.collection('Product').where('상태' , '==' , '판매중').get().then((result) => {
+  //     setData(result.docs.map((doc) =>({
+  //         id : doc.id,
+  //         ...doc.data()
+  //     })));  
+  // })
   },[]);
   console.log(filtered);
   return (

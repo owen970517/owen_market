@@ -23,8 +23,7 @@ function Profile({userObj}) {
                 ...doc.data()
             })));  
         })
-    },[userObj.displayName])
-    console.log(saleData);
+    },[data , saleData , userObj.displayName])
     const nav = useNavigate();
     const onSubmit = (e) => {
         e.preventDefault();

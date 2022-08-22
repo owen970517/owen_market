@@ -5,7 +5,7 @@ import App from './App';
 import Header from './Components/Header';
 
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
   <React.StrictMode>
       <App />

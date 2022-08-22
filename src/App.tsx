@@ -7,7 +7,7 @@ import { auth } from "./firebase";
 
 function App() {
   const [isLogin , setIsLogin] = useState(false);
-  const [userObj , setUserObj] = useState('');
+  const [userObj , setUserObj] = useState({});
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       if(user) {
@@ -17,10 +17,7 @@ function App() {
           uid : user.uid,
           email : user.email,
         })
-        
-      } else {
-        setIsLogin(false);
-      }
+      } 
   })
   },[])
   return (

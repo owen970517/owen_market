@@ -10,7 +10,7 @@ import Search from "./Search"
 import Sign from "./Sign"
 import Write from "./Write"
 
-function Pages({userObj , isLogin , prop }) {
+function Pages({userObj , isLogin }) {
     return ( 
         <div>
             <Routes>

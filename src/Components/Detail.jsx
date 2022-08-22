@@ -2,23 +2,20 @@ import { useNavigate, useParams } from "react-router-dom"
 import { db } from "../firebase";
 import styled from "styled-components";
 import { useEffect, useState } from "react";
-function Detail({userObj }) {
+
+function Detail({userObj}) {
     const [data , setData] = useState({});
     const [isOwner , setIsOwner] = useState(false);
     const params = useParams();
     const nav = useNavigate();
     useEffect(() => {
-        db.collection('Product').doc(params.id).get().then((result) => {
-            console.log(result);
-            setData(result.data());
-        });
+        db.collection('Product').doc(params.id).get().then((result)=> setData(result.data()))
         if (data.올린사람 === userObj.displayName) {
             setIsOwner(true);
         } else {
             setIsOwner(false);
         }
     },[params.id ,data.올린사람,userObj.displayName ])
-    console.log(data);
     const date = new Date()
     const onChat = () => {
         db.collection('chatroom').add({
