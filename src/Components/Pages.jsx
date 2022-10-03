@@ -21,7 +21,7 @@ function Pages({userObj , isLogin }) {
                 <Route path='/login' element={<Sign/>}></Route>
                 <Route path='/chat' element={<Chat userObj={userObj}/>}></Route>
                 <Route path='/modify/:uid' element={<Modify/>}></Route>
-                <Route path='/cart' element={<Cart/>}/>
+                <Route path='/cart' element={<Cart userObj={userObj}/>}/>
                 <Route path='/search/:input' element={<Search />}/>
             </Routes>
         </div>

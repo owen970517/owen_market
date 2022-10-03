@@ -1,7 +1,19 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom"
 import { db, storage } from "../firebase";
 import styled from "styled-components";
+
+/* interface IData {
+    id? : string ;
+    uid? : string;
+    가격? : string;
+    이미지? : string;
+    올린사람? : string;
+    상품명? : string;
+    지역? : string;
+    날짜? : string;
+    상태? : string;
+  } */
 
 function Modify() {
     const [data, setData] = useState({});
@@ -27,9 +39,8 @@ function Modify() {
             가격 : data.가격,
             날짜 : data.날짜
         })
-        //setNewName(e.target.value);
     }
-    const onChange = (e) => {
+    const onChange = (e ) => {
         setData({
             이미지 :data.이미지,
             올린사람 : data.올린사람,
@@ -37,7 +48,6 @@ function Modify() {
             가격 : e.target.value,
             날짜 : data.날짜
         })
-        //setNewPrice(e.target.value);
     }
     const onFileChange = (e) => {
         const Img = e.target.files[0];

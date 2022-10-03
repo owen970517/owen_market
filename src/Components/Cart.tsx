@@ -3,7 +3,7 @@ import { db } from '../firebase';
 import styled from 'styled-components';
 
 interface IData {
-  id : string;
+  id? : string ;
   uid? : string;
   가격? : string;
   이미지? : string;
@@ -13,36 +13,44 @@ interface IData {
   날짜? : string;
   상태? : string;
 }
-
-const Cart = () => {
+interface IUserObj {
+  userObj : {
+    displayName:string;
+    uid : string;
+    email : string
+  }
+}
+const Cart = ({userObj}:IUserObj) => {
   const [data,setData] = useState<IData[]>([]);
   let sum=0;
+  console.log(userObj.uid)
   useEffect(()=> {
     db.collection('Cart').get().then((result) => {
-        setData(result.docs.map((doc) =>({
-            id : doc.id,
-            ...doc.data()
-        })));  
+       setData(result.docs.map((doc) =>({
+         id : doc.id,
+         ...doc.data()
+     })));  
     })
-  },[])
-  for(let i =0; i<data.length; i++) {
-    sum += parseInt(data[i].가격 as string)
+  },[userObj.uid])
+  console.log(data);
+  for(let i =0; i<data?.length; i++) {
+    sum += parseInt(data[i]?.가격 as string)
   }
   const onDelete = async (id : string) => {
     const ok = window.confirm("정말 삭제하시겠습니까??");
     if (ok) {
-      await db.collection('Cart').doc(`${id}`).delete(); // 반영할 글 지정하기 위해서 rweetObj.id 사용
+      await db.collection('Cart').doc(`${id}`).delete();
     }
-    setData(data.filter((d) => d.id !== id))
+    setData(data?.filter((d) => d.id !== id))
   };
   return (
     <div >
-        {data.map((item) => (
+        {data?.map((item) => (
             <div key={item.id}>
                 <BgImg style={{backgroundImage: `url(${item.이미지})`}}></BgImg>
                 <p>{item.상품명}</p>
                 <p>{item.가격}원</p>
-                <button onClick={() => onDelete(item.id)}>X</button>
+                <button onClick={() => onDelete(item.id as string)}>X</button>
             </div>
         ))}
         <h1>합계 : {sum}원</h1>

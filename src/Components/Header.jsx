@@ -17,7 +17,7 @@ function Header({isLogin , userObj} ) {
   const nav = useNavigate();
   const onLogOut = () => {
     auth.signOut();
-    nav('/');
+    nav('/login');
   }
   const onSearch = (e) => {
     nav('/search/' + e.search);

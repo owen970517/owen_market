@@ -4,34 +4,46 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import Region from "./Region";
 import noImg from '../ImgSrc/noimage.jpg'
-function Home({userObj}) {
+
+
+interface IData {
+  id : string
+  이미지 : string
+  상품명 : string
+  날짜 : string
+  지역 : string
+  가격:string
+  noImg? : HTMLImageElement
+}
+
+function Home() {
   const [data , setData] = useState([]);
   const [filtered , setFiltered] = useState([]);
   const [activeRegion , setActiveRegion] = useState('전체');
   useEffect(() => {
-    db.collection('Product').onSnapshot((snapshot)=> {
+    db.collection('Product').where('상태' , '==', '판매중').onSnapshot((snapshot)=> {
       const array = snapshot.docs.map((doc) =>({
         id : doc.id,
         ...doc.data(),
       }));
-      setFiltered(array);
+      setFiltered(array as any);
     })
-  //   db.collection('Product').where('상태' , '==' , '판매중').get().then((result) => {
-  //     setData(result.docs.map((doc) =>({
-  //         id : doc.id,
-  //         ...doc.data()
-  //     })));  
-  // })
+     db.collection('Product').where('상태' , '==' , '판매중').get().then((result) => {
+      const itemList = result.docs.map((doc) =>({
+        id : doc.id,
+        ...doc.data()
+    }))
+       setData(itemList as any);  
+   })
   },[]);
-  console.log(filtered);
   return (
     <div>
       <Region data={data} setFiltered={setFiltered} setActiveRegion={setActiveRegion} activeRegion={activeRegion}/>
       <Grid>
-        {filtered.map((p) => {
+        {filtered.map((p:IData) => {
           return (
             <Item key={p.id}>
-            <img src={p.이미지 ? p.이미지 : {noImg}} alt='img' width ='200px' height='200px'/>
+            <img src={p.이미지 ? p.이미지 : ''} alt='img' width ='200px' height='200px'/>
             <div>
               <Link to={`/detail/${p.id}`}><h3>{p.상품명}</h3></Link>
               <h3>{p.날짜}</h3>

@@ -3,19 +3,39 @@ import { db } from "../firebase";
 import styled from "styled-components";
 import { useEffect, useState } from "react";
 
-function Detail({userObj}) {
-    const [data , setData] = useState({});
+interface ICart {
+    상태 : string
+    올린사람 : string
+    이미지 : string
+    상품명 : string
+    날짜 : string
+    지역 : string
+    가격:string
+}
+interface IUser {
+    userObj : {
+        displayName? : string
+        uid? : string
+        email? : string
+    }
+}
+
+function Detail({userObj}:IUser) {
+    const [data , setData] = useState<ICart>([] as any);
+    const [cartData , setCartData] = useState([]);
     const [isOwner , setIsOwner] = useState(false);
     const params = useParams();
     const nav = useNavigate();
     useEffect(() => {
-        db.collection('Product').doc(params.id).get().then((result)=> setData(result.data()))
+        db.collection('Product').doc(params.id).get().then((result)=> {setData(result.data() as any)})
         if (data.올린사람 === userObj.displayName) {
             setIsOwner(true);
         } else {
             setIsOwner(false);
         }
-    },[params.id ,data.올린사람,userObj.displayName ])
+        db.collection('Cart').doc(userObj.uid).get().then((result) => setCartData(result.data() as any))
+    },[params.id ,data.올린사람,userObj.displayName , userObj.uid ])
+    console.log(data);
     const date = new Date()
     const onChat = () => {
         db.collection('chatroom').add({
@@ -36,11 +56,13 @@ function Detail({userObj}) {
         }
         nav('/');
     }
-    const onCart = () => {
-        db.collection('Cart').add({
-            ...data
+    const onAddCart = () => {
+        db.collection('Cart').doc(userObj.uid).set({
+            ...cartData,
+            ...data,
         })
     }
+    console.log(cartData);
     return (
         <div>
             <BgImg style={{backgroundImage: `url(${data.이미지})`}}></BgImg>
@@ -54,7 +76,7 @@ function Detail({userObj}) {
             {!isOwner && 
                 <div>
                     <button onClick={onChat}>채팅</button>
-                    <button onClick={onCart}>장바구니 담기</button>
+                    <button onClick={onAddCart}>장바구니 담기</button>
                 </div>}
             {isOwner && <div>
                 <button onClick={onModify}>수정</button>
