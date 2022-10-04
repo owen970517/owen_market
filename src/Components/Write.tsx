@@ -1,26 +1,34 @@
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import {db , storage} from '../firebase';
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import {  useState } from "react";
 import { useEffect } from "react";
 
-function Write({userObj , isLogin}) {
-    const {register , handleSubmit , watch } = useForm();
+interface IWriteProps {
+  title : string 
+  image: string | any
+  region : string 
+  item : string 
+  price : string 
+}
+
+function Write({userObj}:any) {
+    const {register , handleSubmit , watch } = useForm<IWriteProps>();
     const [imgPreview , setImgPreview] = useState('');
     const imgSrc = watch('image');
 
     useEffect(()=> {
       if(imgSrc && imgSrc.length > 0) {
-        const file = imgSrc[0];
+        const file = imgSrc[0] as any;
         setImgPreview(URL.createObjectURL(file));
       }
     },[imgSrc])
     const nav = useNavigate();
-    const onSubmit = (props) => {
+    const onSubmit:SubmitHandler<IWriteProps> = (props) => {
       const Img = props.image[0];
       const storageRef = storage.ref();
-      const ImgRef = storageRef.child(`image/${props.image[0].name}`);
+      const ImgRef = storageRef.child(`image/${Img.name}`);
       const uploadImg = ImgRef.put(Img);
       const date = new Date();
       const years = String(date.getFullYear()).padStart(4,'0');
@@ -70,7 +78,7 @@ function Write({userObj , isLogin}) {
                 <Input {...register("region" , {required : true})} placeholder='지역'></Input>
                 <Input {...register("item" , {required :true , maxLength:10})} placeholder="상품명"></Input>
                 <Input {...register("price" , {required :true , maxLength:20})} placeholder="가격"></Input>
-                <Input type="submit" value='올리기' onClick={onSubmit}></Input>
+                <Input type="submit" value='올리기' onClick={() => onSubmit}></Input>
             </Form>
         </Wrapper>
     )

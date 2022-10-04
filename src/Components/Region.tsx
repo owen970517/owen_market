@@ -1,13 +1,23 @@
 import { useEffect } from "react";
 import styled from "styled-components"
 
-function Region({setActiveRegion , activeRegion , setFiltered , data}) {
+interface IData {
+    id? : string
+    이미지? : string
+    상품명? : string
+    날짜? : string
+    지역? : string
+    가격?:string
+    noImg? : HTMLImageElement
+  }
+
+function Region({setActiveRegion , activeRegion , setFiltered , data}:any) {
     useEffect(() => {
         if (activeRegion === '전체') {
             setFiltered(data);
             return;
         }
-        const filtered = data.filter((region) => 
+        const filtered = data.filter((region:IData) => 
             region.지역 === activeRegion );
         setFiltered(filtered);
     },[activeRegion , data ,setFiltered]);

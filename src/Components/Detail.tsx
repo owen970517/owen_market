@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 
 interface ICart {
     상태 : string
-    올린사람 : string
+    올린사람? : string
     이미지 : string
     상품명 : string
     날짜 : string
@@ -22,7 +22,6 @@ interface IUser {
 
 function Detail({userObj}:IUser) {
     const [data , setData] = useState<ICart>([] as any);
-    const [cartData , setCartData] = useState([]);
     const [isOwner , setIsOwner] = useState(false);
     const params = useParams();
     const nav = useNavigate();
@@ -33,9 +32,7 @@ function Detail({userObj}:IUser) {
         } else {
             setIsOwner(false);
         }
-        db.collection('Cart').doc(userObj.uid).get().then((result) => setCartData(result.data() as any))
     },[params.id ,data.올린사람,userObj.displayName , userObj.uid ])
-    console.log(data);
     const date = new Date()
     const onChat = () => {
         db.collection('chatroom').add({
@@ -57,15 +54,13 @@ function Detail({userObj}:IUser) {
         nav('/');
     }
     const onAddCart = () => {
-        db.collection('Cart').doc(userObj.uid).set({
-            ...cartData,
-            ...data,
+        db.collection('Cart').doc(userObj.uid).collection('items').add({
+            ...data
         })
     }
-    console.log(cartData);
     return (
         <div>
-            <BgImg style={{backgroundImage: `url(${data.이미지})`}}></BgImg>
+            <BgImg src={data?.이미지} width='30%' height='300px'></BgImg>
             <div>
             <h5>올린사람 : {data.올린사람} </h5>
             <h5 >상품명 : {data.상품명}</h5>
@@ -87,9 +82,7 @@ function Detail({userObj}:IUser) {
         </div>
     )
 }
-const BgImg = styled.div`
-    width: 100%;
-    height: 300px;
+const BgImg = styled.img`
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;

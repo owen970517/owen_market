@@ -1,24 +1,31 @@
-import { useForm } from "react-hook-form"
+import { SubmitHandler, useForm } from "react-hook-form"
 import { auth, db } from "../firebase";
 import styled from "styled-components";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+interface ILoginProps {
+    mail : string
+    password : string
+    name? : string
+}
+
+
 function Sign() {
-    const {register , handleSubmit  } = useForm();
+    const {register , handleSubmit  } = useForm<ILoginProps>();
     const [login , setLogin] = useState(false);
     const nav = useNavigate();
-    const onSubmit = (props) => {
+    const onSubmit:SubmitHandler<ILoginProps> = (props) => {
         auth.createUserWithEmailAndPassword(props.mail,props.password).then((result) => {
-            db.collection('user').doc(result.user.uid).set({
+            db.collection('user').doc(result?.user?.uid).set({
                 name : props.name,
                 email : props.mail
             })
             console.log(result.user);
-            result.user.updateProfile({displayName : props.name})
+            result?.user?.updateProfile({displayName : props.name})
         })
     }
-    const onLoginSubmit = (props) => {
+    const onLoginSubmit:SubmitHandler<ILoginProps> = (props) => {
         auth.signInWithEmailAndPassword(props.mail , props.password).then((result)=> {
             console.log(result.user)
         })

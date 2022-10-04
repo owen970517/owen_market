@@ -1,5 +1,5 @@
 import React from "react"
-import { BrowserRouter, Route, Routes } from "react-router-dom"
+import { Route, Routes } from "react-router-dom"
 import Cart from "./Cart"
 import Chat from "./Chat"
 import Detail from "./Detail"
@@ -10,11 +10,11 @@ import Search from "./Search"
 import Sign from "./Sign"
 import Write from "./Write"
 
-function Pages({userObj , isLogin }) {
+function Pages({userObj , isLogin }:any) {
     return ( 
         <div>
             <Routes>
-                <Route path='/' element={<Home userObj={userObj}/>}></Route>
+                <Route path='/' element={<Home/>}></Route>
                 <Route path='/write' element={<Write userObj={userObj} isLogin = {isLogin}/>}></Route>
                 <Route path='/profile/' element={<Profile userObj={userObj}/>}></Route>
                 <Route path='/detail/:id' element={<Detail userObj={userObj}/>}></Route>

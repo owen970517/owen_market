@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom"
 import { db, storage } from "../firebase";
 import styled from "styled-components";
 
-/* interface IData {
+interface IData {
     id? : string ;
     uid? : string;
     가격? : string;
@@ -13,10 +13,10 @@ import styled from "styled-components";
     지역? : string;
     날짜? : string;
     상태? : string;
-  } */
+}
 
 function Modify() {
-    const [data, setData] = useState({});
+    const [data, setData] = useState<IData>({});
     const [file , setFile] = useState('');
     const nav = useNavigate();
     const params = useParams();
@@ -27,11 +27,11 @@ function Modify() {
     useEffect(() => {
         db.collection('Product').doc(params.uid).get().then((result) => {
             console.log(result.data());
-            setData(result.data());
+            setData(result.data() as any);
         });
 
     },[params.uid])
-    const onItemChange = (e) => {
+    const onItemChange = (e:React.ChangeEvent<HTMLInputElement>) => {
         setData({
             이미지 :data.이미지,
             올린사람 : data.올린사람,
@@ -40,7 +40,7 @@ function Modify() {
             날짜 : data.날짜
         })
     }
-    const onChange = (e ) => {
+    const onChange = (e:React.ChangeEvent<HTMLInputElement> ) => {
         setData({
             이미지 :data.이미지,
             올린사람 : data.올린사람,
@@ -49,8 +49,10 @@ function Modify() {
             날짜 : data.날짜
         })
     }
-    const onFileChange = (e) => {
-        const Img = e.target.files[0];
+    // React.ChangeEvent<HTMLInputElement> 타입 지정 시 
+    // Object is possibly 'null'. error 발생
+    const onFileChange = (e:any ) => {
+        const Img =e.target.files[0];
         const storageRef = storage.ref();
         const ImgRef = storageRef.child(`image/${Img.name}`);
         const uploadImg = ImgRef.put(Img);
@@ -83,7 +85,7 @@ function Modify() {
     }
     return (
         <div>
-            <BgImg style={{backgroundImage: `url(${data.이미지})`}}></BgImg>
+            <BgImg src={data?.이미지} width='30%' height='300px'></BgImg>
             <div>
                 <input type='file' onChange={onFileChange}/>
                 <h5>올린사람 : {data.올린사람} </h5>
@@ -98,7 +100,7 @@ function Modify() {
 }
 
 
-const BgImg = styled.div`
+const BgImg = styled.img`
     width: 100%;
     height: 300px;
     background-size: contain;

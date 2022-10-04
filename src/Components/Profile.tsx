@@ -4,45 +4,54 @@ import { Link, useNavigate} from "react-router-dom"
 import { useEffect } from "react";
 import styled from "styled-components";
 
-function Profile({userObj}) {
-    const [userName , setUserName] = useState(userObj.displayName);
-    const [ userEmail , setUserEmail ] = useState(userObj.email);
-    const [data , setData] = useState([]);
-    const [saleData , setSaleData] = useState([]);
+interface IData {
+    id : string
+    이미지 : string
+    상품명 : string
+    날짜 : string
+    지역 : string
+    가격:string
+    noImg? : HTMLImageElement
+  }
+function Profile({userObj}:any) {
+    const [userNickName , setUserNickName] = useState(userObj.displayName);
+    const [data , setData] = useState<IData[]>([]);
+    const [saledData , setSaledData] = useState<IData[]>([]);
     const [sale , setSale] = useState(true);
     useEffect(() => {
         db.collection('Product').where('상태' , '==' , '판매중').where('올린사람' ,'==' , userObj.displayName).get().then((result) => {
-            setData(result.docs.map((doc) =>({
+            const saling = result.docs.map((doc) =>({
                 id : doc.id,
                 ...doc.data()
-            })));  
+            }))
+            setData(saling as any);  
         })
         db.collection('Product').where('상태' , '==' , '판매완료').where('올린사람' ,'==' , userObj.displayName).get().then((result) => {
-            setSaleData(result.docs.map((doc) =>({
+            const saled = result.docs.map((doc) =>({
                 id : doc.id,
                 ...doc.data()
-            })));  
+            }))
+            setSaledData(saled as any);  
         })
-    },[data , saleData , userObj.displayName])
+    },[data , saledData , userObj.displayName])
     const nav = useNavigate();
-    const onSubmit = (e) => {
+    const onFormSubmit = (e:React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        auth.currentUser.updateProfile({
-            displayName : userName , 
-            
-        })
-        auth.currentUser.updateEmail({
-            email : userEmail,
+        auth?.currentUser?.updateProfile({
+            displayName : userNickName ,    
         })
         nav('/');
     }
-    const onNickname = (e) => {
-        setUserName(e.target.value);
-        console.log(userName)
+    const onClickSubmit = (e:React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        auth?.currentUser?.updateProfile({
+            displayName : userNickName ,    
+        })
+        nav('/');
     }
-    const onEmail = (e) => {
-        setUserEmail(e.target.value);
-        console.log(userEmail)
+    const onNickname = (e:React.ChangeEvent<HTMLInputElement>) => {
+        setUserNickName(e.target.value);
+        console.log(userNickName)
     }
     const onClick = () => {
         setSale((prev) => !prev);
@@ -50,9 +59,9 @@ function Profile({userObj}) {
     return (
         <div>
             <Title>프로필</Title>
-            <UserForm onSubmit={onSubmit}>
-                닉네임 : <input type='text' onChange={onNickname} value={userName}/>
-                <button onClick={onSubmit}>수정</button>
+            <UserForm onSubmit={onFormSubmit}>
+                닉네임 : <input type='text' onChange={onNickname} value={userNickName}/>
+                <button onClick={onClickSubmit}>수정</button>
             </UserForm>
             <div>
                 <Btn>
@@ -82,7 +91,7 @@ function Profile({userObj}) {
                 <>
                 <Title>판매완료</Title>
                  <Grid>
-                    {saleData.map((p) =>  {
+                    {saledData.map((p) =>  {
                         return (
                             <div key={p.id}>
                             <img src={p.이미지 ? p.이미지 : 'https://via.placeholder.com/350'} alt='img' width ='200px' height='200px'/>
@@ -110,7 +119,7 @@ const Grid = styled.div`
     place-items: center;
 `;
 
-const UserForm = styled.div`
+const UserForm = styled.form`
   display : flex;
   justify-content: center;
   align-items: center;

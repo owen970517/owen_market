@@ -3,30 +3,34 @@ import styled from "styled-components"
 import { auth } from "../firebase";
 import { useForm } from "react-hook-form";
 
-/* interface IProps {
+ interface IProps {
   isLogin : boolean;
   userObj : {
     displayName : string;
     uid : string;
     email :string;
   }
-} */
+} 
+interface IFrom {
+  search : string
+}
 
-function Header({isLogin , userObj} ) {
-  const {register , handleSubmit} = useForm();
+function Header({isLogin , userObj}:any) {
+  const {register , handleSubmit , setValue} = useForm<IFrom>();
   const nav = useNavigate();
   const onLogOut = () => {
     auth.signOut();
     nav('/login');
   }
-  const onSearch = (e) => {
-    nav('/search/' + e.search);
-  }
+  const onSearch = handleSubmit((e) => {
+    nav('/search/' + e.search)
+    setValue('search' , '')
+})
     return (
       <Nav>
         <h1>중고사이트</h1>
         <UL>
-          <form onSubmit={handleSubmit(onSearch)}>
+          <form onSubmit={onSearch}>
             <input {...register("search" , {required : true})} placeholder='찾을 상품 입력하시오'></input>
           </form>
           <LI>{isLogin ? <Link to='/profile'>{userObj.displayName}</Link> : ""}</LI>

@@ -5,7 +5,6 @@ import styled from "styled-components";
 
 
 function Chat({userObj}) {
-
     return (
         <>
             <ChatBox>

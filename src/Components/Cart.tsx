@@ -25,7 +25,7 @@ const Cart = ({userObj}:IUserObj) => {
   let sum=0;
   console.log(userObj.uid)
   useEffect(()=> {
-    db.collection('Cart').get().then((result) => {
+    db.collection('Cart').doc(userObj.uid).collection('items').get().then((result) => {
        setData(result.docs.map((doc) =>({
          id : doc.id,
          ...doc.data()
@@ -47,7 +47,7 @@ const Cart = ({userObj}:IUserObj) => {
     <div >
         {data?.map((item) => (
             <div key={item.id}>
-                <BgImg style={{backgroundImage: `url(${item.이미지})`}}></BgImg>
+                <BgImg src={item.이미지} width='300px' height='300px'></BgImg>
                 <p>{item.상품명}</p>
                 <p>{item.가격}원</p>
                 <button onClick={() => onDelete(item.id as string)}>X</button>
@@ -58,9 +58,7 @@ const Cart = ({userObj}:IUserObj) => {
   )
 }
 
-const BgImg = styled.div`
-    width: 300px;
-    height: 300px;
+const BgImg = styled.img`
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
