@@ -1,22 +1,15 @@
 import { useState } from "react"
-import { auth, db } from "../firebase";
+import { auth, db } from "../../firebase";
 import { Link, useNavigate} from "react-router-dom"
 import { useEffect } from "react";
 import styled from "styled-components";
+import { IData } from "../../type/ItemProps";
+import { IUserObj } from "../../type/UserProps";
 
-interface IData {
-    id : string
-    이미지 : string
-    상품명 : string
-    날짜 : string
-    지역 : string
-    가격:string
-    noImg? : HTMLImageElement
-  }
-function Profile({userObj}:any) {
+function Profile({userObj}:IUserObj) {
     const [userNickName , setUserNickName] = useState(userObj.displayName);
     const [data , setData] = useState<IData[]>([]);
-    const [saledData , setSaledData] = useState<IData[]>([]);
+    const [soldData , setSoldData] = useState<IData[]>([]);
     const [sale , setSale] = useState(true);
     useEffect(() => {
         db.collection('Product').where('상태' , '==' , '판매중').where('올린사람' ,'==' , userObj.displayName).get().then((result) => {
@@ -24,16 +17,16 @@ function Profile({userObj}:any) {
                 id : doc.id,
                 ...doc.data()
             }))
-            setData(saling as any);  
+            setData(saling);  
         })
         db.collection('Product').where('상태' , '==' , '판매완료').where('올린사람' ,'==' , userObj.displayName).get().then((result) => {
-            const saled = result.docs.map((doc) =>({
+            const sold = result.docs.map((doc) =>({
                 id : doc.id,
                 ...doc.data()
             }))
-            setSaledData(saled as any);  
+            setSoldData(sold);  
         })
-    },[data , saledData , userObj.displayName])
+    },[data , soldData , userObj.displayName])
     const nav = useNavigate();
     const onFormSubmit = (e:React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -80,7 +73,7 @@ function Profile({userObj}:any) {
                                     <Link to={`/detail/${p.id}`}><h3>{p.상품명}</h3></Link>
                                     <h3>{p.날짜}</h3>
                                     <h3>{p.지역}</h3>
-                                    <h3>{p.가격.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}원</h3>
+                                    <h3>{p.가격?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}원</h3>
                                 </div>
                                 </div>
                                 )
@@ -91,7 +84,7 @@ function Profile({userObj}:any) {
                 <>
                 <Title>판매완료</Title>
                  <Grid>
-                    {saledData.map((p) =>  {
+                    {soldData.map((p) =>  {
                         return (
                             <div key={p.id}>
                             <img src={p.이미지 ? p.이미지 : 'https://via.placeholder.com/350'} alt='img' width ='200px' height='200px'/>
@@ -99,7 +92,7 @@ function Profile({userObj}:any) {
                                 <Link to={`/detail/${p.id}`}><h3>{p.상품명}</h3></Link>
                                 <h3>{p.날짜}</h3>
                                 <h3>{p.지역}</h3>
-                                <h3>{p.가격.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}원</h3>
+                                <h3>{p.가격?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}원</h3>
                             </div>
                             </div>
                             )

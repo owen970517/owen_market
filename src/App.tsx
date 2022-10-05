@@ -1,7 +1,6 @@
-import Header from "./Components/Header";
-import Pages from './Components/Pages';
+import Header from "./Components/Layout/Header";
+import Pages from './Components/Layout/Pages';
 import { BrowserRouter} from "react-router-dom";
-import Home from "./Components/Home";
 import { useEffect, useState } from "react";
 import { auth } from "./firebase";
 

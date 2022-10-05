@@ -1,22 +1,13 @@
 import { Link, useNavigate } from "react-router-dom"
 import styled from "styled-components"
-import { auth } from "../firebase";
+import { auth } from "../../firebase";
 import { useForm } from "react-hook-form";
+import { IUserObj } from "../../type/UserProps";
+import { IForm } from "../../type/InputForm";
 
- interface IProps {
-  isLogin : boolean;
-  userObj : {
-    displayName : string;
-    uid : string;
-    email :string;
-  }
-} 
-interface IFrom {
-  search : string
-}
 
-function Header({isLogin , userObj}:any) {
-  const {register , handleSubmit , setValue} = useForm<IFrom>();
+function Header({isLogin , userObj}:IUserObj) {
+  const {register , handleSubmit , setValue} = useForm<IForm>();
   const nav = useNavigate();
   const onLogOut = () => {
     auth.signOut();

@@ -1,15 +1,6 @@
 import { useEffect } from "react";
 import styled from "styled-components"
-
-interface IData {
-    id? : string
-    이미지? : string
-    상품명? : string
-    날짜? : string
-    지역? : string
-    가격?:string
-    noImg? : HTMLImageElement
-  }
+import { IData } from "../../type/ItemProps";
 
 function Region({setActiveRegion , activeRegion , setFiltered , data}:any) {
     useEffect(() => {

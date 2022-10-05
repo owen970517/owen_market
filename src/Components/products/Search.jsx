@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom'
-import { db } from '../firebase';
+import { db } from '../../firebase';
 
 const Search = () => {
   const [data,setData] = useState([]);

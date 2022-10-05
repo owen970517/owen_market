@@ -1,34 +1,27 @@
 import { SubmitHandler, useForm } from "react-hook-form"
-import { auth, db } from "../firebase";
+import { auth, db } from "../../firebase";
 import styled from "styled-components";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
-interface ILoginProps {
-    mail : string
-    password : string
-    name? : string
-}
-
+import { IForm } from "../../type/InputForm";
 
 function Sign() {
-    const {register , handleSubmit  } = useForm<ILoginProps>();
+    const {register , handleSubmit  } = useForm<IForm>();
     const [login , setLogin] = useState(false);
     const nav = useNavigate();
-    const onSubmit:SubmitHandler<ILoginProps> = (props) => {
+    const onSubmit:SubmitHandler<IForm> = (props) => {
         auth.createUserWithEmailAndPassword(props.mail,props.password).then((result) => {
             db.collection('user').doc(result?.user?.uid).set({
                 name : props.name,
                 email : props.mail
             })
-            console.log(result.user);
             result?.user?.updateProfile({displayName : props.name})
-        })
+        }).catch(e => console.log(e))
     }
-    const onLoginSubmit:SubmitHandler<ILoginProps> = (props) => {
+    const onLoginSubmit:SubmitHandler<IForm> = (props) => {
         auth.signInWithEmailAndPassword(props.mail , props.password).then((result)=> {
             console.log(result.user)
-        })
+        }).catch(e =>  console.log(e));
     }
     const onChangeBtn = () => {
         setLogin((prev) => !prev)

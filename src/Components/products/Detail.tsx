@@ -1,44 +1,30 @@
 import { useNavigate, useParams } from "react-router-dom"
-import { db } from "../firebase";
+import { db } from "../../firebase";
 import styled from "styled-components";
 import { useEffect, useState } from "react";
+import { IUserObj } from "../../type/UserProps";
+import { IData } from "../../type/ItemProps";
 
-interface ICart {
-    상태 : string
-    올린사람? : string
-    이미지 : string
-    상품명 : string
-    날짜 : string
-    지역 : string
-    가격:string
-}
-interface IUser {
-    userObj : {
-        displayName? : string
-        uid? : string
-        email? : string
-    }
-}
 
-function Detail({userObj}:IUser) {
-    const [data , setData] = useState<ICart>([] as any);
+function Detail({userObj}:IUserObj) {
+    const [data , setData] = useState<IData>();
     const [isOwner , setIsOwner] = useState(false);
     const params = useParams();
     const nav = useNavigate();
     useEffect(() => {
-        db.collection('Product').doc(params.id).get().then((result)=> {setData(result.data() as any)})
-        if (data.올린사람 === userObj.displayName) {
+        db.collection('Product').doc(params.id).get().then((result)=> {setData(result.data())})
+        if (data?.올린사람 === userObj.displayName) {
             setIsOwner(true);
         } else {
             setIsOwner(false);
         }
-    },[params.id ,data.올린사람,userObj.displayName , userObj.uid ])
+    },[params.id ,data?.올린사람,userObj.displayName , userObj.uid ])
     const date = new Date()
     const onChat = () => {
         db.collection('chatroom').add({
-            product : data.상품명,
+            product : data?.상품명,
             date : date,
-            participant : [userObj.displayName,data.올린사람]
+            participant : [userObj.displayName,data?.올린사람]
         })
         nav('/chat');
     }
@@ -46,7 +32,7 @@ function Detail({userObj}:IUser) {
         nav('/modify/' + params.id)
     }
     const onSoldOut = () => {
-        if (data.상태 === '판매중') {
+        if (data?.상태 === '판매중') {
             db.collection('Product').doc(params.id).update({
                 상태 : '판매완료'
             })
@@ -62,11 +48,11 @@ function Detail({userObj}:IUser) {
         <div>
             <BgImg src={data?.이미지} width='30%' height='300px'></BgImg>
             <div>
-            <h5>올린사람 : {data.올린사람} </h5>
-            <h5 >상품명 : {data.상품명}</h5>
-            <p>올린날짜 : {data.날짜}</p>
-            <p>가격 : {data.가격}원</p>
-            <p>{data.상태}</p>
+            <h5>올린사람 : {data?.올린사람} </h5>
+            <h5 >상품명 : {data?.상품명}</h5>
+            <p>올린날짜 : {data?.날짜}</p>
+            <p>가격 : {data?.가격}원</p>
+            <p>{data?.상태}</p>
             </div>
             {!isOwner && 
                 <div>

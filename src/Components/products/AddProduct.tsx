@@ -1,20 +1,15 @@
 import { SubmitHandler, useForm } from "react-hook-form";
-import {db , storage} from '../firebase';
+import {db , storage} from '../../firebase';
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import {  useState } from "react";
 import { useEffect } from "react";
+import { IUserObj } from "../../type/UserProps";
+import { IForm } from "../../type/InputForm";
 
-interface IWriteProps {
-  title : string 
-  image: string | any
-  region : string 
-  item : string 
-  price : string 
-}
 
-function Write({userObj}:any) {
-    const {register , handleSubmit , watch } = useForm<IWriteProps>();
+function Write({userObj}:IUserObj) {
+    const {register , handleSubmit , watch } = useForm<IForm>();
     const [imgPreview , setImgPreview] = useState('');
     const imgSrc = watch('image');
 
@@ -25,7 +20,7 @@ function Write({userObj}:any) {
       }
     },[imgSrc])
     const nav = useNavigate();
-    const onSubmit:SubmitHandler<IWriteProps> = (props) => {
+    const onSubmit:SubmitHandler<IForm> = (props) => {
       const Img = props.image[0];
       const storageRef = storage.ref();
       const ImgRef = storageRef.child(`image/${Img.name}`);
