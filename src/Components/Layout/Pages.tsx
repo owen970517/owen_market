@@ -1,6 +1,5 @@
 import React from "react"
 import { Route, Routes } from "react-router-dom"
-import { IUserObj } from "../../type/UserProps"
 import Cart from "../products/Cart"
 import Chat from "../products/Chat"
 import Detail from "../products/Detail"
@@ -11,18 +10,18 @@ import Search from "../products/Search"
 import Sign from "../auth/Sign"
 import Write from "../products/AddProduct"
 
-function Pages({userObj , isLogin }:IUserObj) {
+function Pages() {
     return ( 
         <div>
             <Routes>
                 <Route path='/' element={<Home/>}></Route>
-                <Route path='/write' element={<Write userObj={userObj} isLogin = {isLogin}/>}></Route>
-                <Route path='/profile/' element={<Profile userObj={userObj}/>}></Route>
-                <Route path='/detail/:id' element={<Detail userObj={userObj}/>}></Route>
+                <Route path='/write' element={<Write />}></Route>
+                <Route path='/profile/' element={<Profile/>}></Route>
+                <Route path='/detail/:id' element={<Detail />}></Route>
                 <Route path='/login' element={<Sign/>}></Route>
-                <Route path='/chat' element={<Chat userObj={userObj}/>}></Route>
+                <Route path='/chat' element={<Chat/>}></Route>
                 <Route path='/modify/:uid' element={<Modify/>}></Route>
-                <Route path='/cart' element={<Cart userObj={userObj}/>}/>
+                <Route path='/cart' element={<Cart/>}/>
                 <Route path='/search/:input' element={<Search />}/>
             </Routes>
         </div>

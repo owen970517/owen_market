@@ -4,7 +4,7 @@ import { db } from "../../firebase";
 import styled from "styled-components";
 
 
-function Chat({userObj}) {
+function Chat() {
     return (
         <>
             <ChatBox>

@@ -1,29 +1,30 @@
 import Header from "./Components/Layout/Header";
 import Pages from './Components/Layout/Pages';
 import { BrowserRouter} from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { auth } from "./firebase";
+import { useDispatch } from "react-redux";
+import { userActions } from "./store/userSlice";
 
 function App() {
-  const [isLogin , setIsLogin] = useState(false);
-  const [userObj , setUserObj] = useState({});
+  const dispatch = useDispatch();
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       if(user) {
-        setIsLogin(true);
-        setUserObj({
+        dispatch(userActions.login({
           displayName : user.displayName,
           uid : user.uid,
-          email : user.email,
-        })
+        }))
+      } else {
+        dispatch(userActions.logout());
       } 
   })
-  },[])
+  },[dispatch])
   return (
     <>
     <BrowserRouter>
-      <Header userObj={userObj} isLogin={isLogin}></Header>
-      <Pages userObj={userObj} isLogin={isLogin}/>
+      <Header ></Header>
+      <Pages />
     </BrowserRouter>
     </>
   );

@@ -11,9 +11,9 @@ function Sign() {
     const nav = useNavigate();
     const onSubmit:SubmitHandler<IForm> = (props) => {
         auth.createUserWithEmailAndPassword(props.mail,props.password).then((result) => {
-            db.collection('user').doc(result?.user?.uid).set({
-                name : props.name,
-                email : props.mail
+             db.collection('user').doc(result?.user?.uid).set({
+                 name : props.name,
+                 email : props.mail
             })
             result?.user?.updateProfile({displayName : props.name})
         }).catch(e => console.log(e))
@@ -21,17 +21,17 @@ function Sign() {
     const onLoginSubmit:SubmitHandler<IForm> = (props) => {
         auth.signInWithEmailAndPassword(props.mail , props.password).then((result)=> {
             console.log(result.user)
-        }).catch(e =>  console.log(e));
+            nav('/');
+        }).catch(e =>  alert('아이디 또는 비밀번호가 틀렸습니다.'));
     }
     const onChangeBtn = () => {
         setLogin((prev) => !prev)
     }
-    auth.onAuthStateChanged((user)=>{
-        if (user) {
-            console.log(user)
-            nav('/');
-        }
-      })
+    if (login) {
+        window.history.pushState('','','/login')
+    } else {
+        window.history.pushState('','','/join')
+    }
     return (
         <div>
             {login ?   
@@ -46,7 +46,7 @@ function Sign() {
                     <h1>회원가입</h1>
                     <Input {...register('name' , {required :true , maxLength : 10})} type='text' placeholder="닉네임"></Input>
                     <Input {...register('mail' , {required :true })} type='email' placeholder="이메일"></Input>
-                    <Input {...register('password' , {required :true , maxLength : 10})} type='password' placeholder="비밀번호"></Input>
+                    <Input {...register('password' , {required :true })} type='password' placeholder="비밀번호"></Input>
                     <Btn type='submit'></Btn>
                     <button onClick={onChangeBtn}>로그인</button>
             </Form>

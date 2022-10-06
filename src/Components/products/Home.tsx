@@ -5,11 +5,13 @@ import { Link } from "react-router-dom";
 import Region from "./Region";
 import noImg from '../../ImgSrc/noimage.jpg'
 import { IData } from "../../type/ItemProps";
-
+import { useSelector} from 'react-redux'
 function Home() {
   const [data , setData] = useState<IData[]>([]);
   const [filtered , setFiltered] = useState<IData[]>([]);
   const [activeRegion , setActiveRegion] = useState('전체');
+  const userObj = useSelector((state:any) => state.user.user);
+  console.log(userObj);
   useEffect(() => {
     db.collection('Product').where('상태' , '==', '판매중').onSnapshot((snapshot)=> {
       const array = snapshot.docs.map((doc) =>({

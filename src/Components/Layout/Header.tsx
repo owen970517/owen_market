@@ -2,14 +2,18 @@ import { Link, useNavigate } from "react-router-dom"
 import styled from "styled-components"
 import { auth } from "../../firebase";
 import { useForm } from "react-hook-form";
-import { IUserObj } from "../../type/UserProps";
 import { IForm } from "../../type/InputForm";
+import {useDispatch , useSelector} from 'react-redux'
+import { userActions } from "../../store/userSlice";
 
-
-function Header({isLogin , userObj}:IUserObj) {
+function Header() {
+  const dispatch = useDispatch();
+  const userObj = useSelector((state:any) => state.user.user)
+  const isLogin = useSelector((state:any) => state.user.isLogin);
   const {register , handleSubmit , setValue} = useForm<IForm>();
   const nav = useNavigate();
   const onLogOut = () => {
+    dispatch(userActions.logout());
     auth.signOut();
     nav('/login');
   }

@@ -4,11 +4,11 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import {  useState } from "react";
 import { useEffect } from "react";
-import { IUserObj } from "../../type/UserProps";
 import { IForm } from "../../type/InputForm";
+import { useSelector} from 'react-redux'
 
-
-function Write({userObj}:IUserObj) {
+function Write() {
+  const userObj = useSelector((state:any) => state.user.user)
     const {register , handleSubmit , watch } = useForm<IForm>();
     const [imgPreview , setImgPreview] = useState('');
     const imgSrc = watch('image');

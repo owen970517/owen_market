@@ -2,9 +2,9 @@ import React, { useEffect ,useState} from 'react'
 import { db } from '../../firebase';
 import styled from 'styled-components';
 import { IData } from '../../type/ItemProps';
-import { IUserObj } from '../../type/UserProps';
-
-const Cart = ({userObj}:IUserObj) => {
+import { useSelector} from 'react-redux'
+const Cart = () => {
+  const userObj = useSelector((state:any) => state.user.user);
   const [data,setData] = useState<IData[]>([]);
   let sum=0;
   useEffect(()=> {

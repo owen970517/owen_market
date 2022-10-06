@@ -4,29 +4,29 @@ import { Link, useNavigate} from "react-router-dom"
 import { useEffect } from "react";
 import styled from "styled-components";
 import { IData } from "../../type/ItemProps";
-import { IUserObj } from "../../type/UserProps";
-
-function Profile({userObj}:IUserObj) {
+import { useSelector} from 'react-redux'
+function Profile() {
+    const userObj = useSelector((state:any) => state.user.user)
     const [userNickName , setUserNickName] = useState(userObj.displayName);
     const [data , setData] = useState<IData[]>([]);
     const [soldData , setSoldData] = useState<IData[]>([]);
     const [sale , setSale] = useState(true);
     useEffect(() => {
-        db.collection('Product').where('상태' , '==' , '판매중').where('올린사람' ,'==' , userObj.displayName).get().then((result) => {
+        db.collection('Product').where('상태' , '==' , '판매중').where('올린사람' ,'==' , userNickName).get().then((result) => {
             const saling = result.docs.map((doc) =>({
                 id : doc.id,
                 ...doc.data()
             }))
             setData(saling);  
         })
-        db.collection('Product').where('상태' , '==' , '판매완료').where('올린사람' ,'==' , userObj.displayName).get().then((result) => {
+        db.collection('Product').where('상태' , '==' , '판매완료').where('올린사람' ,'==' , userNickName).get().then((result) => {
             const sold = result.docs.map((doc) =>({
                 id : doc.id,
                 ...doc.data()
             }))
             setSoldData(sold);  
         })
-    },[data , soldData , userObj.displayName])
+    },[data , soldData , userNickName])
     const nav = useNavigate();
     const onFormSubmit = (e:React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -40,11 +40,11 @@ function Profile({userObj}:IUserObj) {
         auth?.currentUser?.updateProfile({
             displayName : userNickName ,    
         })
+        userObj.displayName = userNickName;
         nav('/');
     }
     const onNickname = (e:React.ChangeEvent<HTMLInputElement>) => {
         setUserNickName(e.target.value);
-        console.log(userNickName)
     }
     const onClick = () => {
         setSale((prev) => !prev);
