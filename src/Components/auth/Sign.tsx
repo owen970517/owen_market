@@ -9,8 +9,8 @@ function Sign() {
     const {register , handleSubmit  } = useForm<IForm>();
     const [login , setLogin] = useState(false);
     const nav = useNavigate();
-    const onSubmit:SubmitHandler<IForm> = (props) => {
-        auth.createUserWithEmailAndPassword(props.mail,props.password).then((result) => {
+    const onSubmit:SubmitHandler<IForm> = async (props) => {
+        await auth.createUserWithEmailAndPassword(props.mail,props.password).then((result) => {
              db.collection('user').doc(result?.user?.uid).set({
                  name : props.name,
                  email : props.mail
@@ -18,8 +18,8 @@ function Sign() {
             result?.user?.updateProfile({displayName : props.name})
         }).catch(e => console.log(e))
     }
-    const onLoginSubmit:SubmitHandler<IForm> = (props) => {
-        auth.signInWithEmailAndPassword(props.mail , props.password).then((result)=> {
+    const onLoginSubmit:SubmitHandler<IForm> = async (props) => {
+        await auth.signInWithEmailAndPassword(props.mail , props.password).then((result)=> {
             console.log(result.user)
             nav('/');
         }).catch(e =>  alert('아이디 또는 비밀번호가 틀렸습니다.'));

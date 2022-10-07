@@ -8,8 +8,7 @@ import { userActions } from "../../store/userSlice";
 
 function Header() {
   const dispatch = useDispatch();
-  const userObj = useSelector((state:any) => state.user.user)
-  const isLogin = useSelector((state:any) => state.user.isLogin);
+  const userObj = useSelector((state:any) => state.user);
   const {register , handleSubmit , setValue} = useForm<IForm>();
   const nav = useNavigate();
   const onLogOut = () => {
@@ -28,11 +27,11 @@ function Header() {
           <form onSubmit={onSearch}>
             <input {...register("search" , {required : true})} placeholder='찾을 상품 입력하시오'></input>
           </form>
-          <LI>{isLogin ? <Link to='/profile'>{userObj.displayName}</Link> : ""}</LI>
+          <LI>{userObj.isLogin ? <Link to='/profile'>{userObj.user.displayName}</Link> : ""}</LI>
           <LI><Link to='/'>중고거래</Link></LI>
           <LI><Link to='/write'>글쓰기</Link></LI>
-          {isLogin && <LI><Link to='/cart'>장바구니</Link></LI> }
-          {isLogin ? <Btn onClick={onLogOut}>로그아웃</Btn> : <LI><Link to='/login'>회원가입</Link></LI> }
+          {userObj.isLogin && <LI><Link to='/cart'>장바구니</Link></LI> }
+          {userObj.isLogin ? <Btn onClick={onLogOut}>로그아웃</Btn> : <LI><Link to='/login'>회원가입</Link></LI> }
         </UL>
       </Nav>
     )

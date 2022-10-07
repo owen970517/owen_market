@@ -8,10 +8,8 @@ import { IData } from "../../type/ItemProps";
 import { useSelector} from 'react-redux'
 function Home() {
   const [data , setData] = useState<IData[]>([]);
-  const [filtered , setFiltered] = useState<IData[]>([]);
+  const [filteredData , setFiltered] = useState<IData[]>([]);
   const [activeRegion , setActiveRegion] = useState('전체');
-  const userObj = useSelector((state:any) => state.user.user);
-  console.log(userObj);
   useEffect(() => {
     db.collection('Product').where('상태' , '==', '판매중').onSnapshot((snapshot)=> {
       const array = snapshot.docs.map((doc) =>({
@@ -24,15 +22,15 @@ function Home() {
       const itemList = result.docs.map((doc) =>({
         id : doc.id,
         ...doc.data()
-    }))
-       setData(itemList);  
+      }))
+      setData(itemList);  
    })
   },[]);
   return (
     <div>
       <Region data={data} setFiltered={setFiltered} setActiveRegion={setActiveRegion} activeRegion={activeRegion}/>
       <Grid>
-        {filtered.map((p) => {
+        {filteredData.map((p) => {
           return (
             <Item key={p.id}>
             <img src={p.이미지 ? p.이미지 : noImg} alt='img' width ='200px' height='200px'/>

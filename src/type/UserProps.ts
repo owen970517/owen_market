@@ -1,6 +1,6 @@
 export interface IUserObj {
     isLogin? :boolean;
-    userObj : {
+    userObj? : {
       displayName?:string;
       uid? : string;
       email? : string

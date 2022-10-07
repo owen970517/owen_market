@@ -19,3 +19,4 @@
 - firebase를 typescript로 바꾸는데 좀 어려웠습니다.
 - useform hook을 기존 form과 똑같이 type을 지정하는 줄 알았는데 다른 방법이 있다는 것을 알게되었습니다. 
 - input file을 typescript로 바꾸는데 어려움을 겪었습니다.
+- data filter를 redux로 바꾸는데 어려움을 겪었습니다. 
