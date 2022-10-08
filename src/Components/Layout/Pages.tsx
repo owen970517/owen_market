@@ -1,12 +1,12 @@
 import React from "react"
 import { Route, Routes } from "react-router-dom"
 import Cart from "../products/Cart"
-import Chat from "../products/Chat"
+import Chat from "./Chat"
 import Detail from "../products/Detail"
 import Home from '../products/Home'
 import Modify from "../products/Modify"
 import Profile from "../auth/Profile"
-import Search from "../products/Search"
+import Search from "./Search"
 import Sign from "../auth/Sign"
 import Write from "../products/AddProduct"
 
