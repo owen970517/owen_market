@@ -1,36 +1,30 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import {db } from '../../firebase';
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import Region from "./Region";
 import noImg from '../../ImgSrc/noimage.jpg'
 import { IData } from "../../type/ItemProps";
-import { useSelector} from 'react-redux'
+import { useDispatch, useSelector} from 'react-redux'
+import { regionActions } from "../../store/regionSlice";
+import { RootState } from "../../store/store";
 function Home() {
-  const [data , setData] = useState<IData[]>([]);
-  const [filteredData , setFiltered] = useState<IData[]>([]);
-  const [activeRegion , setActiveRegion] = useState('전체');
+  const dispatch = useDispatch();
+  const filteredData = useSelector((state:RootState) =>state.region.filteredData)
   useEffect(() => {
-    db.collection('Product').where('상태' , '==', '판매중').onSnapshot((snapshot)=> {
-      const array = snapshot.docs.map((doc) =>({
-        id : doc.id,
-        ...doc.data(),
-      }));
-      setFiltered(array);
-    })
      db.collection('Product').where('상태' , '==' , '판매중').get().then((result) => {
       const itemList = result.docs.map((doc) =>({
         id : doc.id,
         ...doc.data()
       }))
-      setData(itemList);  
+      dispatch(regionActions.setData(itemList));
    })
-  },[]);
+  },[dispatch]);
   return (
     <div>
-      <Region data={data} setFiltered={setFiltered} setActiveRegion={setActiveRegion} activeRegion={activeRegion}/>
+      <Region />
       <Grid>
-        {filteredData.map((p) => {
+        {filteredData.map((p:IData) => {
           return (
             <Item key={p.id}>
             <img src={p.이미지 ? p.이미지 : noImg} alt='img' width ='200px' height='200px'/>

@@ -8,3 +8,5 @@ export const store = configureStore({
         region : regionSlice
     }
 })
+
+export type RootState = ReturnType<typeof userSlice> | ReturnType<typeof regionSlice>;

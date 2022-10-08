@@ -6,9 +6,10 @@ import {  useState } from "react";
 import { useEffect } from "react";
 import { IForm } from "../../type/InputForm";
 import { useSelector} from 'react-redux'
+import { RootState } from "../../store/store";
 
 function Write() {
-  const userObj = useSelector((state:any) => state.user.user)
+  const userObj = useSelector((state:RootState) => state.user!.user)
     const {register , handleSubmit , watch } = useForm<IForm>();
     const [imgPreview , setImgPreview] = useState('');
     const imgSrc = watch('image');
@@ -48,7 +49,6 @@ function Write() {
             상태 : '판매중',
             올린사람 : userObj.displayName,
             날짜 : `${years}년${month}월${day}일`,
-            시간 : new Date(),
             이미지 : url});
         });
       }
@@ -68,7 +68,7 @@ function Write() {
               </div>
               } 
             <Form onSubmit={handleSubmit(onSubmit)}>
-                <Input {...register('image' , {required : true })} type="file"></Input>
+                <Input {...register('image')} type="file"></Input>
                 <Input {...register("title" , {required :true , maxLength:20})} placeholder="제목"></Input>
                 <Input {...register("region" , {required : true})} placeholder='지역'></Input>
                 <Input {...register("item" , {required :true , maxLength:10})} placeholder="상품명"></Input>

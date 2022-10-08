@@ -4,10 +4,11 @@ import styled from "styled-components";
 import { useEffect, useState } from "react";
 import { IData } from "../../type/ItemProps";
 import { useSelector} from 'react-redux'
+import { RootState } from "../../store/store";
 
 function Detail() {
-    const userObj = useSelector((state:any) => state.user.user);
-    const isLogin = useSelector((state:any) => state.user.isLogin);
+    const userObj = useSelector((state:RootState) => state.user.user);
+    const isLogin = useSelector((state:RootState) => state.user.isLogin);
     const [data , setData] = useState<IData>();
     const [isOwner , setIsOwner] = useState(false);
     const params = useParams();

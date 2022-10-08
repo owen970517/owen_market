@@ -3,8 +3,9 @@ import { db } from '../../firebase';
 import styled from 'styled-components';
 import { IData } from '../../type/ItemProps';
 import { useSelector} from 'react-redux'
+import { RootState } from '../../store/store';
 const Cart = () => {
-  const userObj = useSelector((state:any) => state.user.user);
+  const userObj = useSelector((state:RootState) => state.user.user);
   const [data,setData] = useState<IData[]>([]);
   let sum=0;
   useEffect(()=> {
