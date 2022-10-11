@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { IData } from "../../type/ItemProps";
 import { useSelector} from 'react-redux'
 import { RootState } from "../../store/store";
-
+import noImg from '../../ImgSrc/noimage.jpg'
 function Detail() {
     const userObj = useSelector((state:RootState) => state.user.user);
     const isLogin = useSelector((state:RootState) => state.user.isLogin);
@@ -47,7 +47,7 @@ function Detail() {
     }
     return (
         <div>
-            <BgImg src={data?.이미지} width='30%' height='300px'></BgImg>
+            <BgImg src={data?.이미지 ? data?.이미지 : noImg } width='30%' height='300px'></BgImg>
             <div>
             <h5>올린사람 : {data?.올린사람} </h5>
             <h5 >상품명 : {data?.상품명}</h5>
