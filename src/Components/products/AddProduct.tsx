@@ -2,7 +2,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import {db , storage} from '../../firebase';
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import {  useState , useEffect } from "react";
+import {  useState , useEffect,useRef } from "react";
 import { IForm } from "../../type/InputForm";
 import { useSelector} from 'react-redux'
 import { RootState } from "../../store/store";
@@ -10,10 +10,10 @@ import { RootState } from "../../store/store";
 
 function Write() {
   const userObj = useSelector((state:RootState) => state.user!.user)
-    const {register , handleSubmit , watch, setValue } = useForm<IForm>();
+    const {register , handleSubmit , watch } = useForm<IForm>();
     const [imgPreview , setImgPreview] = useState('');
     const imgSrc = watch('image');
-    console.log(imgSrc);
+    const fileRef = useRef<HTMLInputElement | null>(null);
     useEffect(()=> {
       if(imgSrc && imgSrc.length > 0) {
         const file = imgSrc[0];
@@ -69,18 +69,23 @@ function Write() {
   }
   const onImgDel = () => {
     setImgPreview('');
-    setValue('image', '');
   }
     return (
         <Wrapper>
+            {imgPreview && 
+              <div>
+                <Preview src={imgPreview} alt="없음"/>
+                <button onClick={onImgDel}>삭제</button>
+              </div>
+            } 
             <Form onSubmit={handleSubmit(onSubmit)}>
-                {imgPreview && 
-                <div>
-                  <Preview src={imgPreview} alt="없음"/>
-                  <button onClick={onImgDel}>삭제</button>
-                </div>
-                } 
-                <input {...register('image')} type="file"></input>
+                <FileInput onClick={() => {fileRef.current?.click()}}>
+                  <label>사진 추가</label>
+                  <input {...register('image')} type="file" ref={(data) => {
+                    register('image').ref(data);
+                    fileRef.current = data
+                  }}></input>
+                </FileInput>
                 <Input {...register("title" , {required :true , maxLength:20})} placeholder="제목"></Input>
                 <Input {...register("region" , {required : true})} placeholder='지역'></Input>
                 <Input {...register("item" , {required :true , maxLength:10})} placeholder="상품명"></Input>

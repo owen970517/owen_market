@@ -1,37 +1,30 @@
 import { Link, useNavigate } from "react-router-dom"
 import styled from "styled-components"
 import { auth } from "../../firebase";
-import { useForm } from "react-hook-form";
-import { IForm } from "../../type/InputForm";
 import {useDispatch , useSelector} from 'react-redux'
 import { userActions } from "../../store/userSlice";
+import SearchBar from "./SearchBar";
+import { RootState } from "../../store/store";
 
 function Header() {
   const dispatch = useDispatch();
-  const userObj = useSelector((state:any) => state.user);
-  const {register , handleSubmit , setValue} = useForm<IForm>();
+  const userObj = useSelector((state:RootState) => state.user);
   const nav = useNavigate();
   const onLogOut = () => {
     dispatch(userActions.logout());
     auth.signOut();
     nav('/login');
   }
-  const onSearch = handleSubmit((e) => {
-    nav('/search/' + e.search)
-    setValue('search' , '')
-})
     return (
       <Nav>
         <h1>중고사이트</h1>
         <UL>
-          <form onSubmit={onSearch}>
-            <input {...register("search" , {required : true})} placeholder='찾을 상품 입력하시오'></input>
-          </form>
-          <LI>{userObj.isLogin ? <Link to='/profile'>{userObj.user.displayName}</Link> : ""}</LI>
-          <LI><Link to='/'>중고거래</Link></LI>
-          <LI><Link to='/write'>글쓰기</Link></LI>
-          {userObj.isLogin && <LI><Link to='/cart'>장바구니</Link></LI> }
-          {userObj.isLogin ? <Btn onClick={onLogOut}>로그아웃</Btn> : <LI><Link to='/login'>회원가입</Link></LI> }
+          <SearchBar/>
+          <LI>{userObj.isLogin ? <StyledLink to='/profile' >{userObj.user.displayName}</StyledLink> : ""}</LI>
+          <LI><StyledLink to='/' >중고거래</StyledLink></LI>
+          <LI><StyledLink to='/write' >글쓰기</StyledLink></LI>
+          {userObj.isLogin && <LI><StyledLink to='/cart' >장바구니</StyledLink></LI> }
+          {userObj.isLogin ? <Btn onClick={onLogOut}>로그아웃</Btn> : <LI><StyledLink to='/login' >회원가입</StyledLink></LI> }
         </UL>
       </Nav>
     )
@@ -54,6 +47,8 @@ const LI =  styled.li`
 const Btn = styled.button `
   margin-left : 10px;
 `
-
+const StyledLink = styled(Link)`
+  text-decoration: none;
+`
 
 export default Header

@@ -6,7 +6,7 @@ import Detail from "../products/Detail"
 import Home from '../products/Home'
 import Modify from "../products/Modify"
 import Profile from "../auth/Profile"
-import Search from "./Search"
+import Search from "./SearchedProduct"
 import Sign from "../auth/Sign"
 import Write from "../products/AddProduct"
 
