@@ -6,16 +6,16 @@ import Detail from "../products/Detail"
 import Home from '../products/Home'
 import Modify from "../products/Modify"
 import Profile from "../auth/Profile"
-import Search from "./SearchedProduct"
+import Search from "../products/SearchedProduct"
 import Sign from "../auth/Sign"
-import Write from "../products/AddProduct"
+import AddProduct from "../products/AddProduct"
 
 function Pages() {
     return ( 
         <div>
             <Routes>
                 <Route path='/' element={<Home/>}></Route>
-                <Route path='/write' element={<Write />}></Route>
+                <Route path='/write' element={<AddProduct />}></Route>
                 <Route path='/profile/' element={<Profile/>}></Route>
                 <Route path='/detail/:id' element={<Detail />}></Route>
                 <Route path='/login' element={<Sign/>}></Route>

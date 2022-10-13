@@ -8,7 +8,7 @@ import { useSelector} from 'react-redux'
 import { RootState } from "../../store/store";
 
 
-function Write() {
+function AddProduct() {
   const userObj = useSelector((state:RootState) => state.user!.user)
     const {register , handleSubmit , watch } = useForm<IForm>();
     const [imgPreview , setImgPreview] = useState('');
@@ -80,7 +80,7 @@ function Write() {
             } 
             <Form onSubmit={handleSubmit(onSubmit)}>
                 <FileInput onClick={() => {fileRef.current?.click()}}>
-                  <label>사진 추가</label>
+                  <label>업로드</label>
                   <input {...register('image')} type="file" ref={(data) => {
                     register('image').ref(data);
                     fileRef.current = data
@@ -143,4 +143,4 @@ const FileInput = styled.div`
     border: 0;
   }
 `
-export default Write
+export default AddProduct
