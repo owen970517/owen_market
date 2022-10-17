@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialUserState = {
     user : '',
+    profileImg : '',
     isLogin : false
 }
 
@@ -16,6 +17,9 @@ const userSlice = createSlice({
         logout(state) {
             state.user = '';
             state.isLogin = false;
+        },
+        addProfileImg(state,action) {
+            state.profileImg = action.payload;
         }
     }
 })

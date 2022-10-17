@@ -12,14 +12,18 @@ interface IProps {
 const SearchBar = () => {
     const [isOpen , setIsOpen] = useState(false);
     const nav = useNavigate();
-    const {register , handleSubmit , setValue} = useForm<IForm>();
+    const {register , handleSubmit , setValue, setFocus } = useForm<IForm>();
     const onSearch = handleSubmit((e) => {
         nav('/search/' + e.search)
         setIsOpen(false);
         setValue('search' , '')
     })
+    const toggleSearch = () => {
+        setIsOpen(true);
+        setFocus('search');
+    }
   return (
-    <SearchForm isopen={isOpen} onSubmit={onSearch} onClick={() => {setIsOpen(true)}}>
+    <SearchForm isopen={isOpen} onSubmit={onSearch} onClick={toggleSearch}>
         <SearchIcon/>
         <SearchInput {...register("search" , {required : true})} placeholder='찾고 싶은 상품을 입력하시오' isopen={isOpen}/>
     </SearchForm>
