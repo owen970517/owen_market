@@ -5,6 +5,7 @@ import {useDispatch , useSelector} from 'react-redux'
 import { userActions } from "../../store/userSlice";
 import SearchBar from "./SearchBar";
 import { RootState } from "../../store/store";
+import React from "react";
 
 function Header() {
   const dispatch = useDispatch();
@@ -17,18 +18,17 @@ function Header() {
     auth.signOut();
     nav('/login');
   }
-  console.log(userObj);
     return (
       <Nav>
         <h1>중고사이트</h1>
         <UL>
           <SearchBar/>
-          <LI>
+          <LI>{userObj.isLogin ? <div style={{display:'flex'}}>
             <ProfileDiv>
               <ProfileImg src={profile ? profile : defaultImg} alt='' ></ProfileImg>
             </ProfileDiv>
-          </LI>
-          <LI>{userObj.isLogin ? <StyledLink to='/profile' >{userObj.user.displayName}</StyledLink> : ""}</LI>
+            <StyledLink to='/profile' >{userObj.user.displayName}</StyledLink>
+          </div> : ""}</LI>
           <LI><StyledLink to='/' >중고거래</StyledLink></LI>
           <LI><StyledLink to='/write' >글쓰기</StyledLink></LI>
           {userObj.isLogin && <LI><StyledLink to='/cart' >장바구니</StyledLink></LI> }

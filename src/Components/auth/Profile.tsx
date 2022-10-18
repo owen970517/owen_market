@@ -1,5 +1,5 @@
-import { useState,useRef } from "react"
-import { auth, db, storage } from "../../firebase";
+import { useState,useRef, useEffect } from "react"
+import { auth, storage } from "../../firebase";
 import { useNavigate} from "react-router-dom"
 import styled from "styled-components";
 import { useDispatch, useSelector} from 'react-redux'
@@ -10,10 +10,18 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { IForm } from "../../type/InputForm";
 import { userActions } from "../../store/userSlice";
 function Profile() {
-    const {register,handleSubmit} = useForm<IForm>()
+    const {register,handleSubmit,watch} = useForm<IForm>();
+    const profile = useSelector((state:RootState) => state.user.profileImg);
     const dispatch = useDispatch();
+    const imgSrc = watch('image');
+    const [imgPreview , setImgPreview] = useState('');
+    useEffect(()=> {
+        if(imgSrc && imgSrc.length > 0) {
+          const file = imgSrc[0];
+          setImgPreview(URL.createObjectURL(file));
+        }
+      },[imgSrc])
     const userObj = useSelector((state:any) => state.user.user)
-    const profileImg = useSelector((state:RootState) => state.user.profileImg);
     const fileRef = useRef<HTMLInputElement | null>(null);
     const [userNickName , setUserNickName] = useState(userObj.displayName);
     const [sale , setSale] = useState(true);
@@ -32,7 +40,7 @@ function Profile() {
         if(props.image[0]) {
             const Img = props.image[0];
             const storageRef = storage.ref();
-            const ImgRef = storageRef.child(`image/${Img.name}`);
+            const ImgRef = storageRef.child(`user_image/${Img.name}`);
             const uploadImg = ImgRef.put(Img);
             uploadImg.on('state_changed', 
             // 변화시 동작하는 함수 
@@ -47,20 +55,19 @@ function Profile() {
                 console.log('업로드된 경로는', url);
                 auth.currentUser?.updateProfile({
                     photoURL : url
-                    })
+                })
                 dispatch(userActions.addProfileImg(url))
                 });
               });
             }
         nav('/');
     }
-    
     const defaultImg = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
     return (
         <div>
             <Title>프로필</Title>
             <ProfileDiv>
-                <ProfileImg src={profileImg ? profileImg : defaultImg}></ProfileImg>
+                <ProfileImg src={imgPreview ? imgPreview : profile ? profile : defaultImg}></ProfileImg>
             </ProfileDiv>
             <Form onSubmit={handleSubmit(onSubmit)}>
                 <FileInput onClick={() => {fileRef.current?.click()}}>
@@ -70,6 +77,7 @@ function Profile() {
                         fileRef.current = data
                     }}></input>
                 </FileInput>
+                <button type="submit">수정</button>
             </Form>
             <UserForm onSubmit={onFormSubmit}>
                 닉네임 : <input type='text' onChange={onNickname} value={userNickName}/>
@@ -125,6 +133,8 @@ const ProfileImg = styled.img`
 `
 const Form = styled.form`
   display: flex;
+  justify-content: center;
+  align-items: center;
   flex-direction: column;
 `
 

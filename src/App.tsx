@@ -15,6 +15,7 @@ function App() {
           displayName : user.displayName,
           uid : user.uid,
         }))
+        dispatch(userActions.addProfileImg(user.photoURL));
       } else {
         dispatch(userActions.logout());
       } 
