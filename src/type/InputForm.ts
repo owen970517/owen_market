@@ -8,4 +8,5 @@ export interface IForm {
     mail : string
     password : string
     name : string
+    nickname :string
   }

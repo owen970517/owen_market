@@ -23,12 +23,13 @@ function Header() {
         <h1>중고사이트</h1>
         <UL>
           <SearchBar/>
-          <LI>{userObj.isLogin ? <div style={{display:'flex'}}>
+          <LI>{userObj.isLogin ? 
+          <Div>
             <ProfileDiv>
               <ProfileImg src={profile ? profile : defaultImg} alt='' ></ProfileImg>
             </ProfileDiv>
             <StyledLink to='/profile' >{userObj.user.displayName}</StyledLink>
-          </div> : ""}</LI>
+          </Div> : ""}</LI>
           <LI><StyledLink to='/' >중고거래</StyledLink></LI>
           <LI><StyledLink to='/write' >글쓰기</StyledLink></LI>
           {userObj.isLogin && <LI><StyledLink to='/cart' >장바구니</StyledLink></LI> }
@@ -46,6 +47,8 @@ const Nav = styled.div`
 `
 const UL = styled.ul`
   display:flex;
+  justify-content: center;
+  align-items: center;
 `
 const LI =  styled.li`
   font-size : 20px;
@@ -69,6 +72,11 @@ const ProfileImg = styled.img`
     height: 100%;
     object-fit: cover;
 
+`
+const Div = styled.div`
+  display:flex;
+  justify-content: center;
+  align-items: center;
 `
 
 export default Header

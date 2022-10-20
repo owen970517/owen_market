@@ -1,20 +1,27 @@
 import React,{useEffect ,useState} from 'react'
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components'
 import { db } from '../../firebase'
+import { RootState } from '../../store/store';
 import { IData } from '../../type/ItemProps';
 
-const SaleProducts = ({userNickName}:any) => {
+const SaleProducts = () => {
+    const user = useSelector((state:RootState) => state.user.user)
     const [saleData , setSaleData] = useState<IData[]>([]);
     useEffect(() => {
-        db.collection('Product').where('상태' , '==' , '판매중').where('올린사람' ,'==' , userNickName).get().then((result) => {
-            const saling = result.docs.map((doc) =>({
-                id : doc.id,
-                ...doc.data()
-            }))
-            setSaleData(saling);  
-        })
-    },[userNickName])
+        if (!user.displayName) return;
+        const getData = async () => {
+            await db.collection('Product').where('상태' , '==' , '판매중').where('올린사람' ,'==' , user?.displayName).get().then( async (result) => {
+                const saling = result.docs.map((doc) =>({
+                    id : doc.id,
+                    ...doc.data()
+                }))
+                setSaleData(saling);  
+            })
+        }
+        getData();
+    },[user.displayName])
   return (
     <Grid>
         {saleData.map((p) =>  {

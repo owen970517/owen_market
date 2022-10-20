@@ -14,7 +14,7 @@ function Profile() {
     const profile = useSelector((state:RootState) => state.user.profileImg);
     const dispatch = useDispatch();
     const imgSrc = watch('image');
-    const [imgPreview , setImgPreview] = useState('');
+    const [imgPreview , setImgPreview] = useState(profile);
     useEffect(()=> {
         if(imgSrc && imgSrc.length > 0) {
           const file = imgSrc[0];
@@ -80,7 +80,7 @@ function Profile() {
                 <button type="submit">수정</button>
             </Form>
             <UserForm onSubmit={onFormSubmit}>
-                닉네임 : <input type='text' onChange={onNickname} value={userNickName}/>
+                닉네임 : <input {...register('nickname')} type='text' onChange={onNickname} value={userNickName}/>
                 <button type="submit">수정</button>
             </UserForm>
             <div>
@@ -91,12 +91,12 @@ function Profile() {
                 {sale ?
                     <>
                         <Title>판매중</Title>
-                        <SaleProducts userNickName={userNickName}/>
+                        <SaleProducts />
                     </>
                     :  
                     <>
                         <Title>판매완료</Title>
-                        <SoldProducts userNickName={userNickName}/>
+                        <SoldProducts />
                     </>
                 }
             </div>
