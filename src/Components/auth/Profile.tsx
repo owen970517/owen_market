@@ -9,11 +9,19 @@ import { RootState } from "../../store/store";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { IForm } from "../../type/InputForm";
 import { userActions } from "../../store/userSlice";
+
 function Profile() {
-    const {register,handleSubmit,watch} = useForm<IForm>();
-    const profile = useSelector((state:RootState) => state.user.profileImg);
+    const userObj = useSelector((state:RootState) => state.user.user);
     const dispatch = useDispatch();
+    const {register,handleSubmit,watch} = useForm<IForm>({
+        defaultValues : {
+            nickname : userObj.displayName
+        }
+    });
+    const profile = useSelector((state:RootState) => state.user.profileImg);
+    const defaultImg = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
     const imgSrc = watch('image');
+    const newNickname = watch('nickname')
     const [imgPreview , setImgPreview] = useState(profile);
     useEffect(()=> {
         if(imgSrc && imgSrc.length > 0) {
@@ -21,22 +29,19 @@ function Profile() {
           setImgPreview(URL.createObjectURL(file));
         }
       },[imgSrc])
-    const userObj = useSelector((state:any) => state.user.user)
     const fileRef = useRef<HTMLInputElement | null>(null);
-    const [userNickName , setUserNickName] = useState(userObj.displayName);
     const [sale , setSale] = useState(true);
     const nav = useNavigate();
-    const onFormSubmit = (e:React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        auth?.currentUser?.updateProfile({
-            displayName : userNickName ,    
-        })
-        nav('/');
-    }
-    const onNickname = (e:React.ChangeEvent<HTMLInputElement>) => {
-        setUserNickName(e.target.value);
-    }
-    const onSubmit:SubmitHandler<IForm> = (props) => {
+    const onFormSubmit:SubmitHandler<IForm> = async (props) => {
+        if (userObj.displayName !== newNickname) {
+            await auth?.currentUser?.updateProfile({
+                displayName : newNickname ,    
+            })
+        }
+        dispatch(userActions.modifyDisplayName({
+            displayName : newNickname,
+            uid : userObj.uid
+        }))
         if(props.image[0]) {
             const Img = props.image[0];
             const storageRef = storage.ref();
@@ -59,28 +64,29 @@ function Profile() {
                 dispatch(userActions.addProfileImg(url))
                 });
               });
+              nav('/');
             }
-        nav('/');
     }
-    const defaultImg = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+    
     return (
         <div>
             <Title>프로필</Title>
-            <ProfileDiv>
-                <ProfileImg src={imgPreview ? imgPreview : profile ? profile : defaultImg}></ProfileImg>
-            </ProfileDiv>
-            <Form onSubmit={handleSubmit(onSubmit)}>
+            <Div>
+                <ProfileDiv>
+                    <ProfileImg src={imgPreview ? imgPreview : profile ? profile : defaultImg}></ProfileImg>
+                </ProfileDiv>
+            </Div>
+            <PreviewImg>
                 <FileInput onClick={() => {fileRef.current?.click()}}>
-                    <label>업로드</label>
+                    <label>사진 변경</label>
                     <input {...register('image')} type="file" ref={(data) => {
                         register('image').ref(data);
                         fileRef.current = data
                     }}></input>
                 </FileInput>
-                <button type="submit">수정</button>
-            </Form>
-            <UserForm onSubmit={onFormSubmit}>
-                닉네임 : <input {...register('nickname')} type='text' onChange={onNickname} value={userNickName}/>
+            </PreviewImg>
+            <UserForm onSubmit={handleSubmit(onFormSubmit)}>
+                <TextInput {...register('nickname')} type='text' />
                 <button type="submit">수정</button>
             </UserForm>
             <div>
@@ -108,6 +114,7 @@ const UserForm = styled.form`
   display : flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
   margin-bottom: 20px;
 `
 
@@ -121,7 +128,7 @@ const Btn = styled.div`
     align-items: center;
 `
 const ProfileDiv = styled.div`
-  width : 300px;
+  width: 300px;
   height : 300px;
   border-radius: 50%;
   overflow:hidden;
@@ -131,7 +138,7 @@ const ProfileImg = styled.img`
     height: 100%;
     object-fit: cover;
 `
-const Form = styled.form`
+const PreviewImg = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -162,5 +169,19 @@ const FileInput = styled.div`
     clip:rect(0,0,0,0);
     border: 0;
   }
+`
+
+const Div = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`
+const TextInput = styled.input`
+    padding : 10px;
+    text-align: center;
+    width : 100px;
+    height : 25px;
+    border-radius: 20px;
+
 `
 export default Profile

@@ -20,6 +20,9 @@ const userSlice = createSlice({
         },
         addProfileImg(state,action) {
             state.profileImg = action.payload;
+        },
+        modifyDisplayName(state,action) {
+            state.user = action.payload;
         }
     }
 })
