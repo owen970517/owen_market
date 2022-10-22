@@ -4,13 +4,16 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components'
 import { auth } from '../../firebase';
 import { IForm } from '../../type/InputForm';
-const LoginForm = ({setLogin}:any) => {
+import { IProps } from '../../type/StateProps';
+
+
+const LoginForm = ({setLogin}:IProps) => {
     const {register , handleSubmit  } = useForm<IForm>();
     const nav = useNavigate();
     const onLoginSubmit:SubmitHandler<IForm> = async (props) => {
-        await auth.signInWithEmailAndPassword(props.mail , props.password).then((result)=> {
+        await auth.signInWithEmailAndPassword(props.mail , props.password).then(()=> {
             nav('/');
-        }).catch(e => alert('아이디 또는 비밀번호가 틀렸습니다.'));
+        }).catch(() => alert('아이디 또는 비밀번호가 틀렸습니다.'));
     }
   return (
     <Form onSubmit={handleSubmit(onLoginSubmit)}>
@@ -18,7 +21,7 @@ const LoginForm = ({setLogin}:any) => {
         <Input {...register('mail' , {required :true })} type='email' placeholder="이메일"></Input>
         <Input {...register('password' , {required :true , maxLength : 10})} type='password' placeholder="비밀번호"></Input>
         <Btn type='submit'></Btn>
-        <button type='button' onClick={() => setLogin((prev:boolean) => !prev)}>회원가입</button>
+        <button type='button' onClick={() => setLogin((prev) => !prev)}>회원가입</button>
     </Form>
   )
 }

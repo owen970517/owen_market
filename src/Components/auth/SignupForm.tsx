@@ -3,8 +3,9 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import styled from 'styled-components'
 import { auth, db } from '../../firebase';
 import { IForm } from '../../type/InputForm';
+import { IProps } from '../../type/StateProps';
 
-const SignupForm = ({setLogin} :any) => {
+const SignupForm = ({setLogin} :IProps) => {
     const {register , handleSubmit  } = useForm<IForm>();
     const onSubmit:SubmitHandler<IForm> = async (props) => {
         await auth.createUserWithEmailAndPassword(props.mail,props.password).then((result) => {
@@ -22,7 +23,7 @@ const SignupForm = ({setLogin} :any) => {
         <Input {...register('mail' , {required :true })} type='email' placeholder="이메일"></Input>
         <Input {...register('password' , {required :true })} type='password' placeholder="비밀번호"></Input>
         <Btn type='submit'></Btn>
-    <button type='button' onClick={() => setLogin((prev:boolean) => !prev)}>로그인</button>
+    <button type='button' onClick={() => setLogin((prev) => !prev)}>로그인</button>
 </Form>
   )
 }

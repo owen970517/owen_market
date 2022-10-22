@@ -4,10 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import { IForm } from '../../type/InputForm';
 import styled from 'styled-components';
 import { BiSearch } from "react-icons/bi";
+import { IStyleProps } from '../../type/StyleProps';
 
-interface IProps {
-    isopen :boolean
-}
 
 const SearchBar = () => {
     const [isOpen , setIsOpen] = useState(false);
@@ -36,9 +34,9 @@ const SearchForm = styled.form`
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   background-color: #37474f;
   /* Change width of the form depending if the bar is opened or not */
-  width: ${(props:IProps) => (props.isopen ? "30rem" : "2rem")};
+  width: ${(props:IStyleProps) => (props.isopen ? "30rem" : "2rem")};
   /* If bar opened, normal cursor on the whole form. If closed, show pointer on the whole form so user knows he can click to open it */
-  cursor: ${(props:IProps)=> (props.isopen ? "auto" : "pointer")};
+  cursor: ${(props:IStyleProps)=> (props.isopen ? "auto" : "pointer")};
   padding: 10px;
   height: 20px;
   border-radius: 40px;
@@ -51,7 +49,7 @@ const SearchInput = styled.input`
   width: 100%;
   border: none;
   color: white;
-  display : ${(props:IProps) => props.isopen ? 'block' : 'none'};
+  display : ${(props:IStyleProps) => props.isopen ? 'block' : 'none'};
   transition: margin 300ms cubic-bezier(0.645, 0.045, 0.355, 1);
 `
 const SearchIcon =styled(BiSearch)`

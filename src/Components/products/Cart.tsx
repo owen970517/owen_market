@@ -22,12 +22,13 @@ const Cart = () => {
   const onDelete = async (id : string) => {
     const ok = window.confirm("정말 삭제하시겠습니까??");
     if (ok) {
-      await db.collection('Cart').doc(`${id}`).delete();
+      await db.collection('Cart').doc(userObj.uid).collection('items').doc(id).delete();
     }
-    setData(data?.filter((d) => d.id !== id))
+    setData(data?.filter((d) => d.id !== id));
+    console.log(id);
   };
   return (
-    <div >
+    <div>
         {data?.map((item) => (
             <div key={item.id}>
                 <BgImg src={item.이미지} width='300px' height='300px'></BgImg>
@@ -36,6 +37,7 @@ const Cart = () => {
                 <button onClick={() => onDelete(item.id as string)}>X</button>
             </div>
         ))}
+        <h1>총 {data.length}개</h1>
         <h1>합계 : {sum}원</h1>
     </div>
   )

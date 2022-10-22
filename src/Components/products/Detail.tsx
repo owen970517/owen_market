@@ -41,9 +41,12 @@ function Detail() {
         nav('/');
     }
     const onAddCart = () => {
-        db.collection('Cart').doc(userObj.uid).collection('items').add({
-            ...data
-        })
+        const ok = window.confirm('장바구니에 추가하시겠습니까?')
+        if(ok) {
+            db.collection('Cart').doc(userObj.uid).collection('items').add({
+                ...data
+            }).then(()=> alert('장바구니에 추가되었습니다.'))
+        }
     }
     return (
         <div>

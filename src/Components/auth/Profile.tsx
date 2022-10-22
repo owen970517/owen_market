@@ -13,6 +13,7 @@ import { userActions } from "../../store/userSlice";
 function Profile() {
     const userObj = useSelector((state:RootState) => state.user.user);
     const dispatch = useDispatch();
+    const [sale , setSale] = useState(true);
     const {register,handleSubmit,watch} = useForm<IForm>({
         defaultValues : {
             nickname : userObj.displayName
@@ -30,7 +31,6 @@ function Profile() {
         }
       },[imgSrc])
     const fileRef = useRef<HTMLInputElement | null>(null);
-    const [sale , setSale] = useState(true);
     const nav = useNavigate();
     const onFormSubmit:SubmitHandler<IForm> = async (props) => {
         if (userObj.displayName !== newNickname) {
