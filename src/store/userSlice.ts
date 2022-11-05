@@ -3,7 +3,8 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialUserState = {
     user : '',
     profileImg : '',
-    isLogin : false
+    isLogin : false, 
+    cartItems : []
 }
 
 const userSlice = createSlice({

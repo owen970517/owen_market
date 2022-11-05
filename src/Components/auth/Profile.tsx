@@ -9,6 +9,7 @@ import { RootState } from "../../store/store";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { IForm } from "../../type/InputForm";
 import { userActions } from "../../store/userSlice";
+import { Helmet ,HelmetProvider } from "react-helmet-async";
 
 function Profile() {
     const userObj = useSelector((state:RootState) => state.user.user);
@@ -69,8 +70,10 @@ function Profile() {
     }
     
     return (
-        <div>
-            <Title>프로필</Title>
+        <HelmetProvider>
+            <Helmet>
+                <title>{`${userObj.displayName} | 중고사이트`}</title>
+            </Helmet>
             <Div>
                 <ProfileDiv>
                     <ProfileImg src={imgPreview ? imgPreview : profile ? profile : defaultImg}></ProfileImg>
@@ -106,7 +109,7 @@ function Profile() {
                     </>
                 }
             </div>
-        </div>
+        </HelmetProvider>
     )
 }
 

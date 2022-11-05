@@ -6,6 +6,8 @@ import { IData } from "../../type/ItemProps";
 import { useSelector} from 'react-redux'
 import { RootState } from "../../store/store";
 import noImg from '../../ImgSrc/noimage.jpg'
+import { Helmet ,HelmetProvider } from "react-helmet-async";
+
 function Detail() {
     const userObj = useSelector((state:RootState) => state.user.user);
     const isLogin = useSelector((state:RootState) => state.user.isLogin);
@@ -49,7 +51,10 @@ function Detail() {
         }
     }
     return (
-        <div>
+        <HelmetProvider>
+            <Helmet>
+                <title>{`${data?.상품명} | 중고사이트`}</title>
+            </Helmet>
             <BgImg src={data?.이미지 ? data?.이미지 : noImg } width='30%' height='300px'></BgImg>
             <div>
             <h5>올린사람 : {data?.올린사람} </h5>
@@ -66,7 +71,7 @@ function Detail() {
                 <button onClick={onAddCart}>장바구니 담기</button>
             </div> : ''
             }
-        </div>
+        </HelmetProvider>
     )
 }
 const BgImg = styled.img`

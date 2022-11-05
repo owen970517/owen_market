@@ -25,7 +25,6 @@ const Cart = () => {
       await db.collection('Cart').doc(userObj.uid).collection('items').doc(id).delete();
     }
     setData(data?.filter((d) => d.id !== id));
-    console.log(id);
   };
   return (
     <div>

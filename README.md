@@ -10,7 +10,9 @@
 - Write.jsx >>글쓰기 페이지에서 선택한 사진을 미리보고, 삭제할 수 있도록 만들었습니다.
 - Cart.jsx >> 상품을 장바구니에 담고, 전체 합계와 각 상품을 삭제할 수 있도록 만들었습니다.
 - Search.jsx >> 검색창에 입력한 값이 포함된 상품들을 보여주도록 만들었습니다.
-- js로 작성한 코드를 ts로 변경 중입니다.
+- js로 작성한 코드를 ts로 변경
+- redux 추가
+- react helmet async 사용하여 페이지 제목 변경
 
 
 
@@ -20,3 +22,4 @@
 - useform hook을 기존 form과 똑같이 type을 지정하는 줄 알았는데 다른 방법이 있다는 것을 알게되었습니다. 
 - input file을 typescript로 바꾸는데 어려움을 겪었습니다.
 - data filter를 redux로 바꾸는데 어려움을 겪었습니다. 
+- react-helmet을 사용했더니 unsafe componentwillmount 에러를 react-helmet-async를 사용하여 해결

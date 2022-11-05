@@ -6,7 +6,7 @@ import {  useState , useEffect,useRef } from "react";
 import { IForm } from "../../type/InputForm";
 import { useSelector} from 'react-redux'
 import { RootState } from "../../store/store";
-
+import { Helmet ,HelmetProvider } from "react-helmet-async";
 
 function AddProduct() {
   const userObj = useSelector((state:RootState) => state.user!.user)
@@ -72,28 +72,33 @@ function AddProduct() {
     setImgPreview('');
   }
     return (
+      <HelmetProvider>
+        <Helmet>
+          <title>{`중고 등록 | 중고사이트`}</title>
+        </Helmet>
         <Wrapper>
-            {imgPreview && 
-              <div>
-                <Preview src={imgPreview} alt="없음"/>
-                <button onClick={onImgDel}>삭제</button>
-              </div>
-            } 
-            <Form onSubmit={handleSubmit(onSubmit)}>
-                <FileInput onClick={() => {fileRef.current?.click()}}>
-                  <label>업로드</label>
-                  <input {...register('image')} type="file" ref={(data) => {
-                    register('image').ref(data);
-                    fileRef.current = data
-                  }}></input>
-                </FileInput>
-                <Input {...register("title" , {required :true , maxLength:20})} placeholder="제목"></Input>
-                <Input {...register("region" , {required : true})} placeholder='지역'></Input>
-                <Input {...register("item" , {required :true , maxLength:10})} placeholder="상품명"></Input>
-                <Input {...register("price" , {required :true , maxLength:20})} placeholder="가격"></Input>
-                <Input type="submit" value='올리기' onClick={() => onSubmit}></Input>
-            </Form>
+          {imgPreview && 
+            <div>
+              <Preview src={imgPreview} alt="없음"/>
+              <button onClick={onImgDel}>삭제</button>
+            </div>
+          } 
+          <Form onSubmit={handleSubmit(onSubmit)}>
+              <FileInput onClick={() => {fileRef.current?.click()}}>
+                <label>업로드</label>
+                <input {...register('image')} type="file" ref={(data) => {
+                  register('image').ref(data);
+                  fileRef.current = data
+                }}></input>
+              </FileInput>
+              <Input {...register("title" , {required :true , maxLength:20})} placeholder="제목"></Input>
+              <Input {...register("region" , {required : true})} placeholder='지역'></Input>
+              <Input {...register("item" , {required :true , maxLength:10})} placeholder="상품명"></Input>
+              <Input {...register("price" , {required :true , maxLength:20})} placeholder="가격"></Input>
+              <Input type="submit" value='올리기' onClick={() => onSubmit}></Input>
+          </Form>
         </Wrapper>
+      </HelmetProvider>
     )
 }
 const Wrapper = styled.div`
