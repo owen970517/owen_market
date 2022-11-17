@@ -25,7 +25,7 @@ const AllProducts = () => {
     {filteredData.map((p:IData) => {
       return (
         <Item key={p.id}>
-        <img src={p.이미지 ? p.이미지 : noImg} alt='img' width ='200px' height='200px'/>
+        <img src={p.이미지 ? p.이미지 : noImg} alt='img' width ='200px' height='200px' loading='lazy'/>
         <div>
           <Link to={`/detail/${p.id}`}><h3>{p.상품명}</h3></Link>
           <h3>{p.날짜}</h3>

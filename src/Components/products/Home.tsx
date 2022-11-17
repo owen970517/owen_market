@@ -2,7 +2,7 @@ import Region from "../Layout/Region";
 import AllProducts from "./AllProducts";
 import { Helmet ,HelmetProvider } from "react-helmet-async";
 import Title from "../Layout/Title";
-
+import styled from "styled-components";
 
 function Home() {
   return (
@@ -18,4 +18,5 @@ function Home() {
     </>
   );
 }
+
 export default Home;

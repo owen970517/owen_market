@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { auth } from "./firebase";
 import { useDispatch } from "react-redux";
 import { userActions } from "./store/userSlice";
+import React , {Suspense} from "react"
 
 function App() {
   const dispatch = useDispatch();
@@ -24,8 +25,10 @@ function App() {
   return (
     <>
     <BrowserRouter>
-      <Header ></Header>
-      <Pages />
+      <Suspense fallback={<div>Loading...</div>}>
+        <Header ></Header>
+        <Pages />
+      </Suspense>
     </BrowserRouter>
     </>
   );
