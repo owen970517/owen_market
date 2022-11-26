@@ -19,7 +19,7 @@ const LoginForm = ({setLogin}:IProps) => {
     <Form onSubmit={handleSubmit(onLoginSubmit)}>
         <h1>로그인</h1>
         <Input {...register('mail' , {required :true })} type='email' placeholder="이메일"></Input>
-        <Input {...register('password' , {required :true , maxLength : 10})} type='password' placeholder="비밀번호"></Input>
+        <Input {...register('password' , {required :true , minLength : 6})} type='password' placeholder="비밀번호"></Input>
         <Btn type='submit'></Btn>
         <button type='button' onClick={() => setLogin((prev) => !prev)}>회원가입</button>
     </Form>
