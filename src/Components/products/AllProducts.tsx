@@ -27,7 +27,7 @@ const AllProducts = () => {
         <Item key={p.id}>
         <img src={p.이미지 ? p.이미지 : noImg} alt='img' width ='200px' height='200px' loading='lazy'/>
         <div>
-          <Link to={`/detail/${p.id}`}><h3>{p.상품명}</h3></Link>
+          <StyledLink to={`/detail/${p.id}`}><h3>{p.상품명}</h3></StyledLink>
           <h3>{p.날짜}</h3>
           <h3>{p.지역}</h3>
           <h3>{p.가격?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}원</h3>
@@ -47,5 +47,10 @@ const Grid = styled.div`
 
 const Item = styled.div`
   display : flex;
+  flex-direction: column;
+`
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  color : black;
 `
 export default AllProducts

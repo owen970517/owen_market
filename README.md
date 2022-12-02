@@ -58,3 +58,4 @@
 - input file을 typescript로 바꾸는데 어려움을 겪었습니다.
 - data filter를 redux로 바꾸는데 어려움을 겪었습니다. 
 - react-helmet을 사용했더니 unsafe componentwillmount 에러를 react-helmet-async를 사용하여 해결
+- React.lazy를 사용하여 성능 개선 

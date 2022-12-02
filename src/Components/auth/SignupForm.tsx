@@ -6,15 +6,16 @@ import { IForm } from '../../type/InputForm';
 import { IProps } from '../../type/StateProps';
 
 const SignupForm = ({setLogin} :IProps) => {
-    const {register , handleSubmit , formState : {errors} } = useForm<IForm>();
+    const {register , handleSubmit , getValues,formState : {errors} } = useForm<IForm>();
     const onSubmit:SubmitHandler<IForm> = async (props) => {
         await auth.createUserWithEmailAndPassword(props.mail,props.password).then((result) => {
-             db.collection('user').doc(result?.user?.uid).set({
-                 name : props.name,
-                 email : props.mail
-            })
             result?.user?.updateProfile({displayName : props.name})
-        }).catch(e => console.log(e))
+            db.collection('user').doc(result?.user?.uid).set({
+                name : props.name,
+                email : props.mail
+            })
+            alert('회원가입이 완료되었습니다.')
+        }).catch(e => alert('이미 존재하는 이메일입니다.'))
     }
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
@@ -42,6 +43,17 @@ const SignupForm = ({setLogin} :IProps) => {
             }})} type='password' placeholder="비밀번호"></Input>
             {errors.password?.type==='required' && <p style={{color : 'red'}}>비밀번호를 입력하시오</p>}
             {errors.password?.type==='pattern' && <p style={{color : 'red'}}>{errors.password.message}</p>}
+        <Input {...register('passwordConfirm' , {
+            required :true,              
+            validate : {
+                matchPassword : (value) => {
+                    const {password} = getValues();
+                    return password ===value || "비밀번호가 일치하지 않습니다."
+                }
+            }
+        })} type='password' placeholder="비밀번호 확인"></Input>
+        {errors.passwordConfirm?.type==='required' && <p style={{color : 'red'}}>비밀번호를 입력하시오</p>}
+        {errors.passwordConfirm && <p style={{color : 'red'}}>{errors.passwordConfirm.message}</p>}
         <Btn type='submit'></Btn>
     <button type='button' onClick={() => setLogin((prev) => !prev)}>로그인</button>
 </Form>

@@ -9,4 +9,5 @@ export interface IForm {
     password : string
     name : string
     nickname :string
+    passwordConfirm :string
   }

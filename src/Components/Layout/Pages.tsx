@@ -1,15 +1,15 @@
 import React , { lazy} from "react"
 import { Route, Routes } from "react-router-dom"
-import Cart from "../products/Cart"
 import Chat from "./Chat"
-import Detail from "../products/Detail"
-import Modify from "../products/Modify"
-import Search from "../products/SearchedProduct"
-import Sign from "../auth/Sign"
-import AddProduct from "../products/AddProduct"
 
 const Home = lazy(() =>import('../products/Home'))
 const Profile = lazy(() => import("../auth/Profile"))
+const AddProduct = lazy(() => import('../products/AddProduct'))
+const Detail = lazy(() => import('../products/Detail'))
+const Sign = lazy(() => import("../auth/Sign"))
+const Modify = lazy(() => import("../products/Modify"))
+const Cart = lazy(() => import("../products/Cart"))
+const Search = lazy(() => import("../products/SearchedProduct"))
 
 function Pages() {
     return ( 
@@ -18,7 +18,7 @@ function Pages() {
             <Route path='/write' element={<AddProduct />}></Route>
             <Route path='/profile/' element={<Profile/>}></Route>
             <Route path='/detail/:id' element={<Detail />}></Route>
-            <Route path='/login' element={<Sign/>}></Route>
+            <Route path='/sign' element={<Sign/>}></Route>
             <Route path='/chat' element={<Chat/>}></Route>
             <Route path='/modify/:uid' element={<Modify/>}></Route>
             <Route path='/cart' element={<Cart/>}/>

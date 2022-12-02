@@ -5,7 +5,7 @@ import {useDispatch , useSelector} from 'react-redux'
 import { userActions } from "../../store/userSlice";
 import SearchBar from "./SearchBar";
 import { RootState } from "../../store/store";
-import React from "react";
+import React, { useCallback } from "react";
 
 function Header() {
   const dispatch = useDispatch();
@@ -13,11 +13,11 @@ function Header() {
   const defaultImg = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
   const profile = useSelector((state:RootState) => state.user.profileImg);
   const nav = useNavigate();
-  const onLogOut = () => {
+  const onLogOut = useCallback(async () => {
     dispatch(userActions.logout());
-    auth.signOut();
-    nav('/login');
-  }
+    await auth.signOut();
+    nav('/sign');
+  },[dispatch, nav])
     return (
       <Nav>
         <h1>중고사이트</h1>
@@ -33,7 +33,7 @@ function Header() {
           <LI><StyledLink to='/' >중고거래</StyledLink></LI>
           <LI><StyledLink to='/write' >글쓰기</StyledLink></LI>
           {userObj.isLogin && <LI><StyledLink to='/cart' >장바구니</StyledLink></LI> }
-          {userObj.isLogin ? <Btn onClick={onLogOut}>로그아웃</Btn> : <LI><StyledLink to='/login' >회원가입</StyledLink></LI> }
+          {userObj.isLogin ? <Btn onClick={onLogOut}>로그아웃</Btn> : <LI><StyledLink to='/sign' >회원가입</StyledLink></LI> }
         </UL>
       </Nav>
     )
