@@ -12,19 +12,18 @@ import { userActions } from "../../store/userSlice";
 import { Helmet ,HelmetProvider } from "react-helmet-async";
 
 function Profile() {
-    const userObj = useSelector((state:RootState) => state.user.user);
+    const {user , profileImg} = useSelector((state:RootState) => state.user);
     const dispatch = useDispatch();
     const [sale , setSale] = useState(true);
     const {register,handleSubmit,watch} = useForm<IForm>({
         defaultValues : {
-            nickname : userObj.displayName
+            nickname : user.displayName
         }
     });
-    const profile = useSelector((state:RootState) => state.user.profileImg);
     const defaultImg = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
     const imgSrc = watch('image');
     const newNickname = watch('nickname')
-    const [imgPreview , setImgPreview] = useState(profile);
+    const [imgPreview , setImgPreview] = useState(profileImg);
     useEffect(()=> {
         if(imgSrc && imgSrc.length > 0) {
           const file = imgSrc[0];
@@ -34,14 +33,14 @@ function Profile() {
     const fileRef = useRef<HTMLInputElement | null>(null);
     const nav = useNavigate();
     const onFormSubmit:SubmitHandler<IForm> = async (props) => {
-        if (userObj.displayName !== newNickname) {
+        if (user.displayName !== newNickname) {
             await auth?.currentUser?.updateProfile({
                 displayName : newNickname ,    
             })
         }
         dispatch(userActions.modifyDisplayName({
             displayName : newNickname,
-            uid : userObj.uid
+            uid : user.uid
         }))
         if(props.image[0]) {
             const Img = props.image[0];
@@ -72,11 +71,11 @@ function Profile() {
     return (
         <HelmetProvider>
             <Helmet>
-                <title>{`${userObj.displayName} | 중고사이트`}</title>
+                <title>{`${user.displayName} | 중고사이트`}</title>
             </Helmet>
             <Div>
                 <ProfileDiv>
-                    <ProfileImg src={imgPreview ? imgPreview : profile ? profile : defaultImg}></ProfileImg>
+                    <ProfileImg src={imgPreview ? imgPreview : profileImg ? profileImg : defaultImg}></ProfileImg>
                 </ProfileDiv>
             </Div>
             <PreviewImg>

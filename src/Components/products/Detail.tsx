@@ -9,25 +9,24 @@ import noImg from '../../ImgSrc/noimage.jpg'
 import { Helmet ,HelmetProvider } from "react-helmet-async";
 
 function Detail() {
-    const userObj = useSelector((state:RootState) => state.user.user);
-    const isLogin = useSelector((state:RootState) => state.user.isLogin);
+    const {user , isLogin} = useSelector((state:RootState) => state.user);
     const [data , setData] = useState<IData>();
     const [isOwner , setIsOwner] = useState(false);
     const params = useParams();
     const nav = useNavigate();
     useEffect(() => {
         db.collection('Product').doc(params.id).get().then((result)=> {setData(result.data())})
-        if (data?.올린사람 === userObj.displayName) {
+        if (data?.올린사람 === user.displayName) {
             setIsOwner(true);
         } else {
             setIsOwner(false);
         }
-    },[params.id ,data?.올린사람,userObj.displayName , userObj.uid ])
+    },[params.id ,data?.올린사람,user.displayName , user.uid ])
     const onChat = () => {
         db.collection('chatroom').add({
             product : data?.상품명,
             date : new Date(),
-            participant : [userObj.displayName,data?.올린사람]
+            participant : [user.displayName,data?.올린사람]
         })
         nav('/chat');
     }
@@ -45,7 +44,7 @@ function Detail() {
     const onAddCart = () => {
         const ok = window.confirm('장바구니에 추가하시겠습니까?')
         if(ok) {
-            db.collection('Cart').doc(userObj.uid).collection('items').add({
+            db.collection('Cart').doc(user.uid).collection('items').add({
                 ...data
             }).then(()=> alert('장바구니에 추가되었습니다.'))
         }

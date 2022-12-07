@@ -7,16 +7,15 @@ import { IData } from "../../type/ItemProps";
 
 function Region() {
     const dispatch = useDispatch()
-    const nowRegion = useSelector((state:RootState)=> state.region.activeRegion);
-    const data = useSelector((state:RootState) => state.region.data)
+    const {activeRegion,data} = useSelector((state:RootState)=> state.region);
     useEffect(() => {
-        if (nowRegion === '전체') {
+        if (activeRegion === '전체') {
             dispatch(regionActions.setFilteredData(data));
             return;
         } 
-        const filtered = data.filter((region:IData) => region.지역 === nowRegion)
+        const filtered = data.filter((region:IData) => region.지역 === activeRegion)
         dispatch(regionActions.setFilteredData(filtered));
-    },[data, dispatch, nowRegion]);
+    },[data, dispatch, activeRegion]);
     const onRegionClick = (e:React.MouseEvent<HTMLButtonElement>) => {
         dispatch(regionActions.changeRegion(e.currentTarget.innerText))
     }

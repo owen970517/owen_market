@@ -9,9 +9,8 @@ import React, { useCallback } from "react";
 
 function Header() {
   const dispatch = useDispatch();
-  const userObj = useSelector((state:RootState) => state.user);
+  const {isLogin,profileImg,user} = useSelector((state:RootState) => state.user);
   const defaultImg = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
-  const profile = useSelector((state:RootState) => state.user.profileImg);
   const nav = useNavigate();
   const onLogOut = useCallback(async () => {
     dispatch(userActions.logout());
@@ -23,17 +22,17 @@ function Header() {
         <h1>중고사이트</h1>
         <UL>
           <SearchBar/>
-          <LI>{userObj.isLogin ? 
+          <LI>{isLogin ? 
           <Div>
             <ProfileDiv>
-              <ProfileImg src={profile ? profile : defaultImg} alt='' ></ProfileImg>
+              <ProfileImg src={profileImg ? profileImg : defaultImg} alt='' ></ProfileImg>
             </ProfileDiv>
-            <StyledLink to='/profile' >{userObj.user.displayName}</StyledLink>
+            <StyledLink to='/profile' >{user.displayName}</StyledLink>
           </Div> : ""}</LI>
           <LI><StyledLink to='/' >중고거래</StyledLink></LI>
           <LI><StyledLink to='/write' >글쓰기</StyledLink></LI>
-          {userObj.isLogin && <LI><StyledLink to='/cart' >장바구니</StyledLink></LI> }
-          {userObj.isLogin ? <Btn onClick={onLogOut}>로그아웃</Btn> : <LI><StyledLink to='/sign' >회원가입</StyledLink></LI> }
+          {isLogin && <LI><StyledLink to='/cart' >장바구니</StyledLink></LI> }
+          {isLogin ? <Btn onClick={onLogOut}>로그아웃</Btn> : <LI><StyledLink to='/sign' >회원가입</StyledLink></LI> }
         </UL>
       </Nav>
     )

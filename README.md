@@ -53,9 +53,9 @@
 
 ## 힘들었던 점 
 
-- firebase를 typescript로 바꾸는데 좀 어려웠습니다.
-- useform hook을 기존 form과 똑같이 type을 지정하는 줄 알았는데 다른 방법이 있다는 것을 알게되었습니다. 
-- input file을 typescript로 바꾸는데 어려움을 겪었습니다.
-- data filter를 redux로 바꾸는데 어려움을 겪었습니다. 
+- firebase를 typescript로 바꾸는데 좀 어려웠음
+- useform hook을 기존 form과 똑같이 type을 지정하는 줄 알았는데 다른 방법이 있다는 것을 알게되었음
+- input file을 typescript,useForm으로 바꾸는데 어려웠음
+- data filter를 redux로 바꾸는데 어려웠음 
 - react-helmet을 사용했더니 unsafe componentwillmount 에러를 react-helmet-async를 사용하여 해결
 - React.lazy를 사용하여 성능 개선 
