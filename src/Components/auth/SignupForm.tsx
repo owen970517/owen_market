@@ -17,45 +17,48 @@ const SignupForm = ({setLogin} :IProps) => {
             alert('회원가입이 완료되었습니다.')
         }).catch(e => alert('이미 존재하는 이메일입니다.'))
     }
+    const nicknameValidate = register('name' , {
+        required :{value : true , message : '닉네임을 입력하시오'} , 
+        maxLength : {
+            value : 5,
+            message : '닉네임은 5자 이하로 입력하시오'
+        }
+    })
+    const emailValidate = register('mail' , {
+        required :{value : true , message : '이메일을 입력하시오'} ,             
+        pattern: {
+            value:
+              /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i,
+            message: '올바른 이메일 형식을 입력하시오',
+        }})
+    const passwordValidate = register('password' , {
+        required :{value : true , message : '비밀번호를 입력하시오'},              
+        pattern: {
+            value: /^(?=.*[A-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/,
+            message: '특수문자 , 대문자 , 숫자를 포함하시오',
+        }})
+    const passwordCheckValidate = register('passwordConfirm' , {
+        required :{value : true , message : '비밀번호를 입력하시오'},              
+        validate : {
+            matchPassword : (value) => {
+                const {password} = getValues();
+                return password ===value || "비밀번호가 일치하지 않습니다."
+            }
+        }
+    })
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
         <h1>회원가입</h1>
-        <Input {...register('name' , {required :true , maxLength : {
-            value : 5,
-            message : '닉네임은 5자 이하로 입력하시오'
-        }})} type='text' placeholder="닉네임"></Input>
-        {errors.name?.type==='required' && <p style={{color :'red'}}>닉네임을 설정하시오</p>}
-        {errors.name?.type==='maxLength' && <p style={{color : 'red'}}>{errors.name.message}</p>}
-        <Input {...register('mail' , {
-            required :true ,             
-            pattern: {
-                value:
-                  /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i,
-                message: '올바른 이메일 형식을 입력하시오',
-            }})} type='email' placeholder="이메일"></Input>
-            {errors.mail?.type === 'required' && <p style={{color :'red'}}>이메일을 입력하시오</p>}
-            {errors.mail?.type==='pattern' && <p style={{color : 'red'}}>{errors.mail.message}</p>}
-        <Input {...register('password' , {
-            required :true,              
-            pattern: {
-                value: /^(?=.*[A-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/,
-                message: '특수문자 , 대문자 , 숫자를 포함하시오',
-            }})} type='password' placeholder="비밀번호"></Input>
-            {errors.password?.type==='required' && <p style={{color : 'red'}}>비밀번호를 입력하시오</p>}
-            {errors.password?.type==='pattern' && <p style={{color : 'red'}}>{errors.password.message}</p>}
-        <Input {...register('passwordConfirm' , {
-            required :true,              
-            validate : {
-                matchPassword : (value) => {
-                    const {password} = getValues();
-                    return password ===value || "비밀번호가 일치하지 않습니다."
-                }
-            }
-        })} type='password' placeholder="비밀번호 확인"></Input>
-        {errors.passwordConfirm?.type==='required' && <p style={{color : 'red'}}>비밀번호를 입력하시오</p>}
+        <Input {...nicknameValidate} type='text' placeholder="닉네임" isError={errors.name ? 'red' : ''}></Input>
+        {errors.name && <p style={{color : 'red'}}>{errors.name.message}</p>}
+        <Input {...emailValidate} type='email' placeholder="이메일" isError={errors.mail ? 'red' : ''}></Input>
+        {errors.mail && <p style={{color : 'red'}}>{errors.mail.message}</p>}
+        <Input {...passwordValidate} type='password' placeholder="비밀번호" isError={errors.password ? 'red' : ''}></Input>
+        {errors.password && <p style={{color : 'red'}}>{errors.password.message}</p>}
+        <Input {...passwordCheckValidate} type='password' placeholder="비밀번호 확인" isError={errors.passwordConfirm ? 'red' : ''}></Input>
         {errors.passwordConfirm && <p style={{color : 'red'}}>{errors.passwordConfirm.message}</p>}
         <Btn type='submit'></Btn>
-    <button type='button' onClick={() => setLogin((prev) => !prev)}>로그인</button>
+        <button type='button' onClick={() => setLogin((prev) => !prev)}>로그인</button>
 </Form>
   )
 }
@@ -65,10 +68,11 @@ const Form = styled.form`
     align-items : center;
     flex-direction : column;
 `
-const Input = styled.input`
+const Input = styled.input<{isError : string}>`
     width : 500px;
     height : 50px;
     margin : 10px 10px;
+    border-color: ${props => props.isError};
 `
 
 const Btn = styled.input`
@@ -76,4 +80,4 @@ const Btn = styled.input`
     height : 50px;
     margin-bottom : 10px;
 `
-export default SignupForm
+export default React.memo(SignupForm)
