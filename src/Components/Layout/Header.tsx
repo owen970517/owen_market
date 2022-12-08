@@ -7,6 +7,13 @@ import SearchBar from "./SearchBar";
 import { RootState } from "../../store/store";
 import React, { useCallback } from "react";
 
+interface Iimage {
+  width : number
+  height : number
+  quality : number
+  format : string
+}
+
 function Header() {
   const dispatch = useDispatch();
   const {isLogin,profileImg,user} = useSelector((state:RootState) => state.user);
@@ -17,6 +24,9 @@ function Header() {
     await auth.signOut();
     nav('/sign');
   },[dispatch, nav])
+  function getParametersForUnsplash({ width, height, quality, format } : Iimage) {
+    return `?w=${width}&h=${height}&q=${quality}&fm=${format}&fit=crop`;
+  }
     return (
       <Nav>
         <h1>중고사이트</h1>
@@ -25,7 +35,17 @@ function Header() {
           <LI>{isLogin ? 
           <Div>
             <ProfileDiv>
-              <ProfileImg src={profileImg ? profileImg : defaultImg} alt='' ></ProfileImg>
+              <ProfileImg src={profileImg ? profileImg + getParametersForUnsplash({
+              width: 200,
+              height: 200,
+              quality: 80,
+              format: "jpg"
+        }) : defaultImg + getParametersForUnsplash({
+          width: 200,
+          height: 200,
+          quality: 80,
+          format: "jpg"
+    })} alt='' ></ProfileImg>
             </ProfileDiv>
             <StyledLink to='/profile' >{user.displayName}</StyledLink>
           </Div> : ""}</LI>

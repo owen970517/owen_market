@@ -8,6 +8,13 @@ import noImg from '../../ImgSrc/noimage.jpg'
 import { db } from '../../firebase'
 import { regionActions } from '../../store/regionSlice'
 
+interface Iimage {
+  width : number
+  height : number
+  quality : number
+  format : string
+}
+
 const AllProducts = () => {
     const filteredData = useSelector((state:RootState) =>state.region.filteredData)
     const dispatch = useDispatch();
@@ -20,12 +27,20 @@ const AllProducts = () => {
         dispatch(regionActions.setData(itemList));
      })
     },[dispatch]);
+    function getParametersForUnsplash({ width, height, quality, format } : Iimage) {
+      return `?w=${width}&h=${height}&q=${quality}&fm=${format}&fit=crop`;
+    }
   return (
     <Grid>
     {filteredData.map((p:IData) => {
       return (
         <Item key={p.id}>
-        <img src={p.이미지 ? p.이미지 : noImg} alt='img' width ='200px' height='200px' loading='lazy'/>
+        <img src={p.이미지 ? p.이미지 + getParametersForUnsplash({
+              width: 200,
+              height: 200,
+              quality: 80,
+              format: "jpg"
+        }) : noImg} alt='이미지가 존재하지 않습니다' width ='200px' height='200px' loading='lazy' decoding='async'/>
         <div>
           <StyledLink to={`/detail/${p.id}`}><h3>{p.상품명}</h3></StyledLink>
           <h3>{p.날짜}</h3>

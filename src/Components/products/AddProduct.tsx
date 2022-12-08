@@ -8,12 +8,21 @@ import { useSelector} from 'react-redux'
 import { RootState } from "../../store/store";
 import { Helmet ,HelmetProvider } from "react-helmet-async";
 
+interface Iimage {
+  width : number
+  height : number
+  quality : number
+  format : string
+}
 function AddProduct() {
   const userObj = useSelector((state:RootState) => state.user!.user)
     const {register , handleSubmit , watch } = useForm<IForm>();
     const [imgPreview , setImgPreview] = useState('');
     const imgSrc = watch('image');
     const fileRef = useRef<HTMLInputElement | null>(null);
+    function getParametersForUnsplash({ width, height, quality, format } : Iimage) {
+      return `?w=${width}&h=${height}&q=${quality}&fm=${format}&fit=crop`;
+    }
     useEffect(()=> {
       if(imgSrc && imgSrc.length > 0) {
         const file = imgSrc[0];
@@ -41,7 +50,12 @@ function AddProduct() {
         // 성공시 동작하는 함수
         async () => {
           await uploadImg.snapshot.ref.getDownloadURL().then((url) => {
-            console.log('업로드된 경로는', url);
+            console.log('업로드된 경로는', url + getParametersForUnsplash({
+              width: 200,
+              height: 200,
+              quality: 80,
+              format: "jpg"
+        }) );
             db.collection('Product').doc(props.title).set({ 
               uid : userObj.uid,
               상품명 : props.item, 
@@ -50,7 +64,7 @@ function AddProduct() {
               상태 : '판매중',
               올린사람 : userObj.displayName,
               날짜 : `${years}년${month}월${day}일`,
-              이미지 : url });
+              이미지 : url});
             });
           });    
       } 
@@ -79,7 +93,7 @@ function AddProduct() {
         <Wrapper>
           {imgPreview && 
             <div>
-              <Preview src={imgPreview} alt="없음"/>
+              <Preview src={imgPreview } alt="없음"/>
               <button onClick={onImgDel}>삭제</button>
             </div>
           } 
