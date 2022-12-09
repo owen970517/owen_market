@@ -10,6 +10,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { IForm } from "../../type/InputForm";
 import { userActions } from "../../store/userSlice";
 import { Helmet ,HelmetProvider } from "react-helmet-async";
+import imageCompression from 'browser-image-compression';
 
 function Profile() {
     const {user , profileImg} = useSelector((state:RootState) => state.user);
@@ -44,9 +45,14 @@ function Profile() {
         }))
         if(props.image[0]) {
             const Img = props.image[0];
+            const options = {
+                maxSizeMB : 2,
+                maxWidthOrHeight : 1920,
+              }
+            const compressedImage = await imageCompression(Img , options);
             const storageRef = storage.ref();
-            const ImgRef = storageRef.child(`user_image/${Img.name}`);
-            const uploadImg = ImgRef.put(Img);
+            const ImgRef = storageRef.child(`user_image/${compressedImage.name}`);
+            const uploadImg = ImgRef.put(compressedImage);
             uploadImg.on('state_changed', 
             // 변화시 동작하는 함수 
             null, 

@@ -7,22 +7,15 @@ import { IForm } from "../../type/InputForm";
 import { useSelector} from 'react-redux'
 import { RootState } from "../../store/store";
 import { Helmet ,HelmetProvider } from "react-helmet-async";
+import imageCompression from 'browser-image-compression';
 
-interface Iimage {
-  width : number
-  height : number
-  quality : number
-  format : string
-}
+
 function AddProduct() {
   const userObj = useSelector((state:RootState) => state.user!.user)
     const {register , handleSubmit , watch } = useForm<IForm>();
     const [imgPreview , setImgPreview] = useState('');
     const imgSrc = watch('image');
     const fileRef = useRef<HTMLInputElement | null>(null);
-    function getParametersForUnsplash({ width, height, quality, format } : Iimage) {
-      return `?w=${width}&h=${height}&q=${quality}&fm=${format}&fit=crop`;
-    }
     useEffect(()=> {
       if(imgSrc && imgSrc.length > 0) {
         const file = imgSrc[0];
@@ -30,7 +23,7 @@ function AddProduct() {
       }
     },[imgSrc])
     const nav = useNavigate();
-    const onSubmit:SubmitHandler<IForm> = (props) => {
+    const onSubmit:SubmitHandler<IForm> = async (props) => {
       const date = new Date();
       const years = String(date.getFullYear()).padStart(4,'0');
       const month = String(date.getMonth()+1).padStart(2,'0');
@@ -50,12 +43,6 @@ function AddProduct() {
         // 성공시 동작하는 함수
         async () => {
           await uploadImg.snapshot.ref.getDownloadURL().then((url) => {
-            console.log('업로드된 경로는', url + getParametersForUnsplash({
-              width: 200,
-              height: 200,
-              quality: 80,
-              format: "jpg"
-        }) );
             db.collection('Product').doc(props.title).set({ 
               uid : userObj.uid,
               상품명 : props.item, 
@@ -64,7 +51,7 @@ function AddProduct() {
               상태 : '판매중',
               올린사람 : userObj.displayName,
               날짜 : `${years}년${month}월${day}일`,
-              이미지 : url});
+              이미지 : url });
             });
           });    
       } 
