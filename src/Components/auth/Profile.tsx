@@ -12,7 +12,7 @@ import { userActions } from "../../store/userSlice";
 import { Helmet ,HelmetProvider } from "react-helmet-async";
 import imageCompression from 'browser-image-compression';
 
-function Profile() {
+const Profile = () => {
     const {user , profileImg} = useSelector((state:RootState) => state.user);
     const dispatch = useDispatch();
     const [sale , setSale] = useState(true);

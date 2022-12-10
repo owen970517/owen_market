@@ -58,4 +58,5 @@
 - input file을 typescript,useForm으로 바꾸는데 어려웠음
 - data filter를 redux로 바꾸는데 어려웠음 
 - react-helmet을 사용했더니 unsafe componentwillmount 에러를 react-helmet-async를 사용하여 해결
-- React.lazy를 사용하여 성능 개선 
+- React.lazy를 사용하여 라우터 코드 분할로 성능 개선 
+- react-lazy-load-image 라이브러리를 사용하여 이미지 로딩 개선 

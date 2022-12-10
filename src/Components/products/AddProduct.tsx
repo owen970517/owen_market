@@ -9,8 +9,7 @@ import { RootState } from "../../store/store";
 import { Helmet ,HelmetProvider } from "react-helmet-async";
 import imageCompression from 'browser-image-compression';
 
-
-function AddProduct() {
+const AddProduct = () => {
   const userObj = useSelector((state:RootState) => state.user!.user)
     const {register , handleSubmit , watch } = useForm<IForm>();
     const [imgPreview , setImgPreview] = useState('');

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef} from "react";
+import { useEffect, useState, useRef} from "react";
 import { useNavigate, useParams } from "react-router-dom"
 import { db, storage } from "../../firebase";
 import styled from "styled-components";
@@ -7,7 +7,7 @@ import noImg from '../../ImgSrc/noimage.jpg'
 import { SubmitHandler, useForm } from "react-hook-form";
 import { IForm } from "../../type/InputForm";
 
-function Modify() {
+const Modify = () => {
     const [data, setData] = useState<IData>();
     const [imagePreview, setImagePreview] = useState('');
     const {register , handleSubmit,watch} = useForm<IForm>();

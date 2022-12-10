@@ -5,7 +5,7 @@ import { regionActions } from "../../store/regionSlice";
 import { RootState } from "../../store/store";
 import { IData } from "../../type/ItemProps";
 
-function Region() {
+const Region = () => {
     const dispatch = useDispatch()
     const {activeRegion,data} = useSelector((state:RootState)=> state.region);
     useEffect(() => {

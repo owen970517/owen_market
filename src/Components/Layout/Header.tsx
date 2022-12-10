@@ -5,7 +5,7 @@ import {useDispatch , useSelector} from 'react-redux'
 import { userActions } from "../../store/userSlice";
 import SearchBar from "./SearchBar";
 import { RootState } from "../../store/store";
-import React, { useCallback } from "react";
+import { useCallback } from "react";
 
 interface Iimage {
   width : number
@@ -14,7 +14,7 @@ interface Iimage {
   format : string
 }
 
-function Header() {
+const Header = () => {
   const dispatch = useDispatch();
   const {isLogin,profileImg,user} = useSelector((state:RootState) => state.user);
   const defaultImg = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"

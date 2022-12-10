@@ -1,4 +1,4 @@
-import React ,{useEffect}from 'react'
+import {useEffect}from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
@@ -7,6 +7,7 @@ import { IData } from '../../type/ItemProps'
 import noImg from '../../ImgSrc/noimage.jpg'
 import { db } from '../../firebase'
 import { regionActions } from '../../store/regionSlice'
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 const AllProducts = () => {
     const filteredData = useSelector((state:RootState) =>state.region.filteredData)
@@ -26,7 +27,7 @@ const AllProducts = () => {
     {filteredData.map((p:IData) => {
       return (
         <Item key={p.id}>
-        <img src={p.이미지 ? p.이미지 : noImg} alt='이미지를 불러오지 못했습니다.' width='200' height='200' loading='lazy' decoding='async'/>
+        <LazyLoadImage src={p.이미지 ? p.이미지 : noImg} alt='이미지를 불러오지 못했습니다.' width={300} height={300} effect='blur'/>
         <div>
           <StyledLink to={`/detail/${p.id}`}><h3>{p.상품명}</h3></StyledLink>
           <h3>{p.날짜}</h3>

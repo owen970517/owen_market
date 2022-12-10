@@ -2,7 +2,7 @@ import Region from "../Layout/Region";
 import AllProducts from "./AllProducts";
 import { Helmet ,HelmetProvider } from "react-helmet-async";
 
-function Home() {
+const Home = () => {
   return (
     <>
       <HelmetProvider>

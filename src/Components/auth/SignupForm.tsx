@@ -1,4 +1,3 @@
-import React from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import styled from 'styled-components'
 import { auth, db } from '../../firebase';
@@ -80,4 +79,4 @@ const Btn = styled.input`
     height : 50px;
     margin-bottom : 10px;
 `
-export default React.memo(SignupForm)
+export default SignupForm

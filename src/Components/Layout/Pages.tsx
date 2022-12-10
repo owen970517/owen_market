@@ -1,4 +1,4 @@
-import React , { lazy} from "react"
+import { lazy} from "react"
 import { Route, Routes } from "react-router-dom"
 import Chat from "./Chat"
 
@@ -11,7 +11,7 @@ const Modify = lazy(() => import("../products/Modify"))
 const Cart = lazy(() => import("../products/Cart"))
 const Search = lazy(() => import("../products/SearchedProduct"))
 
-function Pages() {
+const Pages = () => {
     return ( 
         <Routes>
             <Route path='/' element={<Home/>}></Route>

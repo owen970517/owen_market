@@ -1,4 +1,4 @@
-import React, { useEffect ,useState} from 'react'
+import { useEffect ,useState} from 'react'
 import { db } from '../../firebase';
 import styled from 'styled-components';
 import { IData } from '../../type/ItemProps';

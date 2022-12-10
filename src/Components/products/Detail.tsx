@@ -8,7 +8,7 @@ import { RootState } from "../../store/store";
 import noImg from '../../ImgSrc/noimage.jpg'
 import { Helmet ,HelmetProvider } from "react-helmet-async";
 
-function Detail() {
+const Detail = () => {
     const {user , isLogin} = useSelector((state:RootState) => state.user);
     const [data , setData] = useState<IData>();
     const [isOwner , setIsOwner] = useState(false);
