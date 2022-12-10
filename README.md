@@ -51,12 +51,11 @@
 - 검색 시스템
     - 원하는 상품 검색 가능
 
-## 힘들었던 점 
+## 개선한 점  
 
-- firebase를 typescript로 바꾸는데 좀 어려웠음
-- useform hook을 기존 form과 똑같이 type을 지정하는 줄 알았는데 다른 방법이 있다는 것을 알게되었음
-- input file을 typescript,useForm으로 바꾸는데 어려웠음
-- data filter를 redux로 바꾸는데 어려웠음 
-- react-helmet을 사용했더니 unsafe componentwillmount 에러를 react-helmet-async를 사용하여 해결
+- firebase를 typescript로 개선
+- 기존 form-input을 useForm hook을 사용하여 개선
+- redux-toolkit을 사용하여 상태 관리
+- react-helmet-async를 사용하여 웹 사이트 타이틀 변경
 - React.lazy를 사용하여 라우터 코드 분할로 성능 개선 
 - react-lazy-load-image 라이브러리를 사용하여 이미지 로딩 개선 
