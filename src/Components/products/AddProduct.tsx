@@ -30,9 +30,15 @@ function AddProduct() {
       const day = String(date.getDate()).padStart(2,'0');
       if(props.image[0]) {
         const Img = props.image[0];
+        const options = {
+          maxSizeMB: 0.3,
+          maxWidthOrHeight: 1920,
+          useWebWorker: true
+        }
+        const compressedImage = await imageCompression(Img , options);
         const storageRef = storage.ref();
-        const ImgRef = storageRef.child(`image/${Img.name}`);
-        const uploadImg = ImgRef.put(Img);
+        const ImgRef = storageRef.child(`image/${compressedImage.name}`);
+        const uploadImg = ImgRef.put(compressedImage);
         uploadImg.on('state_changed', 
         // 변화시 동작하는 함수 
         null, 
