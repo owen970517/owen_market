@@ -1,16 +1,17 @@
-import { useState,useRef, useEffect } from "react"
+import { useState,useRef, useEffect, lazy, Suspense } from "react"
 import { auth, storage } from "../../firebase";
 import { useNavigate} from "react-router-dom"
 import styled from "styled-components";
 import { useDispatch, useSelector} from 'react-redux'
-import SaleProducts from "../products/SaleProducts";
-import SoldProducts from "../products/SoldProducts";
 import { RootState } from "../../store/store";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { IForm } from "../../type/InputForm";
 import { userActions } from "../../store/userSlice";
 import { Helmet ,HelmetProvider } from "react-helmet-async";
 import imageCompression from 'browser-image-compression';
+
+const SaleProducts = lazy(() => import("../products/SaleProducts"))
+const SoldProducts = lazy(() => import("../products/SoldProducts"))
 
 const Profile = () => {
     const {user , profileImg} = useSelector((state:RootState) => state.user);
@@ -96,12 +97,12 @@ const Profile = () => {
             <UserForm onSubmit={handleSubmit(onFormSubmit)}>
                 <TextInput {...register('nickname')} type='text' />
                 <button type="submit">수정</button>
-            </UserForm>
-            <div>
-                <Btn>
-                    <button onClick={() => setSale((prev) => !prev)}>판매중</button>
-                    <button onClick={() => setSale((prev) => !prev)}>판매완료</button>
-                </Btn>
+            </UserForm>            
+            <ToggleBtn>
+                <button onClick={() => setSale((prev) => !prev)}>판매중</button>
+                <button onClick={() => setSale((prev) => !prev)}>판매완료</button>
+            </ToggleBtn>
+            <Suspense fallback={<h1>Loading...</h1>}>
                 {sale ?
                     <>
                         <Title>판매중</Title>
@@ -113,7 +114,7 @@ const Profile = () => {
                         <SoldProducts />
                     </>
                 }
-            </div>
+            </Suspense>
         </HelmetProvider>
     )
 }
@@ -130,7 +131,7 @@ const Title = styled.h1`
     text-align: center;
 
 `
-const Btn = styled.div`
+const ToggleBtn = styled.div`
     display: flex;
     justify-content: space-around;
     align-items: center;

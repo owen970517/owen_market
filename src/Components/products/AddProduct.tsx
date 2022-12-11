@@ -23,12 +23,12 @@ const AddProduct = () => {
     },[imgSrc])
     const nav = useNavigate();
     const onSubmit:SubmitHandler<IForm> = async (props) => {
+      const Img = props.image[0];
       const date = new Date();
       const years = String(date.getFullYear()).padStart(4,'0');
       const month = String(date.getMonth()+1).padStart(2,'0');
       const day = String(date.getDate()).padStart(2,'0');
-      if(props.image[0]) {
-        const Img = props.image[0];
+      if(Img) {
         const options = {
           maxSizeMB: 0.3,
           maxWidthOrHeight: 1920,
@@ -47,17 +47,16 @@ const AddProduct = () => {
         }, 
         // 성공시 동작하는 함수
         async () => {
-          await uploadImg.snapshot.ref.getDownloadURL().then((url) => {
-            db.collection('Product').doc(props.title).set({ 
-              uid : userObj.uid,
-              상품명 : props.item, 
-              가격 : props.price,
-              지역 : props.region,
-              상태 : '판매중',
-              올린사람 : userObj.displayName,
-              날짜 : `${years}년${month}월${day}일`,
-              이미지 : url });
-            });
+          const url = await uploadImg.snapshot.ref.getDownloadURL();
+          db.collection('Product').doc(props.title).set({ 
+            uid : userObj.uid,
+            상품명 : props.item, 
+            가격 : props.price,
+            지역 : props.region,
+            상태 : '판매중',
+            올린사람 : userObj.displayName,
+            날짜 : `${years}년${month}월${day}일`,
+            이미지 : url});
           });    
       } 
       else {
@@ -70,9 +69,9 @@ const AddProduct = () => {
           올린사람 : userObj.displayName,
           날짜 : `${years}년${month}월${day}일`,
           이미지 : ''
-        });
+        });  
       }
-    nav('/');
+      nav('/');
   }
   const onImgDel = () => {
     setImgPreview('');
