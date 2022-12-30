@@ -9,13 +9,6 @@ import { useCallback, useState } from "react";
 import { FaBars,FaTimes } from "react-icons/fa";
 import { IStyleProps } from '../../type/StyleProps';
 
-interface Iimage {
-  width : number
-  height : number
-  quality : number
-  format : string
-}
-
 const Header = () => {
   const [isopen, setIsOpen] = useState(false);
   const handleToggleOpen = () => {
@@ -30,35 +23,22 @@ const Header = () => {
     await auth.signOut();
     nav('/sign');
   },[dispatch, nav])
-  function getParametersForUnsplash({ width, height, quality, format } : Iimage) {
-    return `?w=${width}&h=${height}&q=${quality}&fm=${format}&fit=crop`;
-  }
     return (
       <Nav>
-        <h1>중고사이트</h1>
+        <h1>Logo</h1>
         <UL isopen={isopen }>
           <SearchBar/>
           <LI>{isLogin ? 
           <Div>
             <ProfileDiv>
-              <ProfileImg src={profileImg ? profileImg + getParametersForUnsplash({
-              width: 200,
-              height: 200,
-              quality: 80,
-              format: "jpg"
-        }) : defaultImg + getParametersForUnsplash({
-          width: 200,
-          height: 200,
-          quality: 80,
-          format: "jpg"
-    })} alt='' ></ProfileImg>
+              <ProfileImg src={profileImg ? profileImg : defaultImg } alt='' ></ProfileImg>
       </ProfileDiv>
-            <StyledLink to='/profile' >{user.displayName}</StyledLink>
+            <StyledLink to='/profile' onClick={handleToggleOpen}>{user.displayName}</StyledLink>
           </Div> : ""}</LI>
-          <LI><StyledLink to='/' >중고거래</StyledLink></LI>
-          <LI><StyledLink to='/write' >글쓰기</StyledLink></LI>
-          {isLogin && <LI><StyledLink to='/cart' >장바구니</StyledLink></LI> }
-          {isLogin ? <Btn onClick={onLogOut}>로그아웃</Btn> : <LI><StyledLink to='/sign' >회원가입</StyledLink></LI> }
+          <LI><StyledLink to='/' onClick={handleToggleOpen}>중고거래</StyledLink></LI>
+          <LI><StyledLink to='/write' onClick={handleToggleOpen}>글쓰기</StyledLink></LI>
+          {isLogin && <LI><StyledLink to='/cart' onClick={handleToggleOpen}>장바구니</StyledLink></LI> }
+          {isLogin ? <Btn onClick={onLogOut} >로그아웃</Btn> : <LI><StyledLink to='/sign' onClick={handleToggleOpen}>회원가입</StyledLink></LI> }
         </UL>
         { isopen ?  <FaTimes className="ham" onClick={handleToggleOpen}/> : <FaBars className="ham" onClick={handleToggleOpen}/>}
       </Nav>
@@ -88,7 +68,6 @@ const Nav = styled.div`
     .ham {
       display : block;
     }
-
   }
 `
 const UL = styled.ul`
@@ -104,7 +83,6 @@ const UL = styled.ul`
 `
 const LI =  styled.li`
   font-size : 20px;
-  margin-left : 10px;
   list-style : none;
   display: block;
   @media screen and (max-width: 768px) {
@@ -113,16 +91,17 @@ const LI =  styled.li`
       cursor: pointer;
       background: #44a8f4;
       border-radius: 10px;
-      padding : 10px;
     }
   }
 `
 const Btn = styled.button `
-  margin-left : 10px;
+  
 `
 const StyledLink = styled(Link)`
   text-decoration: none;
   color : white;
+  display: block;
+  padding: 10px;
 `
 const ProfileDiv = styled.div`
   width : 50px;
