@@ -23,17 +23,17 @@ const AddProduct = () => {
     },[imgSrc])
     const nav = useNavigate();
     const onSubmit:SubmitHandler<IForm> = async (props) => {
+      const options = {
+        maxSizeMB: 0.3,
+        maxWidthOrHeight: 1920,
+        useWebWorker: true
+      }
       const Img = props.image[0];
       const date = new Date();
       const years = String(date.getFullYear()).padStart(4,'0');
       const month = String(date.getMonth()+1).padStart(2,'0');
       const day = String(date.getDate()).padStart(2,'0');
       if(Img) {
-        const options = {
-          maxSizeMB: 0.3,
-          maxWidthOrHeight: 1920,
-          useWebWorker: true
-        }
         const compressedImage = await imageCompression(Img , options);
         const storageRef = storage.ref();
         const ImgRef = storageRef.child(`image/${compressedImage.name}`);
@@ -48,7 +48,7 @@ const AddProduct = () => {
         // 성공시 동작하는 함수
         async () => {
           const url = await uploadImg.snapshot.ref.getDownloadURL();
-          db.collection('Product').doc(props.title).set({ 
+          await db.collection('Product').doc(props.title).set({ 
             uid : userObj.uid,
             상품명 : props.item, 
             가격 : props.price,
