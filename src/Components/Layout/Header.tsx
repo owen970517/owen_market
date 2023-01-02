@@ -6,9 +6,9 @@ import { userActions } from "../../store/userSlice";
 import SearchBar from "./SearchBar";
 import { RootState } from "../../store/store";
 import { useCallback, useState } from "react";
-import { FaBars,FaTimes } from "react-icons/fa";
 import { IStyleProps } from '../../type/StyleProps';
-
+import Hamburger from '../../ImgSrc/Hamburger_icon.svg'
+import times from '../../ImgSrc/times.svg'
 const Header = () => {
   const [isopen, setIsOpen] = useState(false);
   const handleToggleOpen = () => {
@@ -40,7 +40,7 @@ const Header = () => {
           {isLogin && <LI><StyledLink to='/cart' onClick={handleToggleOpen}>장바구니</StyledLink></LI> }
           {isLogin ? <Btn onClick={onLogOut} >로그아웃</Btn> : <LI><StyledLink to='/sign' onClick={handleToggleOpen}>회원가입</StyledLink></LI> }
         </UL>
-        { isopen ?  <FaTimes className="ham" onClick={handleToggleOpen}/> : <FaBars className="ham" onClick={handleToggleOpen}/>}
+        { isopen ?  <img src={times} className="ham" onClick={handleToggleOpen} alt='asdsa' style={{width :'40px', height : '40px'}}/> : <img className="ham" src={Hamburger} alt='햄버거' onClick={handleToggleOpen}/>}
       </Nav>
     )
 }
@@ -97,6 +97,7 @@ const LI =  styled.li`
 const Btn = styled.button `
   
 `
+
 const StyledLink = styled(Link)`
   text-decoration: none;
   color : white;
