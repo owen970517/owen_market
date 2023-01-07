@@ -13,7 +13,7 @@ const AllProducts = () => {
     const filteredData = useSelector((state:RootState) =>state.region.filteredData)
     const dispatch = useDispatch();
     useEffect(() => {
-       db.collection('Product').where('상태' , '==' , '판매중').orderBy('날짜','desc').get().then((result) => {
+       db.collection('Product').where('상태' , '==' , '판매중').orderBy('날짜','desc').onSnapshot((result) => {
         const itemList = result.docs.map((doc) =>({
           id : doc.id,
           ...doc.data()

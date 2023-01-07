@@ -23,12 +23,13 @@ const Detail = () => {
         }
     },[params.id ,data?.올린사람,user.displayName , user.uid ])
     const onChat = () => {
-        db.collection('chatroom').add({
+        db.collection('chatroom').doc(`${data?.상품명}`).set({
             product : data?.상품명,
             date : new Date(),
-            participant : [user.displayName,data?.올린사람]
+            seller : data?.올린사람,
+            buyer : user.displayName
         })
-        nav('/chat');
+        nav(`/chat/${data?.상품명}`);
     }
     const onModify = () => {
         nav('/modify/' + params.id)

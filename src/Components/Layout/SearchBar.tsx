@@ -3,8 +3,8 @@ import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { IForm } from '../../type/InputForm';
 import styled from 'styled-components';
-import { BiSearch } from "react-icons/bi";
 import { IStyleProps } from '../../type/StyleProps';
+import searchIcon from '../../ImgSrc/search-icon.svg'
 
 
 const SearchBar = () => {
@@ -22,7 +22,7 @@ const SearchBar = () => {
     }
   return (
     <SearchForm isopen={isOpen} onSubmit={onSearch} onClick={toggleSearch}>
-        <SearchIcon/>
+        <img src={searchIcon} alt='search' style={{width : '30px' , height : '30px' }}/>
         <SearchInput {...register("search" , {required : true})} placeholder='찾고 싶은 상품을 입력하시오' isopen={isOpen}/>
     </SearchForm>
   )
@@ -32,7 +32,7 @@ const SearchForm = styled.form`
   align-items: center;
   justify-content: center;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  background-color: #37474f;
+  background-color: #44a8f4;
   /* Change width of the form depending if the bar is opened or not */
   width: ${(props:IStyleProps) => (props.isopen ? "30rem" : "2rem")};
   /* If bar opened, normal cursor on the whole form. If closed, show pointer on the whole form so user knows he can click to open it */
@@ -51,14 +51,8 @@ const SearchInput = styled.input`
   color: white;
   display : ${(props:IStyleProps) => props.isopen ? 'block' : 'none'};
   transition: margin 300ms cubic-bezier(0.645, 0.045, 0.355, 1);
-`
-const SearchIcon =styled(BiSearch)`
-  line-height: 1;
-  font-size :40px;
-  background-color: transparent;
-  border: none;
-  outline: none;
-  color: white;
-  cursor : pointer;
+  ::placeholder {
+    color : white
+  }
 `
 export default SearchBar
