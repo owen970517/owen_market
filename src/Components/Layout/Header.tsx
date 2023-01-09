@@ -19,6 +19,7 @@ const Header = () => {
   const defaultImg = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
   const nav = useNavigate();
   const onLogOut = useCallback(async () => {
+    setIsOpen((prev) => !prev);
     dispatch(userActions.logout());
     await auth.signOut();
     nav('/sign');
@@ -38,7 +39,7 @@ const Header = () => {
           <LI><StyledLink to='/' onClick={handleToggleOpen}>중고거래</StyledLink></LI>
           <LI><StyledLink to='/write' onClick={handleToggleOpen}>글쓰기</StyledLink></LI>
           {isLogin && <LI><StyledLink to='/cart' onClick={handleToggleOpen}>장바구니</StyledLink></LI> }
-          {isLogin ? <Btn onClick={onLogOut} >로그아웃</Btn> : <LI><StyledLink to='/sign' onClick={handleToggleOpen}>회원가입</StyledLink></LI> }
+          {isLogin ? <Btn onClick={onLogOut}>로그아웃</Btn> : <LI><StyledLink to='/sign' onClick={handleToggleOpen}>회원가입</StyledLink></LI> }
         </UL>
         { isopen ?  <img src={times} className="ham" onClick={handleToggleOpen} alt='asdsa' style={{width :'40px', height : '40px'}}/> : <img className="ham" src={Hamburger} alt='햄버거' onClick={handleToggleOpen}/>}
       </Nav>

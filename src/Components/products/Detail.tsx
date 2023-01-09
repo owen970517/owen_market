@@ -26,8 +26,10 @@ const Detail = () => {
         db.collection('chatroom').doc(`${data?.상품명}`).set({
             product : data?.상품명,
             date : new Date(),
-            seller : data?.올린사람,
-            buyer : user.displayName
+            chatUser : [
+                data?.올린사람,
+                user.displayName
+            ]
         })
         nav(`/chat/${data?.상품명}`);
     }

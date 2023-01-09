@@ -6,22 +6,30 @@ import { db } from "../../firebase";
 import { RootState } from "../../store/store";
 import { IForm } from "../../type/InputForm";
 import { useParams } from "react-router-dom"
+import { IMessage } from '../../type/messageProps';
 function Chat() {
-    const [data,setData] = useState([]);
+    const [data,setData] = useState<IMessage[]>([]);
     const {register , handleSubmit,setValue} = useForm<IForm>();
     const {product} = useParams();
     const {user} = useSelector((state:RootState) =>  state.user)
     useEffect(() => {
-        db.collection('chatroom').doc(product).collection('messages').onSnapshot((result) => {
+        const getChatList = async () => {
+            await db.collection('chatroom').where('chatUser' , 'array-contains' , user.displayName).get().then((result) => {
+                const list = result.docs.map(doc => ({
+                    ...doc.data()
+                }))
+                console.log(list);
+            })
+        }
+        db.collection('chatroom').doc(product).collection('messages').orderBy('date').onSnapshot((result) => {
             const message = result.docs.map(doc => ({
                 ...doc.data()
             }))
-            setData(message as any);
+            setData(message);
         })
-    },[product])
-    console.log(data);
+        getChatList()
+    },[product, user.displayName])
     const onChatSubmit:SubmitHandler<IForm> = (props) => {
-        console.log(props.chat);
         setValue('chat' , '')
         db.collection('chatroom').doc(product).collection('messages').add({
             content : props.chat,
@@ -32,16 +40,17 @@ function Chat() {
     return (
         <>
             <ChatBox>
-                <ul>
-                    {data.map((item:any) => {
+                <ChatList>
+                    {data.map((item:IMessage) => {
                         return  (
                             <div key={item.date}>
-                                <Buyer><ChatContent>{item.content}</ChatContent></Buyer>
+                                {item.보낸사람 === user.uid ? <Buyer><ChatContent>{item.content}</ChatContent></Buyer> :
+                                    <Seller><ChatContent>{item.content}</ChatContent></Seller>
+                                }
                             </div>
                         )
-                    }
-                    )}
-                </ul>
+                    })}
+                </ChatList>
             </ChatBox>
             <div>
                 <form onSubmit={handleSubmit(onChatSubmit)}>
@@ -65,6 +74,12 @@ const ChatContent = styled.span`
   padding: 5px;
   border-radius: 5px;
   float: left;
+`
+
+const ChatList = styled.ul`
+    display :flex;
+    flex-direction: column;
+
 `
 
 const Seller = styled.li`
