@@ -3,7 +3,9 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialRegionState:any = {
     activeRegion : '전체',
     data : [], 
-    filteredData : []
+    filteredData : [],
+    remainData : [],
+    index : 0,
 }
 
 const regionSlice = createSlice({
@@ -17,7 +19,13 @@ const regionSlice = createSlice({
             state.data = action.payload
         },
         setFilteredData(state,action) {
-            state.filteredData = action.payload
+            state.filteredData = action.payload.slice(0,10)
+            state.remainData = action.payload
+        },
+        getMoreDataList(state,action) {
+            const prevData = state.filteredData
+            state.filteredData = [...prevData,...action.payload]
+            
         }
     }
 })
