@@ -10,6 +10,7 @@ import { regionActions } from '../../store/regionSlice'
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { useInView } from "react-intersection-observer"
 import React from 'react'
+import SkeletonUI from '../Layout/SkeletonUI'
 
 const AllProducts = () => {
   const [isLoading , setIsLoading] = useState(false);
@@ -19,7 +20,7 @@ const AllProducts = () => {
     threshold: 0.5,
   });
   const dispatch = useDispatch();
-  const {filteredData,remainData,data} = useSelector((state:RootState) =>state.region)
+  const {filteredData,wholeData,data} = useSelector((state:RootState) =>state.region)
   useEffect(() => {
     db.collection('Product').where('상태' , '==' , '판매중').orderBy('날짜','desc').onSnapshot((snapshot) => {
     const itemList = snapshot.docs.map((doc) =>({
@@ -35,19 +36,18 @@ const AllProducts = () => {
     setIsLoading(false);
   },[data, dispatch, nowIndex])
   useEffect(() => {
-    if(!inView ) return
+    if(!inView) return
     if (nowIndex > 0) {
       getMoreProduct()
     }
     if (inView && !isLoading && nowIndex < data.length ) {
       setNowIndex(prev => prev + 10)
     }
-  },[data.length, getMoreProduct, inView, isLoading, nowIndex])
-  console.log(remainData);
+  },[getMoreProduct, inView, isLoading, nowIndex, data.length])
   return (
     <>
       <Grid>
-        {filteredData.map((p:IData,idx:number) => {
+        {filteredData.length > 0 ? filteredData.map((p:IData,idx:number) => {
           return (
             <React.Fragment key={p.id}>
               {filteredData.length -1 === idx ? <Item>
@@ -68,6 +68,10 @@ const AllProducts = () => {
                 </div>
               </Item>}
             </React.Fragment>
+          )
+        }) : new Array(10).fill(1).map((_,i) => {
+          return (
+            <SkeletonUI key={i}/>
           )
         })}
       </Grid>

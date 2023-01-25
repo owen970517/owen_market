@@ -4,7 +4,7 @@ const initialRegionState:any = {
     activeRegion : '전체',
     data : [], 
     filteredData : [],
-    remainData : [],
+    wholeData : [],
     index : 0,
 }
 
@@ -20,12 +20,11 @@ const regionSlice = createSlice({
         },
         setFilteredData(state,action) {
             state.filteredData = action.payload.slice(0,10)
-            state.remainData = action.payload
+            state.wholeData = action.payload
         },
         getMoreDataList(state,action) {
             const prevData = state.filteredData
             state.filteredData = [...prevData,...action.payload]
-            
         }
     }
 })
