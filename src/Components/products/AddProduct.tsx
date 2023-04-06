@@ -33,6 +33,7 @@ const AddProduct = () => {
       const years = String(date.getFullYear()).padStart(4,'0');
       const month = String(date.getMonth()+1).padStart(2,'0');
       const day = String(date.getDate()).padStart(2,'0');
+      let url =''
       if(Img) {
         const compressedImage = await imageCompression(Img , options);
         const storageRef = storage.ref();
@@ -47,7 +48,7 @@ const AddProduct = () => {
         }, 
         // 성공시 동작하는 함수
         async () => {
-          const url = await uploadImg.snapshot.ref.getDownloadURL();
+          url = await uploadImg.snapshot.ref.getDownloadURL();
           await db.collection('Product').doc(props.title).set({ 
             uid : userObj.uid,
             상품명 : props.item, 
@@ -68,7 +69,7 @@ const AddProduct = () => {
           상태 : '판매중',
           올린사람 : userObj.displayName,
           날짜 : `${years}년${month}월${day}일`,
-          이미지 : ''
+          이미지 : url
         });  
       }
       nav('/');

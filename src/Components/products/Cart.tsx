@@ -4,10 +4,12 @@ import styled from 'styled-components';
 import { IData } from '../../type/ItemProps';
 import { useSelector} from 'react-redux'
 import { RootState } from '../../store/store';
-const Cart = () => {
+import React from 'react';
+
+// data가 업데이트 마다 리렌더링 되는 문제를 고침 
+const Cart = React.memo(() => {
   const userObj = useSelector((state:RootState) => state.user.user);
   const [data,setData] = useState<IData[]>([]);
-  let sum=0;
   useEffect(()=> {
     db.collection('Cart').doc(userObj.uid).collection('items').get().then((result) => {
        setData(result.docs.map((doc) =>({
@@ -16,9 +18,7 @@ const Cart = () => {
      })));  
     })
   },[userObj.uid])
-  for(let i =0; i<data?.length; i++) {
-    sum += parseInt(data[i]?.가격 as string)
-  }
+  const sum = data?.reduce((acc, curr) => acc + parseInt(curr?.가격 as string), 0);
   const onDelete = async (id : string) => {
     const ok = window.confirm("정말 삭제하시겠습니까??");
     if (ok) {
@@ -40,7 +40,7 @@ const Cart = () => {
         <h1>합계 : {sum}원</h1>
     </div>
   )
-}
+})
 
 const BgImg = styled.img`
     background-size: contain;

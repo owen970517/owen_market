@@ -5,12 +5,12 @@ const SkeletonUI = () => {
   return (
     <SkeletonBox>
         <SkeletonImg/>
-        <div>
+        <>
             <SkeletonProductName/>
             <SkeletonDate/>
             <SkeletonRegion/>
             <SkeletonPrice/>
-        </div>
+        </>
     </SkeletonBox>
   )
 }

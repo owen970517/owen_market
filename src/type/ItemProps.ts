@@ -8,4 +8,5 @@ export interface IData {
     지역? : string;
     날짜? : string;
     상태? : string;
+    product? : IData
 }

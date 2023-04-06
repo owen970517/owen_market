@@ -20,7 +20,7 @@ const AllProducts = () => {
     threshold: 0.5,
   });
   const dispatch = useDispatch();
-  const {filteredData,wholeData,data} = useSelector((state:RootState) =>state.region)
+  const {filteredData,data} = useSelector((state:RootState) =>state.region)
   useEffect(() => {
     db.collection('Product').where('상태' , '==' , '판매중').orderBy('날짜','desc').onSnapshot((snapshot) => {
     const itemList = snapshot.docs.map((doc) =>({
@@ -44,6 +44,7 @@ const AllProducts = () => {
       setNowIndex(prev => prev + 10)
     }
   },[getMoreProduct, inView, isLoading, nowIndex, data.length])
+  
   return (
     <>
       <Grid>

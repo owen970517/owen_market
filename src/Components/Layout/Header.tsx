@@ -33,7 +33,7 @@ const Header = () => {
           <Div>
             <ProfileDiv>
               <ProfileImg src={profileImg ? profileImg : defaultImg } alt='' ></ProfileImg>
-      </ProfileDiv>
+            </ProfileDiv>
             <StyledLink to='/profile' onClick={handleToggleOpen}>{user.displayName}</StyledLink>
           </Div> : ""}</LI>
           <LI><StyledLink to='/' onClick={handleToggleOpen}>중고거래</StyledLink></LI>
