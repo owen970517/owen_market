@@ -20,19 +20,21 @@ const Modify = () => {
     const day = String(date.getDate()).padStart(2,'0');
     const FileRef = useRef<HTMLInputElement | null>(null);
     useEffect(() => {
-        const fetchData = async () => {
-            const snapshot = await db.collection('Product').doc(params.uid).get()
-            setData(snapshot.data());
-        }
-        setImagePreview(data?.이미지!);
-        if(uploadImg && uploadImg.length > 0) {
-            const file = uploadImg[0]
-            setImagePreview(URL.createObjectURL(file))
-        }
-        fetchData()
-    },[data?.이미지, params.uid, uploadImg])
+      const fetchData = async () => {
+        const snapshot = await db?.collection('Product').doc(params.uid).get();
+        const data = snapshot.data();
+        setData(data);
+      };
+      setImagePreview(data?.이미지 || '');
+      if(uploadImg && uploadImg.length > 0) {
+        const file = uploadImg[0];
+        setImagePreview(URL.createObjectURL(file));
+      }
+      
+      fetchData();
+    }, [data?.이미지, params.uid, uploadImg]);
     const onModified:SubmitHandler<IForm> = async (props) => {
-        if(props.image[0]) {
+        if(props.image && props.image[0]) {
             const Img = props.image[0];
             const storageRef = storage.ref();
             const ImgRef = storageRef.child(`user_image/${Img.name}`);

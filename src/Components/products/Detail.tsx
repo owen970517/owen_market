@@ -16,12 +16,14 @@ const Detail = () => {
     const nav = useNavigate();
     useEffect(() => {
         db.collection('Product').doc(params.id).get().then((result)=> {setData(result.data())})
+    },[params.id])
+    useEffect(() => {
         if (data?.올린사람 === user.displayName) {
             setIsOwner(true);
         } else {
             setIsOwner(false);
         }
-    },[params.id ,data?.올린사람,user.displayName , user.uid ])
+    },[data?.올린사람, user.displayName])
     const onChat = () => {
         db.collection('chatroom').doc(`${data?.상품명}`).set({
             product : data?.상품명,

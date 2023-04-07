@@ -18,13 +18,13 @@ const Cart = React.memo(() => {
      })));  
     })
   },[userObj.uid])
-  const sum = data?.reduce((acc, curr) => acc + parseInt(curr?.가격 as string), 0);
+  const sum = data?.reduce((acc, curr) => acc + parseInt(curr?.가격 as string), 0) || 0;
   const onDelete = async (id : string) => {
     const ok = window.confirm("정말 삭제하시겠습니까??");
     if (ok) {
       await db.collection('Cart').doc(userObj.uid).collection('items').doc(id).delete();
+      setData((prevData) => prevData.filter((d) => d.id !== id));
     }
-    setData(data?.filter((d) => d.id !== id));
   };
   return (
     <div>

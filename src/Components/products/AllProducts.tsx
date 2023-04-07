@@ -36,45 +36,35 @@ const AllProducts = () => {
     setIsLoading(false);
   },[data, dispatch, nowIndex])
   useEffect(() => {
-    if(!inView) return
+    if (!inView) return;
     if (nowIndex > 0) {
-      getMoreProduct()
+      getMoreProduct();
     }
-    if (inView && !isLoading && nowIndex < data.length ) {
-      setNowIndex(prev => prev + 10)
+  }, [inView, nowIndex]);
+  useEffect(() => {
+    if (!inView) return;
+    if (inView && !isLoading && nowIndex < data.length) {
+      setNowIndex(prevIndex => prevIndex + 10);
     }
-  },[getMoreProduct, inView, isLoading, nowIndex, data.length])
-  
+  }, [inView, isLoading, data.length, nowIndex]);
+  console.log(nowIndex)
+  const defaultItems = Array.from({ length: 10 }, (_, i) => <SkeletonUI key={i} />);
   return (
     <>
       <Grid>
-        {filteredData.length > 0 ? filteredData.map((p:IData,idx:number) => {
+        {filteredData.length > 0 ? filteredData.map((p: IData, idx: number) => {
           return (
-            <React.Fragment key={p.id}>
-              {filteredData.length -1 === idx ? <Item>
-                <LazyLoadImage src={p.이미지 ? p.이미지 : noImg} alt='이미지를 불러오지 못했습니다.' width={300} height={300} effect='blur'/>
-                <div ref={ref}>
-                  <StyledLink to={`/detail/${p.id}`}><h3>{p.상품명}</h3></StyledLink>
-                  <h3>{p.날짜}</h3>
-                  <h3>{p.지역}</h3>
-                  <h3>{p.가격?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}원</h3>
-                </div>
-              </Item> : <Item key={p.id} >
-                <LazyLoadImage src={p.이미지 ? p.이미지 : noImg} alt='이미지를 불러오지 못했습니다.' width={300} height={300} effect='blur'/>
-                <div>
-                  <StyledLink to={`/detail/${p.id}`}><h3>{p.상품명}</h3></StyledLink>
-                  <h3>{p.날짜}</h3>
-                  <h3>{p.지역}</h3>
-                  <h3>{p.가격?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}원</h3>
-                </div>
-              </Item>}
-            </React.Fragment>
+            <Item key={p.id}>
+              <LazyLoadImage src={p.이미지 ? p.이미지 : noImg} alt='이미지를 불러오지 못했습니다.' width={300} height={300} effect='blur' />
+              <div ref={idx === filteredData.length - 1 ? ref : undefined}>
+                <StyledLink to={`/detail/${p.id}`}><h3>{p.상품명}</h3></StyledLink>
+                <h3>{p.날짜}</h3>
+                <h3>{p.지역}</h3>
+                <h3>{p.가격?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}원</h3>
+              </div>
+            </Item>
           )
-        }) : new Array(10).fill(1).map((_,i) => {
-          return (
-            <SkeletonUI key={i}/>
-          )
-        })}
+        }) : defaultItems}
       </Grid>
     </>
   )
