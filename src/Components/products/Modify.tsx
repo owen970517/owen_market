@@ -15,6 +15,8 @@ const Modify = () => {
     const params = useParams();
     const uploadImg = watch('image');
     const date = new Date();
+    const formattedDate = date.toLocaleDateString();
+    console.log(formattedDate);
     const years = String(date.getFullYear()).padStart(4,'0');
     const month = String(date.getMonth()+1).padStart(2,'0');
     const day = String(date.getDate()).padStart(2,'0');
@@ -22,17 +24,20 @@ const Modify = () => {
     useEffect(() => {
       const fetchData = async () => {
         const snapshot = await db?.collection('Product').doc(params.uid).get();
-        const data = snapshot.data();
+        const data = snapshot?.data();
         setData(data);
+        setImagePreview(data?.이미지 || '');
       };
-      setImagePreview(data?.이미지 || '');
-      if(uploadImg && uploadImg.length > 0) {
+      fetchData();
+    }, [data?.이미지, params.uid]);
+    useEffect(() => {
+      if (uploadImg && uploadImg.length > 0) {
         const file = uploadImg[0];
         setImagePreview(URL.createObjectURL(file));
+      } else {
+        setImagePreview(data?.이미지 || '');
       }
-      
-      fetchData();
-    }, [data?.이미지, params.uid, uploadImg]);
+    }, [uploadImg, data?.이미지]);
     const onModified:SubmitHandler<IForm> = async (props) => {
         if(props.image && props.image[0]) {
             const Img = props.image[0];
@@ -60,35 +65,39 @@ const Modify = () => {
             }
     }
     return (
-        <>
-            <FileInput onClick={() => FileRef.current?.click()}>
-                <BgImg src={imagePreview ? imagePreview : noImg} width='30%' height='300px'></BgImg>
-                <label>사진 변경</label>
-                <input {...register('image')} type="file" ref={(data) => {
-                    register('image').ref(data);
-                    FileRef.current = data
-                }}></input>
-            </FileInput>
-            <div>
-                <h5>올린사람 : {data?.올린사람} </h5>
-                <h5>상품명 : <input type='text' {...register('item')} defaultValue={data?.상품명}></input></h5>
-                <p>올린날짜 : {data?.날짜}</p>
-                <p>가격 : <input type='text' {...register('price')} defaultValue={data?.가격}></input></p>
-            </div>
-            <button onClick={handleSubmit(onModified)}>수정 완료</button>
-        </>
+      <>
+        <FileInput onClick={() => FileRef.current?.click()}>
+          <BgImg src={imagePreview ? imagePreview : noImg}></BgImg>
+          <label>사진 변경</label>
+          <input {...register('image')} type="file" ref={(data) => {
+              register('image').ref(data);
+              FileRef.current = data
+          }}></input>
+        </FileInput>
+        <div>
+            <h5>올린사람 : {data?.올린사람} </h5>
+            <h5>상품명 : <input type='text' {...register('item')} defaultValue={data?.상품명}></input></h5>
+            <p>올린날짜 : {data?.날짜}</p>
+            <p>가격 : <input type='text' {...register('price')} defaultValue={data?.가격}></input></p>
+        </div>
+        <button onClick={handleSubmit(onModified)}>수정 완료</button>
+      </>
     )
 }
 
 
 const BgImg = styled.img`
-    width: 100%;
-    height: 300px;
-    background-size: contain;
-    background-position: center;
-    background-repeat: no-repeat;
+  width: 50%;
+  height: 300px;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
 `
 const FileInput = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
   label {
     display: inline-block;
     padding: .5em .75em;

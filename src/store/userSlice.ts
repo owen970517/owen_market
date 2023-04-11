@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialUserState = {
-    user : '',
+    user : null,
     profileImg : '',
     isLogin : false, 
     cartItems : []
@@ -16,14 +16,20 @@ const userSlice = createSlice({
             state.isLogin = true;
         },
         logout(state) {
-            state.user = '';
+            state.user = null;
             state.isLogin = false;
         },
         addProfileImg(state,action) {
-            state.profileImg = action.payload;
+            return {
+                ...state,
+                profileImg : action.payload
+            }
         },
         modifyDisplayName(state,action) {
-            state.user = action.payload;
+            return {
+                ...state,
+                user: action.payload,
+            };
         }
     }
 })

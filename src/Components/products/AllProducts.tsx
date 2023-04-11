@@ -47,7 +47,6 @@ const AllProducts = () => {
       setNowIndex(prevIndex => prevIndex + 10);
     }
   }, [inView, isLoading, data.length, nowIndex]);
-  console.log(nowIndex)
   const defaultItems = Array.from({ length: 10 }, (_, i) => <SkeletonUI key={i} />);
   return (
     <>
@@ -70,10 +69,10 @@ const AllProducts = () => {
   )
 }
 const Grid = styled.div`
-    display : grid;
-    grid-template-columns : repeat(auto-fit , minmax(20rem,1fr));
-    grid-gap : 10px;
-    place-items: center;
+  display : grid;
+  grid-template-columns : repeat(auto-fit , minmax(20rem,1fr));
+  grid-gap : 10px;
+  place-items: center;
 `;
 
 const Item = styled.div`

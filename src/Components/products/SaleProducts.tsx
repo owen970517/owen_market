@@ -13,13 +13,17 @@ const SaleProducts = () => {
     useEffect(() => {
         if (!user.displayName) return;
         const getData = async () => {
-            await db.collection('Product').where('상태' , '==' , '판매중').where('올린사람' ,'==' , user?.displayName).get().then( async (result) => {
-                const saling = result.docs.map((doc) =>({
-                    id : doc.id,
-                    ...doc.data()
-                }))
-                setSaleData(saling);  
-            })
+            const result = await db.collection('Product')
+              .where('상태', '==', '판매중')
+              .where('올린사람', '==', user.displayName)
+              .get();
+            
+            const saling: IData[] = result.docs.map((doc) => ({
+              id: doc.id,
+              ...doc.data()
+            }));
+
+            setSaleData(saling);
         }
         getData();
     },[user.displayName])

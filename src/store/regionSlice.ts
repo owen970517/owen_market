@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { IData } from "../type/ItemProps";
 
 const initialRegionState:any = {
     activeRegion : '전체',
@@ -13,7 +14,10 @@ const regionSlice = createSlice({
     initialState : initialRegionState,
     reducers : {
         changeRegion(state , action) {
-            state.activeRegion = action.payload
+            return {
+                ...state,
+                activeRegion: action.payload
+            }
         },
         setData(state ,action) {
             state.data = action.payload

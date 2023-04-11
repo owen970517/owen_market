@@ -1,4 +1,4 @@
-import { useEffect ,useState} from 'react'
+import { useEffect ,useMemo,useState} from 'react'
 import { db } from '../../firebase';
 import styled from 'styled-components';
 import { IData } from '../../type/ItemProps';
@@ -7,18 +7,36 @@ import { RootState } from '../../store/store';
 import React from 'react';
 
 // data가 업데이트 마다 리렌더링 되는 문제를 고침 
-const Cart = React.memo(() => {
+const Cart = () => {
   const userObj = useSelector((state:RootState) => state.user.user);
   const [data,setData] = useState<IData[]>([]);
-  useEffect(()=> {
-    db.collection('Cart').doc(userObj.uid).collection('items').get().then((result) => {
-       setData(result.docs.map((doc) =>({
-         id : doc.id,
-         ...doc.data()
-     })));  
-    })
-  },[userObj.uid])
-  const sum = data?.reduce((acc, curr) => acc + parseInt(curr?.가격 as string), 0) || 0;
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const result = await db
+          .collection('Cart')
+          .doc(userObj.uid)
+          .collection('items')
+          .get();
+        setData(
+          result.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+          })),
+        );
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    if (userObj.uid) {
+      fetchData();
+    }
+  }, [userObj.uid]);
+  const sum = useMemo(
+    () => data.reduce((acc, curr) => acc + Number(curr.가격), 0),
+    [data]
+  );
   const onDelete = async (id : string) => {
     const ok = window.confirm("정말 삭제하시겠습니까??");
     if (ok) {
@@ -40,7 +58,7 @@ const Cart = React.memo(() => {
         <h1>합계 : {sum}원</h1>
     </div>
   )
-})
+}
 
 const BgImg = styled.img`
     background-size: contain;

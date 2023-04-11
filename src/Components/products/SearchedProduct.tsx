@@ -9,7 +9,8 @@ import { Helmet ,HelmetProvider } from "react-helmet-async";
 const Search = () => {
   const params = useParams();
   const data = useSelector((state:RootState) => state.region.data)
-  const searchedData = data.filter((item:IData) => item.상품명?.includes(params.input!));
+  const input = params.input;
+  const searchedData = input ? data.filter((item: IData) => item.상품명?.includes(input)) : []
   return (
     <HelmetProvider>
       <Helmet>
