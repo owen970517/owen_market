@@ -2,15 +2,14 @@ import { useCallback, useEffect, useState}from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
-import { RootState } from '../../store/store'
 import { IData } from '../../type/ItemProps'
 import noImg from '../../ImgSrc/noimage.jpg'
 import { db } from '../../firebase'
 import { regionActions } from '../../store/regionSlice'
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { useInView } from "react-intersection-observer"
-import React from 'react'
 import SkeletonUI from '../Layout/SkeletonUI'
+import { RootState } from '../../store/store'
 
 const AllProducts = () => {
   const [isLoading , setIsLoading] = useState(false);

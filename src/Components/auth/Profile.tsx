@@ -48,7 +48,7 @@ const Profile = () => {
             const Img = props.image[0];
             const options = {
                 maxSizeMB : 2,
-                maxWidthOrHeight : 1920,
+                maxWidthOrHeight : 300,
               }
             const compressedImage = await imageCompression(Img , options);
             const storageRef = storage.ref();

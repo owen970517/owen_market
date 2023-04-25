@@ -10,7 +10,7 @@ import { Helmet ,HelmetProvider } from "react-helmet-async";
 import imageCompression from 'browser-image-compression';
 
 const AddProduct = () => {
-  const userObj = useSelector((state:RootState) => state.user!.user)
+  const userObj = useSelector((state:RootState) => state.user?.user)
     const {register , handleSubmit , watch } = useForm<IForm>();
     const [imgPreview , setImgPreview] = useState('');
     const imgSrc = watch('image');
@@ -25,7 +25,7 @@ const AddProduct = () => {
     const onSubmit:SubmitHandler<IForm> = async (props) => {
       const options = {
         maxSizeMB: 0.3,
-        maxWidthOrHeight: 1920,
+        maxWidthOrHeight: 1080,
         useWebWorker: true
       }
       const Img = props.image[0];
@@ -49,6 +49,7 @@ const AddProduct = () => {
         // 성공시 동작하는 함수
         async () => {
           url = await uploadImg.snapshot.ref.getDownloadURL();
+          console.log(url);
           await db.collection('Product').doc(props.title).set({ 
             uid : userObj.uid,
             상품명 : props.item, 
@@ -60,22 +61,26 @@ const AddProduct = () => {
             이미지 : url});
           });    
       } 
-      else {
-        db.collection('Product').doc(props.title).set({ 
-          uid : userObj.uid,
-          상품명 : props.item, 
-          가격 : props.price,
-          지역 : props.region,
-          상태 : '판매중',
-          올린사람 : userObj.displayName,
-          날짜 : `${years}년${month}월${day}일`,
-          이미지 : url
-        });  
-      }
+      db.collection('Product').doc(props.title).set({ 
+        uid : userObj.uid,
+        상품명 : props.item, 
+        가격 : props.price,
+        지역 : props.region,
+        상태 : '판매중',
+        올린사람 : userObj.displayName,
+        날짜 : `${years}년${month}월${day}일`,
+        이미지 : url
+      });  
       nav('/');
   }
   const onImgDel = () => {
     setImgPreview('');
+    const Img = imgSrc?.[0];
+    if (Img) {
+      const storageRef = storage.ref();
+      const ImgRef = storageRef.child(`image/${Img.name}`);
+      ImgRef.delete().then(() => console.log('Image deleted')).catch(console.error);
+    }
   }
     return (
       <HelmetProvider>
