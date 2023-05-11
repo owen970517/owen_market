@@ -39,31 +39,26 @@ const Modify = () => {
       }
     }, [uploadImg, data?.이미지]);
     const onModified:SubmitHandler<IForm> = async (props) => {
-        if(props.image && props.image[0]) {
-            const Img = props.image[0];
-            const storageRef = storage.ref();
-            const ImgRef = storageRef.child(`user_image/${Img.name}`);
-            const uploadImg = ImgRef.put(Img);
-            uploadImg.on('state_changed', 
-            // 변화시 동작하는 함수 
-            null, 
-            //에러시 동작하는 함수
-            (error) => {
-              console.error('실패사유는', error);
-            }, 
-            // 성공시 동작하는 함수
-            async () => {
-              const url = await uploadImg.snapshot.ref.getDownloadURL()
-              await db.collection('Product').doc(params.uid).update({
-                이미지 : url,
-                상품명 : watch('item'), 
-                가격 : watch('price'),
-                날짜 : `${years}년${month}월${day}일`
-                })
-                nav('/');
-              });
-            }
-    }
+      if (props.image && props.image[0]) {
+        try {
+          const Img = props.image[0];
+          const storageRef = storage.ref();
+          const ImgRef = storageRef.child(`user_image/${Img.name}`);
+          const uploadImg = ImgRef.put(Img);
+          const snapshot = await uploadImg;
+          const url = await snapshot.ref.getDownloadURL();
+          await db.collection('Product').doc(params.uid).update({
+            이미지: url,
+            상품명: watch('item'),
+            가격: watch('price'),
+            날짜: `${years}년${month}월${day}일`
+          });
+          nav('/');
+        } catch (error) {
+          console.error('실패사유는', error);
+        }
+      }
+    };  
     return (
       <>
         <FileInput onClick={() => FileRef.current?.click()}>

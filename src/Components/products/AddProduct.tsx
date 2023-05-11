@@ -11,76 +11,81 @@ import imageCompression from 'browser-image-compression';
 
 const AddProduct = () => {
   const userObj = useSelector((state:RootState) => state.user?.user)
-    const {register , handleSubmit , watch } = useForm<IForm>();
-    const [imgPreview , setImgPreview] = useState('');
-    const imgSrc = watch('image');
-    const fileRef = useRef<HTMLInputElement | null>(null);
-    useEffect(()=> {
-      if(imgSrc && imgSrc.length > 0) {
-        const file = imgSrc[0];
-        setImgPreview(URL.createObjectURL(file));
-      }
-    },[imgSrc])
-    const nav = useNavigate();
-    const onSubmit:SubmitHandler<IForm> = async (props) => {
-      const options = {
-        maxSizeMB: 0.3,
-        maxWidthOrHeight: 1080,
-        useWebWorker: true
-      }
-      const Img = props.image[0];
-      const date = new Date();
-      const years = String(date.getFullYear()).padStart(4,'0');
-      const month = String(date.getMonth()+1).padStart(2,'0');
-      const day = String(date.getDate()).padStart(2,'0');
-      let url =''
-      if(Img) {
-        const compressedImage = await imageCompression(Img , options);
-        const storageRef = storage.ref();
-        const ImgRef = storageRef.child(`image/${compressedImage.name}`);
-        const uploadImg = ImgRef.put(compressedImage);
-        uploadImg.on('state_changed', 
-        // 변화시 동작하는 함수 
-        null, 
-        //에러시 동작하는 함수
-        (error) => {
-          console.error('실패사유는', error);
-        }, 
-        // 성공시 동작하는 함수
-        async () => {
-          url = await uploadImg.snapshot.ref.getDownloadURL();
-          console.log(url);
-          await db.collection('Product').doc(props.title).set({ 
-            uid : userObj.uid,
-            상품명 : props.item, 
-            가격 : props.price,
-            지역 : props.region,
-            상태 : '판매중',
-            올린사람 : userObj.displayName,
-            날짜 : `${years}년${month}월${day}일`,
-            이미지 : url});
-          });    
-      } 
-      db.collection('Product').doc(props.title).set({ 
-        uid : userObj.uid,
-        상품명 : props.item, 
-        가격 : props.price,
-        지역 : props.region,
-        상태 : '판매중',
-        올린사람 : userObj.displayName,
-        날짜 : `${years}년${month}월${day}일`,
-        이미지 : url
-      });  
-      nav('/');
+  const {register , handleSubmit , watch } = useForm<IForm>();
+  const [imgPreview , setImgPreview] = useState('');
+  const imgSrc = watch('image');
+  const fileRef = useRef<HTMLInputElement | null>(null);
+  useEffect(()=> {
+    if(imgSrc && imgSrc.length > 0) {
+      const file = imgSrc[0];
+      setImgPreview(URL.createObjectURL(file));
+    }
+  },[imgSrc])
+  const nav = useNavigate();
+  const onSubmit:SubmitHandler<IForm> = async (props) => {
+    const options = {
+      maxSizeMB: 0.3,
+      maxWidthOrHeight: 1080,
+      useWebWorker: true
+    }
+    const Img = props.image[0];
+    const date = new Date();
+    const years = String(date.getFullYear()).padStart(4,'0');
+    const month = String(date.getMonth()+1).padStart(2,'0');
+    const day = String(date.getDate()).padStart(2,'0');
+    let url =''
+    if(Img) {
+      const compressedImage = await imageCompression(Img , options);
+      const storageRef = storage.ref();
+      const ImgRef = storageRef.child(`image/${compressedImage.name}`);
+      const uploadImg = ImgRef.put(compressedImage);
+      uploadImg.on('state_changed', 
+      // 변화시 동작하는 함수 
+      null, 
+      //에러시 동작하는 함수
+      (error) => {
+        console.error('실패사유는', error);
+      }, 
+      // 성공시 동작하는 함수
+      async () => {
+        url = await uploadImg.snapshot.ref.getDownloadURL();
+        console.log(url);
+        await db.collection('Product').doc(props.title).set({ 
+          uid : userObj.uid,
+          상품명 : props.item, 
+          가격 : props.price,
+          지역 : props.region,
+          상태 : '판매중',
+          올린사람 : userObj.displayName,
+          날짜 : `${years}년${month}월${day}일`,
+          이미지 : url});
+        });    
+    } 
+    db.collection('Product').doc(props.title).set({ 
+      uid : userObj.uid,
+      상품명 : props.item, 
+      가격 : props.price,
+      지역 : props.region,
+      상태 : '판매중',
+      올린사람 : userObj.displayName,
+      날짜 : `${years}년${month}월${day}일`,
+      이미지 : url
+    });  
+    nav('/');
   }
   const onImgDel = () => {
-    setImgPreview('');
-    const Img = imgSrc?.[0];
-    if (Img) {
-      const storageRef = storage.ref();
-      const ImgRef = storageRef.child(`image/${Img.name}`);
-      ImgRef.delete().then(() => console.log('Image deleted')).catch(console.error);
+    if (!imgSrc || !imgSrc[0]) {
+      return;
     }
+  
+    setImgPreview("");
+  
+    const Img = imgSrc[0];
+    const storageRef = storage.ref();
+    const ImgRef = storageRef.child(`image/${Img.name}`);
+    ImgRef.delete()
+      .then(() => console.log("Image deleted"))
+      .catch(console.error);
   }
     return (
       <HelmetProvider>

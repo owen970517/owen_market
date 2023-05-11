@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState}from 'react'
+import { useCallback, useEffect, useMemo, useState}from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
@@ -20,33 +20,42 @@ const AllProducts = () => {
   });
   const dispatch = useDispatch();
   const {filteredData,data} = useSelector((state:RootState) =>state.region)
-  useEffect(() => {
-    db.collection('Product').where('상태' , '==' , '판매중').orderBy('날짜','desc').onSnapshot((snapshot) => {
-    const itemList = snapshot.docs.map((doc) =>({
-      id : doc.id,
-      ...doc.data()
-    }))
+  
+  const memoizedDispatch = useCallback((itemList:any) => {
     dispatch(regionActions.setData(itemList));
-    })
-  },[dispatch]); 
-  const getMoreProduct = useCallback(async () => {
+  }, [dispatch]);
+  
+  const getMoreProduct = useCallback(() => {
     setIsLoading(true);
     dispatch(regionActions.getMoreDataList(data.slice(nowIndex,nowIndex+10)))
-    setIsLoading(false);
-  },[data, dispatch, nowIndex])
+  }, [dispatch, nowIndex]);
+  
   useEffect(() => {
-    if (!inView) return;
-    if (nowIndex > 0) {
-      getMoreProduct();
-    }
-  }, [inView, nowIndex]);
+    db.collection('Product').where('상태' , '==' , '판매중').orderBy('날짜','desc').onSnapshot((snapshot) => {
+      const itemList = snapshot.docs.map((doc) =>({
+        id : doc.id,
+        ...doc.data()
+      }));
+      memoizedDispatch(itemList);
+    });
+  }, [memoizedDispatch]);
+  
   useEffect(() => {
-    if (!inView) return;
-    if (inView && !isLoading && nowIndex < data.length) {
-      setNowIndex(prevIndex => prevIndex + 10);
-    }
+    if (!inView || nowIndex === 0 || isLoading || nowIndex >= data.length) return;
+    getMoreProduct();
+  }, [inView, nowIndex, isLoading, data.length, getMoreProduct]);
+  
+  useEffect(() => {
+    if (!inView || isLoading || nowIndex >= data.length) return;
+    setNowIndex(prevIndex => prevIndex + 10);
   }, [inView, isLoading, data.length, nowIndex]);
-  const defaultItems = Array.from({ length: 10 }, (_, i) => <SkeletonUI key={i} />);
+  
+  useEffect(() => {
+    if (isLoading && inView) {
+      setIsLoading(false);
+    }
+  }, [isLoading, inView]);
+  const defaultItems = useMemo(() => Array.from({ length: 10 }, (_, i) => <SkeletonUI key={i} />), []);
   return (
     <>
       <Grid>

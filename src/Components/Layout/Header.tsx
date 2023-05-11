@@ -9,6 +9,7 @@ import { useCallback, useState } from "react";
 import { IStyleProps } from '../../type/StyleProps';
 import Hamburger from '../../ImgSrc/Hamburger_icon.svg'
 import times from '../../ImgSrc/times.svg'
+
 const Header = () => {
   const [isopen, setIsOpen] = useState(false);
   const handleToggleOpen = () => {

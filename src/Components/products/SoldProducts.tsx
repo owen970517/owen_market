@@ -6,27 +6,27 @@ import { db } from '../../firebase'
 import { RootState } from '../../store/store';
 import { IData } from '../../type/ItemProps';
 const SoldProducts = () => {
-    const user = useSelector((state:RootState) => state.user.user)
-    const [soldData , setSoldData] = useState<IData[]>([]);
-    useEffect(() => {
-        if (!user.displayName) return;
-    
-        const getData = async () => {
-          const result = await db.collection('Product')
-            .where('상태', '==', '판매완료')
-            .where('올린사람', '==', user?.displayName)
-            .get();
-    
-          const sold = result.docs.map((doc) => ({
-            id: doc.id,
-            ...doc.data(),
-          }));
-    
-          setSoldData(sold);
-        };
-    
-        getData();
-      }, [user.displayName]);
+  const user = useSelector((state:RootState) => state.user.user)
+  const [soldData , setSoldData] = useState<IData[]>([]);
+  useEffect(() => {
+      if (!user.displayName) return;
+  
+      const getData = async () => {
+        const result = await db.collection('Product')
+          .where('상태', '==', '판매완료')
+          .where('올린사람', '==', user?.displayName)
+          .get();
+  
+        const sold = result.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+  
+        setSoldData(sold);
+      };
+  
+      getData();
+    }, [user.displayName]);
   return (
     <Grid>
     {soldData.map((p) =>  {

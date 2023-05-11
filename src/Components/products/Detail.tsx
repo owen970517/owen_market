@@ -11,19 +11,12 @@ import { Helmet ,HelmetProvider } from "react-helmet-async";
 const Detail = () => {
     const {user , isLogin} = useSelector((state:RootState) => state.user);
     const [data , setData] = useState<IData>();
-    const [isOwner , setIsOwner] = useState(false);
     const params = useParams();
     const nav = useNavigate();
     useEffect(() => {
         db.collection('Product').doc(params.id).get().then((result)=> {setData(result.data())})
     },[params.id])
-    useEffect(() => {
-        if (data?.올린사람 === user.displayName) {
-            setIsOwner(true);
-        } else {
-            setIsOwner(false);
-        }
-    },[data?.올린사람, user.displayName])
+    const isOwner = data?.올린사람 === user?.displayName;
     const onChat = () => {
         db.collection('chatroom').doc(`${data?.상품명}`).set({
             product : data?.상품명,
@@ -53,6 +46,9 @@ const Detail = () => {
                 ...data
             }).then(()=> alert('장바구니에 추가되었습니다.'))
         }
+    }
+    if (!data) {
+        return <div>Loading...</div>;
     }
     return (
         <HelmetProvider>
