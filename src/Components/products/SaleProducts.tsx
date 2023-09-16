@@ -29,7 +29,8 @@ const SaleProducts = () => {
     },[user.displayName])
   return (
     <Grid>
-        {saleData.length > 0 ? saleData.map((p) =>  {
+      {saleData.length === 0 && <h1>판매하고 있는 상품이 존재하지 않습니다.</h1>}
+      {saleData.length > 0 && saleData.map((p) =>  {
         return (
             <div key={p.id}>
             <img src={p.이미지 ? p.이미지 : noImg} alt='img' width ={300} height={300}/>
@@ -41,11 +42,8 @@ const SaleProducts = () => {
             </div>
             </div>
             )
-        }) :  new Array(4).fill(1).map((_,i) => {
-            return (
-              <SkeletonUI key={i}/>
-            )
-          })}
+        }) 
+      }
     </Grid> 
   )
 }

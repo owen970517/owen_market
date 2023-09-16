@@ -29,6 +29,7 @@ const SoldProducts = () => {
     }, [user.displayName]);
   return (
     <Grid>
+      {soldData.length === 0 && <h1>판매된 상품이 존재하지 않습니다.</h1>}
     {soldData.map((p) =>  {
         return (
             <div key={p.id}>
