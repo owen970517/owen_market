@@ -21,7 +21,7 @@ const AllProducts = () => {
   const dispatch = useDispatch();
   const {filteredData,data} = useSelector((state:RootState) =>state.region)
   
-  const memoizedDispatch = useCallback((itemList:any) => {
+  const memoizedDispatch = useCallback((itemList:IData[]) => {
     dispatch(regionActions.setData(itemList));
   }, [dispatch]);
   

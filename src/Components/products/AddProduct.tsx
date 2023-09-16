@@ -25,7 +25,7 @@ const AddProduct = () => {
   const onSubmit:SubmitHandler<IForm> = async (props) => {
     const options = {
       maxSizeMB: 0.3,
-      maxWidthOrHeight: 1080,
+      maxWidthOrHeight: 300,
       useWebWorker: true
     }
     const Img = props.image[0];
@@ -137,8 +137,8 @@ height: 50px;
   font-size: 20px;
 `
 const Preview = styled.img`
-    width : 300px;
-    height : 300px;
+  width : 300px;
+  height : 300px;
 `
 const FileInput = styled.div`
   label {
