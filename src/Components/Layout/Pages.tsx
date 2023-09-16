@@ -1,6 +1,7 @@
 import { lazy} from "react"
 import { Route, Routes } from "react-router-dom"
 import Chat from "./Chat"
+import ChatRooms from "./ChatRooms"
 
 const Home = lazy(() =>import('../products/Home'))
 const Profile = lazy(() => import("../auth/Profile"))
@@ -19,6 +20,7 @@ const Pages = () => {
             <Route path='/profile/' element={<Profile/>}></Route>
             <Route path='/detail/:id' element={<Detail />}></Route>
             <Route path='/sign' element={<Sign/>}></Route>
+            <Route path='/chatrooms' element={<ChatRooms/>} />
             <Route path='/chat/:product' element={<Chat/>}></Route>
             <Route path='/modify/:uid' element={<Modify/>}></Route>
             <Route path='/cart' element={<Cart/>}/>

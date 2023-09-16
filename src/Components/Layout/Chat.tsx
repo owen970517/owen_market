@@ -8,24 +8,28 @@ import { IForm } from "../../type/InputForm";
 import { useParams } from "react-router-dom"
 import { IMessage } from '../../type/messageProps';
 function Chat() {
-    const [data,setData] = useState<IMessage[]>([]);
+    const [chatData,setChatData] = useState<IMessage[]>([]);
+    const [seller , setSeller] = useState('');
     const {register , handleSubmit,setValue} = useForm<IForm>();
     const {product} = useParams();
-    const {user} = useSelector((state:RootState) =>  state.user)
+    const {user} = useSelector((state:RootState) => state.user)
     useEffect(() => {
         const getChatList = async () => {
-            await db.collection('chatroom').where('chatUser' , 'array-contains' , user.displayName).get().then((result) => {
-                const list = result.docs.map(doc => ({
-                    ...doc.data()
-                }))
-                console.log(list);
-            })
+            try {
+                const result = await db.collection('chatroom').where('chatUser', 'array-contains', user.displayName).get();
+                const list = result.docs.map(doc => doc.data());
+                const nowChatProduct = list.filter(item => item.product === product);
+
+                setSeller(nowChatProduct[0].chatUser.find((d:any) => d !== user.displayName))
+            } catch(e) {
+                console.log(e);
+            }
         }
         db.collection('chatroom').doc(product).collection('messages').orderBy('date').onSnapshot((result) => {
             const message = result.docs.map(doc => ({
                 ...doc.data()
             }))
-            setData(message);
+            setChatData(message);
         })
         getChatList()
     },[product, user.displayName])
@@ -37,11 +41,13 @@ function Chat() {
             보낸사람 : user.uid
         })
     }
+    console.log(chatData)
     return (
         <>
+            <h1>{seller}님 과의 채팅방</h1>
             <ChatBox>
                 <ChatList>
-                    {data.map((item:IMessage) => {
+                    {chatData.map((item:IMessage) => {
                         return  (
                             <div key={item.date}>
                                 {item.보낸사람 === user.uid ? <Buyer><ChatContent>{item.content}</ChatContent></Buyer> :
@@ -82,14 +88,13 @@ const ChatList = styled.ul`
 
 `
 
-const Seller = styled.li`
+const Buyer = styled.li`
     float: right;
     margin-top: 10px;
     list-style: none;
 `
-const Buyer = styled.li`
+const Seller = styled.li`
     margin-top: 10px;
-
 `
 
 export default Chat
