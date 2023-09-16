@@ -3,18 +3,31 @@ import styled from 'styled-components'
 import { auth, db } from '../../firebase';
 import { IForm } from '../../type/InputForm';
 import { IProps } from '../../type/StateProps';
+import { useDispatch } from 'react-redux';
+import { userActions } from '../../store/userSlice';
 
 const SignupForm = ({setLogin} :IProps) => {
-    const {register , handleSubmit , getValues,formState : {errors} } = useForm<IForm>();
-    const onSubmit:SubmitHandler<IForm> = async (props) => {
-        await auth.createUserWithEmailAndPassword(props.mail,props.password).then((result) => {
-            result?.user?.updateProfile({displayName : props.name})
-            db.collection('user').doc(result?.user?.uid).set({
-                name : props.name,
-                email : props.mail
-            })
-            alert('회원가입이 완료되었습니다.')
-        }).catch(e => alert('이미 존재하는 이메일입니다.'))
+    const dispatch = useDispatch();
+    const {register , handleSubmit,reset, getValues,formState : {errors} } = useForm<IForm>();
+    const onSubmit:SubmitHandler<IForm> = async (data) => {
+        try {
+            const result = await auth.createUserWithEmailAndPassword(data.mail, data.password);
+            dispatch(userActions.setIsLogin(false)); 
+            dispatch(userActions.login({
+                displayName : data.name,
+                uid : result.user?.uid
+            }))
+            await result.user?.updateProfile({ displayName: data.name });
+            await db.collection('user').doc(result.user?.uid).set({
+                name: data.name,
+                email: data.mail,
+            });
+            reset();
+            alert('회원가입이 완료되었습니다.');
+            setLogin(prev => !prev);
+        } catch (e) {
+            alert('이미 존재하는 이메일입니다.');
+        } 
     }
     const nicknameValidate = register('name' , {
         required :{value : true , message : '닉네임을 입력하시오'} , 
@@ -56,9 +69,9 @@ const SignupForm = ({setLogin} :IProps) => {
         {errors.password && <p style={{color : 'red'}}>{errors.password.message}</p>}
         <Input {...passwordCheckValidate} type='password' placeholder="비밀번호 확인" isError={errors.passwordConfirm ? 'red' : ''}></Input>
         {errors.passwordConfirm && <p style={{color : 'red'}}>{errors.passwordConfirm.message}</p>}
-        <Btn type='submit'></Btn>
+        <Btn type='submit'>회원 가입</Btn>
         <button type='button' onClick={() => setLogin((prev) => !prev)}>로그인</button>
-</Form>
+    </Form>
   )
 }
 const Form = styled.form`
@@ -74,7 +87,7 @@ const Input = styled.input<{isError : string}>`
     border-color: ${props => props.isError};
 `
 
-const Btn = styled.input`
+const Btn = styled.button`
     width : 300px;
     height : 50px;
     margin-bottom : 10px;
