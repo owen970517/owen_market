@@ -60,6 +60,7 @@ const Profile = () => {
             //에러시 동작하는 함수
             (error) => {
               console.error('실패사유는', error);
+              alert('이미지 업로드에 실패했습니다.');
             }, 
             // 성공시 동작하는 함수
             async () => {
@@ -71,8 +72,8 @@ const Profile = () => {
                 dispatch(userActions.addProfileImg(url))
                 });
               });
-              nav('/');
             }
+            nav('/');
     }
     
     return (
@@ -137,8 +138,8 @@ const ToggleBtn = styled.div`
     align-items: center;
 `
 const ProfileDiv = styled.div`
-  width: 300px;
-  height : 300px;
+  width: 150px;
+  height : 150px;
   border-radius: 50%;
   overflow:hidden;
 `
