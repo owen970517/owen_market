@@ -6,6 +6,17 @@
 - npm install
 - npm start
 
+## 화면 구성
+
+|        로그인/회원가입    |       프로필 수정     |
+| :-------------------------: | :-----------------------------------------------: |
+| <img width="450" height='600' src="https://github.com/owen970517/carrot_clone/assets/75247323/947e13b2-6779-4a62-864a-97f5d1431876" /> | <img width="450" height='600' src="https://github.com/owen970517/carrot_clone/assets/75247323/5945cda6-a3db-469b-aea5-dc23999b118f" />|
+
+
+|          상세페이지, 수정             |     채팅, 장바구니   |
+| :----------------------------: | :-----------------------------------: |
+| <img width="450" height='600' src="https://github.com/owen970517/carrot_clone/assets/75247323/e625fc75-df62-4e87-9e05-94147d69792a"> | <img width="450" height='600' src="https://github.com/owen970517/carrot_clone/assets/75247323/79682c6c-dc57-4717-9b2c-9a2121cf266b"> |
+
 ## 사용한 라이브러리
 
 - ReactJS
