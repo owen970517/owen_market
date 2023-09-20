@@ -1,5 +1,5 @@
 import { useState,useRef, useEffect, lazy, Suspense } from "react"
-import { auth, storage } from "../../firebase";
+import { auth, db, storage } from "../../firebase";
 import { useNavigate} from "react-router-dom"
 import styled from "styled-components";
 import { useDispatch, useSelector} from 'react-redux'
@@ -9,72 +9,92 @@ import { IForm } from "../../type/InputForm";
 import { userActions } from "../../store/userSlice";
 import { Helmet ,HelmetProvider } from "react-helmet-async";
 import imageCompression from 'browser-image-compression';
+import { defaultImg } from "../../constants/user";
 
 const SaleProducts = lazy(() => import("../products/SaleProducts"))
 const SoldProducts = lazy(() => import("../products/SoldProducts"))
 
 const Profile = () => {
-    const {user , profileImg} = useSelector((state:RootState) => state.user);
-    const dispatch = useDispatch();
-    const [sale , setSale] = useState(true);
-    const {register,handleSubmit,watch} = useForm<IForm>({
-        defaultValues : {
-            nickname : user.displayName
-        }
-    });
-    const defaultImg = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
-    const imgSrc = watch('image');
-    const newNickname = watch('nickname')
-    const [imgPreview , setImgPreview] = useState(profileImg);
-    useEffect(()=> {
-        if(imgSrc && imgSrc.length > 0) {
-          const file = imgSrc[0];
-          setImgPreview(URL.createObjectURL(file));
-        }
-      },[imgSrc])
-    const fileRef = useRef<HTMLInputElement | null>(null);
-    const nav = useNavigate();
-    const onFormSubmit:SubmitHandler<IForm> = async (props) => {
-        if (user.displayName !== newNickname) {
-            await auth?.currentUser?.updateProfile({
-                displayName : newNickname ,    
-            })
-        }
-        dispatch(userActions.modifyDisplayName({
-            displayName : newNickname,
-            uid : user.uid
-        }))
-        if(props.image[0]) {
-            const Img = props.image[0];
-            const options = {
-                maxSizeMB : 2,
-                maxWidthOrHeight : 300,
-              }
-            const compressedImage = await imageCompression(Img , options);
-            const storageRef = storage.ref();
-            const ImgRef = storageRef.child(`user_image/${compressedImage.name}`);
-            const uploadImg = ImgRef.put(compressedImage);
-            uploadImg.on('state_changed', 
-            // 변화시 동작하는 함수 
-            null, 
-            //에러시 동작하는 함수
-            (error) => {
-              console.error('실패사유는', error);
-              alert('이미지 업로드에 실패했습니다.');
-            }, 
-            // 성공시 동작하는 함수
-            async () => {
-              await uploadImg.snapshot.ref.getDownloadURL().then((url) => {
-                console.log('업로드된 경로는', url);
-                auth.currentUser?.updateProfile({
-                    photoURL : url
-                })
-                dispatch(userActions.addProfileImg(url))
-                });
-              });
-            }
-            nav('/');
+  const dispatch = useDispatch();
+  const {user , profileImg} = useSelector((state:RootState) => state.user);
+  const {register,handleSubmit,watch} = useForm<IForm>({
+    defaultValues : {
+        nickname : user.displayName
     }
+  });
+  const imgSrc = watch('image');
+  const newNickname = watch('nickname')
+  const fileRef = useRef<HTMLInputElement | null>(null);
+  const nav = useNavigate();
+  const [sale , setSale] = useState(true);
+  const [imgPreview , setImgPreview] = useState(profileImg);
+  
+  useEffect(()=> {
+    if(imgSrc && imgSrc.length > 0) {
+      const file = imgSrc[0];
+      setImgPreview(URL.createObjectURL(file));
+    }
+  },[imgSrc])
+
+  const updateAllUserDocuments = async (uid:string, newNickname:string) => {
+    try {
+      const querySnapshot = await db.collection("Product").where("uid", "==", uid).get();
+      querySnapshot.forEach((doc) => {
+        db.collection("Product").doc(doc.id).update({
+          올린사람: newNickname
+        });
+      });
+    } catch (error) {
+      console.log("Error updating documents: ", error);
+    }
+  };
+
+  const updateProfileImage = async (image:File) => {
+    const Img = image;
+    const options = {
+        maxSizeMB : 2,
+        maxWidthOrHeight : 300,
+      }
+    const compressedImage = await imageCompression(Img , options);
+    const storageRef = storage.ref();
+    const ImgRef = storageRef.child(`user_image/${compressedImage.name}`);
+    const uploadImg = ImgRef.put(compressedImage);
+    uploadImg.on('state_changed', 
+    // 변화시 동작하는 함수 
+    null, 
+    //에러시 동작하는 함수
+    (error) => {
+      console.error('실패사유는', error);
+      alert('이미지 업로드에 실패했습니다.');
+    }, 
+    // 성공시 동작하는 함수
+    async () => {
+      await uploadImg.snapshot.ref.getDownloadURL().then((url) => {
+        console.log('업로드된 경로는', url);
+        auth.currentUser?.updateProfile({
+            photoURL : url
+        })
+        dispatch(userActions.addProfileImg(url))
+        });
+      });
+  }
+
+  const onFormSubmit:SubmitHandler<IForm> = async (props) => {
+    if (user.displayName !== newNickname) {
+      await auth?.currentUser?.updateProfile({
+        displayName : newNickname ,    
+      })
+      await updateAllUserDocuments(user.uid,newNickname)
+      dispatch(userActions.modifyDisplayName({
+        displayName : newNickname,
+        uid : user.uid
+      }))
+    }
+    if(props.image[0]) {
+      await updateProfileImage(props.image[0])
+    }
+    nav('/');
+  }
     
     return (
         <HelmetProvider>
@@ -83,7 +103,7 @@ const Profile = () => {
             </Helmet>
             <Div>
                 <ProfileDiv>
-                    <ProfileImg src={imgPreview ? imgPreview : profileImg ? profileImg : defaultImg}></ProfileImg>
+                  <ProfileImg src={imgPreview || profileImg || defaultImg}></ProfileImg>
                 </ProfileDiv>
             </Div>
             <PreviewImg>
