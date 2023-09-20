@@ -71,6 +71,22 @@
     - 자신의 채팅 오른쪽, 상대방의 채팅 왼쪽에 보여줌
     - 헤더의 채팅방의 경우에는 자신이 속해있는 모든 채팅방을 보여줌 
 
+
+## 트러블 슈팅 
+
+- 닉네임 수정 시 firebase 계정의 닉네임은 수정되지만, 그 전에 올렸던 상품들의 닉네임은 변하지 않는 현상을 개선
+    <details>
+        <summary><b>👈코드 보기</b></summary>
+        <div markdown="1">
+            <ul>
+                https://github.com/owen970517/carrot_clone/blob/47bbc85eb9507df782ad0d9008b6188817f27b99/src/Components/auth/Profile.tsx#L39-L50
+            </ul>
+            <ul>
+                https://github.com/owen970517/carrot_clone/blob/47bbc85eb9507df782ad0d9008b6188817f27b99/src/Components/auth/Profile.tsx#L82-L87
+            </ul>
+        </div>
+    </details>
+
 ## 개선한 점  
 
 - firebase를 typescript로 개선
