@@ -82,7 +82,7 @@
             https://github.com/owen970517/carrot_clone/blob/47bbc85eb9507df782ad0d9008b6188817f27b99/src/Components/auth/Profile.tsx#L39-L50
         </ul>
         <ul>
-            https://github.com/owen970517/carrot_clone/blob/47bbc85eb9507df782ad0d9008b6188817f27b99/src/Components/auth/Profile.tsx#L97-L103
+            https://github.com/owen970517/carrot_clone/blob/39f4c342597a283f5e9c65a8354e060a0ff0e440/src/Components/auth/Profile.tsx#L97-L103
         </ul>
     </div>
 </details>
@@ -92,10 +92,10 @@
     <summary><b>👈코드 보기</b></summary>
     <div markdown="1">
         <ul>
-            https://github.com/owen970517/carrot_clone/blob/47bbc85eb9507df782ad0d9008b6188817f27b99/src/Components/auth/Profile.tsx#L52-L65
+            https://github.com/owen970517/carrot_clone/blob/39f4c342597a283f5e9c65a8354e060a0ff0e440/src/Components/auth/Profile.tsx#L52-L65
         </ul>
         <ul>
-            https://github.com/owen970517/carrot_clone/blob/47bbc85eb9507df782ad0d9008b6188817f27b99/src/Components/auth/Profile.tsx#L97-L103
+            https://github.com/owen970517/carrot_clone/blob/39f4c342597a283f5e9c65a8354e060a0ff0e440/src/Components/auth/Profile.tsx#L97-L103
         </ul>
     </div>
 </details>
