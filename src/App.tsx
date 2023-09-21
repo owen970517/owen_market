@@ -17,20 +17,18 @@ function App() {
           uid : user.uid,
         }))
         dispatch(userActions.addProfileImg(user.photoURL));
-      } else {
-        dispatch(userActions.logout());
-      } 
-  })
+        dispatch(userActions.setIsLogin(true));
+      }
+    })
+    dispatch(userActions.setIsLogin(false));
   },[dispatch])
   return (
-    <>
     <BrowserRouter>
       <Suspense fallback={<div>Loading...</div>}>
         <Header ></Header>
         <Pages />
       </Suspense>
     </BrowserRouter>
-    </>
   );
 }
 
