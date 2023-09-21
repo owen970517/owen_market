@@ -36,7 +36,7 @@ const Profile = () => {
     }
   },[imgSrc])
 
-  const updateAllUserDocuments = async (uid:string, newNickname:string) => {
+  const updateAllUserDocuments = async (uid:string,newNickname:string) => {
     try {
       const querySnapshot = await db.collection("Product").where("uid", "==", uid).get();
       querySnapshot.forEach((doc) => {
@@ -45,9 +45,24 @@ const Profile = () => {
         });
       });
     } catch (error) {
-      console.log("Error updating documents: ", error);
+      console.error("Error updating documents: ", error);
     }
   };
+
+  const updateAllChat = async (prevName:string,newNickname:string) => {
+    try {
+      const result = await db.collection('chatroom').where('chatUser', 'array-contains', prevName).get();
+      result.forEach(async (doc) => {
+        let chatUser = doc.data().chatUser;
+        chatUser[1] = newNickname; 
+        await db.collection("chatroom").doc(doc.id).update({
+          chatUser: chatUser
+        });
+      });
+    } catch (error) {
+      console.error("Error updating documents: ", error);
+    }
+  }
 
   const updateProfileImage = async (image:File) => {
     const Img = image;
@@ -72,7 +87,7 @@ const Profile = () => {
       await uploadImg.snapshot.ref.getDownloadURL().then((url) => {
         console.log('업로드된 경로는', url);
         auth.currentUser?.updateProfile({
-            photoURL : url
+          photoURL : url
         })
         dispatch(userActions.addProfileImg(url))
         });
@@ -81,10 +96,11 @@ const Profile = () => {
 
   const onFormSubmit:SubmitHandler<IForm> = async (props) => {
     if (user.displayName !== newNickname) {
+      await updateAllUserDocuments(user.uid,newNickname)
+      await updateAllChat(user.displayName,newNickname)
       await auth?.currentUser?.updateProfile({
         displayName : newNickname ,    
       })
-      await updateAllUserDocuments(user.uid,newNickname)
       dispatch(userActions.modifyDisplayName({
         displayName : newNickname,
         uid : user.uid
@@ -99,12 +115,12 @@ const Profile = () => {
     return (
         <HelmetProvider>
             <Helmet>
-                <title>{`${user.displayName} | 중고사이트`}</title>
+                <title>{`중고사이트 | 채팅방`}</title>
             </Helmet>
             <Div>
-                <ProfileDiv>
-                  <ProfileImg src={imgPreview || profileImg || defaultImg}></ProfileImg>
-                </ProfileDiv>
+              <ProfileDiv>
+                <ProfileImg src={imgPreview || profileImg || defaultImg}></ProfileImg>
+              </ProfileDiv>
             </Div>
             <PreviewImg>
                 <FileInput onClick={() => {fileRef.current?.click()}}>
