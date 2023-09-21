@@ -82,10 +82,25 @@
             https://github.com/owen970517/carrot_clone/blob/47bbc85eb9507df782ad0d9008b6188817f27b99/src/Components/auth/Profile.tsx#L39-L50
         </ul>
         <ul>
-            https://github.com/owen970517/carrot_clone/blob/47bbc85eb9507df782ad0d9008b6188817f27b99/src/Components/auth/Profile.tsx#L82-L87
+            https://github.com/owen970517/carrot_clone/blob/47bbc85eb9507df782ad0d9008b6188817f27b99/src/Components/auth/Profile.tsx#L97-L103
         </ul>
     </div>
 </details>
+
+### 2. 닉네임 수정 시 기존 채팅방의 닉네임이 수정되지 않아서, 속한 채팅방이 보이지 않는 현상 개선
+<details>
+    <summary><b>👈코드 보기</b></summary>
+    <div markdown="1">
+        <ul>
+            https://github.com/owen970517/carrot_clone/blob/47bbc85eb9507df782ad0d9008b6188817f27b99/src/Components/auth/Profile.tsx#L52-L65
+        </ul>
+        <ul>
+            https://github.com/owen970517/carrot_clone/blob/47bbc85eb9507df782ad0d9008b6188817f27b99/src/Components/auth/Profile.tsx#L97-L103
+        </ul>
+    </div>
+</details>
+
+
 
 ## 개선한 점  
 
