@@ -4,6 +4,7 @@ import styled from "styled-components"
 import { regionActions } from "../../store/regionSlice";
 import { RootState } from "../../store/store";
 import { IData } from "../../type/ItemProps";
+import { Regions } from "../../constants/region";
 
 const Region = () => {
     const dispatch = useDispatch()
@@ -21,11 +22,11 @@ const Region = () => {
     }
     return (
         <Wrapper>
-            <button onClick={onRegionClick}>전체</button>
-            <button onClick={onRegionClick}>강남구</button>
-            <button onClick={onRegionClick}>강서구</button>
-            <button onClick={onRegionClick}>구로구</button>
-            <button onClick={onRegionClick}>마포구</button>
+            {Regions.map((region) => (
+                <button key={region} onClick={onRegionClick}>
+                    {region}
+                </button>
+            ))}
         </Wrapper>
     )
 }
