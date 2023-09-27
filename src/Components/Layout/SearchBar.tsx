@@ -1,29 +1,31 @@
-import { useState } from 'react'
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { IForm } from '../../type/InputForm';
 import styled from 'styled-components';
 import { IStyleProps } from '../../type/StyleProps';
 import searchIcon from '../../ImgSrc/search-icon.svg'
-
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../store/RootState';
+import { userActions } from '../../store/userSlice';
 
 const SearchBar = () => {
-    const [isOpen , setIsOpen] = useState(false);
-    const nav = useNavigate();
-    const {register , handleSubmit , setValue, setFocus } = useForm<IForm>();
-    const onSearch = handleSubmit((e) => {
-        nav('/search/' + e.search)
-        setIsOpen(false);
-        setValue('search' , '')
-    })
-    const toggleSearch = () => {
-        setIsOpen(true);
-        setFocus('search');
-    }
+  const dispatch = useDispatch();
+  const {isSearchBar} = useSelector((state:RootState) => state.user)
+  const nav = useNavigate();
+  const {register , handleSubmit , setValue, setFocus } = useForm<IForm>();
+  const onSearch = handleSubmit((e) => {
+    nav('/search/' + e.search)
+    dispatch(userActions.searchToggle(false))
+    setValue('search' , '')
+  })
+  const toggleSearch = () => {
+    dispatch(userActions.searchToggle(!isSearchBar))
+    setFocus('search');
+  }
   return (
-    <SearchForm isopen={isOpen} onSubmit={onSearch} onClick={toggleSearch}>
-        <img src={searchIcon} alt='search' style={{width : '30px' , height : '30px' }}/>
-        <SearchInput {...register("search" , {required : true})} placeholder='찾고 싶은 상품을 입력하시오' isopen={isOpen}/>
+    <SearchForm isopen={isSearchBar} onSubmit={onSearch}>
+      <img src={searchIcon} alt='search' style={{width : '30px' , height : '30px' }} onClick={toggleSearch}/>
+      <SearchInput {...register("search" , {required : true})} placeholder='찾고 싶은 상품을 입력하시오' isopen={isSearchBar}/>
     </SearchForm>
   )
 }
@@ -33,9 +35,7 @@ const SearchForm = styled.form`
   justify-content: center;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   background-color: #44a8f4;
-  /* Change width of the form depending if the bar is opened or not */
   width: ${(props:IStyleProps) => (props.isopen ? "30rem" : "2rem")};
-  /* If bar opened, normal cursor on the whole form. If closed, show pointer on the whole form so user knows he can click to open it */
   cursor: ${(props:IStyleProps)=> (props.isopen ? "auto" : "pointer")};
   padding: 10px;
   height: 20px;

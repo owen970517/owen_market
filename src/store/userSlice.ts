@@ -4,7 +4,9 @@ const initialUserState = {
     user : null,
     profileImg : '',
     isLogin : false, 
-    cartItems : []
+    isSignUp : true,
+    cartItems : [],
+    isSearchBar :false,
 }
 
 const userSlice = createSlice({
@@ -13,11 +15,15 @@ const userSlice = createSlice({
     reducers : {
         login(state , action) {
             state.user = action.payload
-            state.isLogin = true;
         },
         logout(state) {
             state.user = null;
-            state.isLogin = false;
+        },
+        setIsLogin(state,action) {
+            state.isLogin = action.payload
+        },
+        searchToggle(state,action) {
+            state.isSearchBar = action.payload
         },
         addProfileImg(state,action) {
             return {
@@ -26,10 +32,9 @@ const userSlice = createSlice({
             }
         },
         modifyDisplayName(state,action) {
-            return {
-                ...state,
-                user: action.payload,
-            };
+            if (state.user) { // Ensure that 'user' is not null before updating 'displayName'
+                state.user = action.payload;
+            }
         }
     }
 })
