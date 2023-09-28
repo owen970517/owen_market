@@ -5,13 +5,13 @@ import SignupForm from "./SignupForm";
 const Sign = () => {
     const [login , setLogin] = useState(false);
     return (
-        <div>
+        <>
             {login ?   
                 <LoginForm setLogin={setLogin}/>
                 :
                 <SignupForm setLogin={setLogin}/>
             }   
-        </div>
+        </>
     )
 }
 
