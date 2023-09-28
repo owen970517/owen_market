@@ -7,6 +7,7 @@ import { RootState } from "../../store/store";
 import { IForm } from "../../type/InputForm";
 import { useParams } from "react-router-dom"
 import { IMessage } from '../../type/messageProps';
+import React from 'react';
 function Chat() {
     const [chatData,setChatData] = useState<IMessage[]>([]);
     const [seller , setSeller] = useState('');
@@ -20,7 +21,7 @@ function Chat() {
                 const list = result.docs.map(doc => doc.data());
                 const nowChatProduct = list.filter(item => item.product === product);
 
-                setSeller(nowChatProduct[0].chatUser.find((d:any) => d !== user.displayName))
+                setSeller(nowChatProduct[0].chatUser.find((d:string) => d !== user.displayName))
             } catch(e) {
                 console.log(e);
             }
@@ -41,7 +42,7 @@ function Chat() {
             보낸사람 : user.uid
         })
     }
-    console.log(chatData)
+
     return (
         <>
             <h1>{seller}님 과의 채팅방</h1>
@@ -49,11 +50,11 @@ function Chat() {
                 <ChatList>
                     {chatData.map((item:IMessage) => {
                         return  (
-                            <div key={item.date}>
+                            <React.Fragment key={item.date}>
                                 {item.보낸사람 === user.uid ? <Buyer><ChatContent>{item.content}</ChatContent></Buyer> :
                                     <Seller><ChatContent>{item.content}</ChatContent></Seller>
                                 }
-                            </div>
+                            </React.Fragment>
                         )
                     })}
                 </ChatList>
@@ -73,7 +74,6 @@ const ChatBox = styled.div`
   overflow-y: scroll;
   padding: 10px;
   background-color: whitesmoke;
-
 `
 const ChatContent = styled.span`
     background: #eee;

@@ -6,45 +6,44 @@ import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
 const ChatRooms = () => {
-    const [chatList , setChatList] = useState<any[]>([]);
-    const [messages, setMessages] = useState<any[]>([]);
-    const {user} = useSelector((state:RootState) => state.user)
-    useEffect(() => {
-      const getChatList = async () => {
-          try {
-            const result = await db.collection('chatroom').where('chatUser', 'array-contains', user?.displayName).get();
-            const list = result.docs.map(doc => doc.data())
-            setChatList(list)
-          } catch(e) {
-            console.log(e);
-          }
+  const [chatList , setChatList] = useState<any[]>([]);
+  const [messages, setMessages] = useState<any[]>([]);
+  const {user} = useSelector((state:RootState) => state.user)
+  useEffect(() => {
+    const getChatList = async () => {
+      try {
+        const result = await db.collection('chatroom').where('chatUser', 'array-contains', user?.displayName).get();
+        const list = result.docs.map(doc => doc.data())
+        setChatList(list)
+      } catch(e) {
+        console.log(e);
       }
-      getChatList()
-    },[user?.displayName])
-    useEffect(() => {
-      const products = chatList.map((arr) => arr.product);
-      const unsubscribe = products.map((product, index) =>
-        db.collection('chatroom').doc(product).collection('messages').orderBy('date').onSnapshot((result) => {
-          const newMessages = result.docs.map(doc => doc.data());
-          const lastMessage = newMessages.pop(); // Get the last message
-          setMessages(prevMessages => {
-            let updatedMessages = [...prevMessages];
-            updatedMessages[index] = lastMessage; // Save only the last message
-            return updatedMessages;
-          });
-        })
-      );
-    
-      // Clean up function
-      return () => unsubscribe.forEach(unsub => unsub());
-    }, [chatList]);
+    }
+    getChatList()
+  },[user?.displayName])
+  useEffect(() => {
+    const products = chatList.map((arr) => arr.product);
+    const unsubscribe = products.map((product, index) =>
+      db.collection('chatroom').doc(product).collection('messages').orderBy('date').onSnapshot((result) => {
+        const newMessages = result.docs.map(doc => doc.data());
+        const lastMessage = newMessages.pop(); // Get the last message
+        setMessages(prevMessages => {
+          let updatedMessages = [...prevMessages];
+          updatedMessages[index] = lastMessage; // Save only the last message
+          return updatedMessages;
+        });
+      })
+    );
+  
+    return () => unsubscribe.forEach(unsub => unsub());
+  }, [chatList]);
   return (
     <ChatRoomContainer>
+      {chatList.length === 0 && <h1>채팅방이 없습니다.</h1>}
       {chatList.map((chat, index) => {
         const otherUser = chat.chatUser.find((p:any) => p !== user?.displayName);
         return (
           <ChatRoomItem key={index}>
-            {!otherUser && <h1>채팅방이 존재하지 않습니다.</h1>}
             <Link to={`/chat/${chat.product}`}>
               <span>{otherUser}</span>
             </Link>

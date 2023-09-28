@@ -113,46 +113,46 @@ const Profile = () => {
   }
     
     return (
-        <HelmetProvider>
-            <Helmet>
-                <title>{`중고사이트 | 채팅방`}</title>
-            </Helmet>
-            <Div>
-              <ProfileDiv>
-                <ProfileImg src={imgPreview || profileImg || defaultImg}></ProfileImg>
-              </ProfileDiv>
-            </Div>
-            <PreviewImg>
-                <FileInput onClick={() => {fileRef.current?.click()}}>
-                    <label>사진 변경</label>
-                    <input {...register('image')} type="file" ref={(data) => {
-                        register('image').ref(data);
-                        fileRef.current = data
-                    }}></input>
-                </FileInput>
-            </PreviewImg>
-            <UserForm onSubmit={handleSubmit(onFormSubmit)}>
-                <TextInput {...register('nickname')} type='text' />
-                <button type="submit">수정</button>
-            </UserForm>            
-            <ToggleBtn>
-                <button onClick={() => setSale((prev) => !prev)}>판매중</button>
-                <button onClick={() => setSale((prev) => !prev)}>판매완료</button>
-            </ToggleBtn>
-            <Suspense fallback={<h1>Loading...</h1>}>
-                {sale ?
-                    <>
-                        <Title>판매중</Title>
-                        <SaleProducts />
-                    </>
-                    :  
-                    <>
-                        <Title>판매완료</Title>
-                        <SoldProducts />
-                    </>
-                }
-            </Suspense>
-        </HelmetProvider>
+      <HelmetProvider>
+          <Helmet>
+              <title>{`중고사이트 | 채팅방`}</title>
+          </Helmet>
+          <Div>
+            <ProfileDiv>
+              <ProfileImg src={imgPreview || profileImg || defaultImg}></ProfileImg>
+            </ProfileDiv>
+          </Div>
+          <PreviewImg>
+              <FileInput onClick={() => {fileRef.current?.click()}}>
+                  <label>사진 변경</label>
+                  <input {...register('image')} type="file" ref={(data) => {
+                      register('image').ref(data);
+                      fileRef.current = data
+                  }}></input>
+              </FileInput>
+          </PreviewImg>
+          <UserForm onSubmit={handleSubmit(onFormSubmit)}>
+              <TextInput {...register('nickname')} type='text' />
+              <button type="submit">수정</button>
+          </UserForm>            
+          <ToggleBtn>
+              <button onClick={() => setSale((prev) => !prev)}>판매중</button>
+              <button onClick={() => setSale((prev) => !prev)}>판매완료</button>
+          </ToggleBtn>
+          <Suspense fallback={<h1>Loading...</h1>}>
+              {sale ?
+                  <>
+                    <Title>판매중</Title>
+                    <SaleProducts />
+                  </>
+                  :  
+                  <>
+                    <Title>판매완료</Title>
+                    <SoldProducts />
+                  </>
+              }
+          </Suspense>
+      </HelmetProvider>
     )
 }
 
