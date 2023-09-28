@@ -1,5 +1,5 @@
 import { SubmitHandler, useForm } from "react-hook-form";
-import {db , storage} from '../../firebase';
+import { db } from '../../firebase';
 import styled from "styled-components";
 import dayjs from 'dayjs';
 import { useNavigate } from "react-router-dom";
@@ -7,13 +7,16 @@ import {  useState , useEffect,useRef } from "react";
 import { IForm } from "../../type/InputForm";
 import { useSelector} from 'react-redux'
 import { Helmet ,HelmetProvider } from "react-helmet-async";
-import imageCompression from 'browser-image-compression';
 import { RootState } from "../../store/store";
+import { useCompressImage } from "../../hooks/useCompressImage";
+import { useUpoadImage } from "../../hooks/useUploadImage";
 
 const AddProduct = () => {
   const nav = useNavigate();
   const userObj = useSelector((state:RootState) => state.user?.user)
   const {register , handleSubmit , watch } = useForm<IForm>();
+  const {compressImage} = useCompressImage();
+  const {uploadImageToStorage} = useUpoadImage()
   const [imgPreview , setImgPreview] = useState('');
   const imgSrc = watch('image');
   const fileRef = useRef<HTMLInputElement | null>(null);
@@ -23,27 +26,6 @@ const AddProduct = () => {
       setImgPreview(URL.createObjectURL(file));
     }
   },[imgSrc])
-  const compressImage = async (image:File) => {
-    const options = {
-      maxSizeMB: 0.3,
-      maxWidthOrHeight: 300,
-      useWebWorker: true
-    };
-    return await imageCompression(image , options);
-  };
-  const uploadImageToStorage = async (compressedImage:File):Promise<string> => {
-    const storageRef = storage.ref();
-    const ImgRef = storageRef.child(`image/${compressedImage.name}`);
-    const uploadImgTask = ImgRef.put(compressedImage);
-    
-    return new Promise((resolve, reject) => {
-      uploadImgTask.on('state_changed', 
-        null,
-        (error) => { console.error('실패사유는', error); reject(error); }, 
-        async () => { resolve(await uploadImgTask.snapshot.ref.getDownloadURL()); }
-      );
-    });
-  }
   const onSubmit:SubmitHandler<IForm> = async (props) => {
     let url =''
     const Img = props.image[0];

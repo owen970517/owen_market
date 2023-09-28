@@ -10,6 +10,8 @@ import { userActions } from "../../store/userSlice";
 import { Helmet ,HelmetProvider } from "react-helmet-async";
 import imageCompression from 'browser-image-compression';
 import { defaultImg } from "../../constants/user";
+import { useCompressImage } from "../../hooks/useCompressImage";
+import { useUpoadImage } from "../../hooks/useUploadImage";
 
 const SaleProducts = lazy(() => import("../products/SaleProducts"))
 const SoldProducts = lazy(() => import("../products/SoldProducts"))
@@ -28,6 +30,8 @@ const Profile = () => {
   const nav = useNavigate();
   const [sale , setSale] = useState(true);
   const [imgPreview , setImgPreview] = useState(profileImg);
+  const {compressImage} = useCompressImage();
+  const {uploadImageToStorage} = useUpoadImage()
   
   useEffect(()=> {
     if(imgSrc && imgSrc.length > 0) {
@@ -66,32 +70,14 @@ const Profile = () => {
 
   const updateProfileImage = async (image:File) => {
     const Img = image;
-    const options = {
-        maxSizeMB : 2,
-        maxWidthOrHeight : 300,
-      }
-    const compressedImage = await imageCompression(Img , options);
-    const storageRef = storage.ref();
-    const ImgRef = storageRef.child(`user_image/${compressedImage.name}`);
-    const uploadImg = ImgRef.put(compressedImage);
-    uploadImg.on('state_changed', 
-    // 변화시 동작하는 함수 
-    null, 
-    //에러시 동작하는 함수
-    (error) => {
-      console.error('실패사유는', error);
-      alert('이미지 업로드에 실패했습니다.');
-    }, 
-    // 성공시 동작하는 함수
-    async () => {
-      await uploadImg.snapshot.ref.getDownloadURL().then((url) => {
-        console.log('업로드된 경로는', url);
-        auth.currentUser?.updateProfile({
-          photoURL : url
-        })
-        dispatch(userActions.addProfileImg(url))
-        });
-      });
+    if (Img) {
+      const compressedImage = await compressImage(Img);
+      const url = await uploadImageToStorage(compressedImage)
+      auth.currentUser?.updateProfile({
+        photoURL : url
+      })
+      dispatch(userActions.addProfileImg(url))
+    }
   }
 
   const onFormSubmit:SubmitHandler<IForm> = async (props) => {
