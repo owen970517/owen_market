@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom"
 import styled from "styled-components"
-import { auth } from "../../firebase";
+import { auth, db } from "../../firebase";
 import {useDispatch , useSelector} from 'react-redux'
 import { userActions } from "../../store/userSlice";
 import SearchBar from "./SearchBar";
@@ -9,42 +9,49 @@ import { useCallback, useState } from "react";
 import { IStyleProps } from '../../type/StyleProps';
 import Hamburger from '../../ImgSrc/Hamburger_icon.svg'
 import times from '../../ImgSrc/times.svg'
+import { defaultImg } from "../../constants/user";
 
 const Header = () => {
   const [isopen, setIsOpen] = useState(false);
-  const handleToggleOpen = () => {
-    setIsOpen((prev) => !prev);
-  };
   const dispatch = useDispatch();
   const {isLogin,profileImg,user} = useSelector((state:RootState) => state.user);
-  const defaultImg = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
   const nav = useNavigate();
+  const handleToggleOpen = () => {
+    setIsOpen((prev) => !prev);
+    dispatch(userActions.searchToggle(false))
+  };
   const onLogOut = useCallback(async () => {
+    await auth.signOut();
     setIsOpen((prev) => !prev);
     dispatch(userActions.logout());
-    await auth.signOut();
+    dispatch(userActions.setIsLogin(false));
     nav('/sign');
   },[dispatch, nav])
-    return (
-      <Nav>
-        <h1>Logo</h1>
-        <UL isopen={isopen }>
-          <SearchBar/>
-          <LI>{isLogin ? 
-          <Div>
-            <ProfileDiv>
-              <ProfileImg src={profileImg ? profileImg : defaultImg } alt='' ></ProfileImg>
-            </ProfileDiv>
-            <StyledLink to='/profile' onClick={handleToggleOpen}>{user.displayName}</StyledLink>
-          </Div> : ""}</LI>
-          <LI><StyledLink to='/' onClick={handleToggleOpen}>중고거래</StyledLink></LI>
-          <LI><StyledLink to='/write' onClick={handleToggleOpen}>글쓰기</StyledLink></LI>
-          {isLogin && <LI><StyledLink to='/cart' onClick={handleToggleOpen}>장바구니</StyledLink></LI> }
-          {isLogin ? <Btn onClick={onLogOut}>로그아웃</Btn> : <LI><StyledLink to='/sign' onClick={handleToggleOpen}>회원가입</StyledLink></LI> }
-        </UL>
-        { isopen ?  <img src={times} className="ham" onClick={handleToggleOpen} alt='asdsa' style={{width :'40px', height : '40px'}}/> : <img className="ham" src={Hamburger} alt='햄버거' onClick={handleToggleOpen}/>}
-      </Nav>
-    )
+
+  return (
+    <Nav>
+      <h1>Logo</h1>
+      <UL isopen={isopen }>
+        <SearchBar/>
+        <LI>
+          {isLogin ? 
+            <Div>
+              <ProfileDiv>
+                <ProfileImg src={profileImg ? profileImg : defaultImg } alt='' ></ProfileImg>
+              </ProfileDiv>
+              <StyledLink to='/profile' onClick={handleToggleOpen}>{user?.displayName}</StyledLink>
+            </Div> : ""
+          }
+        </LI>
+        <LI><StyledLink to='/' onClick={handleToggleOpen}>중고거래</StyledLink></LI>
+        <LI><StyledLink to='/write' onClick={handleToggleOpen}>상품 등록</StyledLink></LI>
+        {isLogin && <LI><StyledLink to='/cart' onClick={handleToggleOpen}>장바구니</StyledLink></LI> }
+        {isLogin && <LI><StyledLink to='/chatrooms' onClick={handleToggleOpen}>채팅방</StyledLink></LI> }
+        {isLogin ? <Btn onClick={onLogOut}>로그아웃</Btn> : <LI><StyledLink to='/sign' onClick={handleToggleOpen}>회원가입</StyledLink></LI> }
+      </UL>
+      { isopen ?  <img src={times} className="ham" onClick={handleToggleOpen} alt='asdsa' style={{width :'40px', height : '40px'}}/> : <img className="ham" src={Hamburger} alt='햄버거' onClick={handleToggleOpen}/>}
+    </Nav>
+  )
 }
 
 const Nav = styled.div`
