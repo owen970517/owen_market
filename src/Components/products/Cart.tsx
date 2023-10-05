@@ -33,10 +33,9 @@ const Cart = () => {
       fetchData();
     }
   }, [userObj.uid]);
-  const sum = useMemo(
-    () => data.reduce((acc, curr) => acc + Number(curr.가격), 0),
-    [data]
-  );
+  const sum = useMemo(() => 
+    data.reduce((acc, curr) => acc + Number(curr.가격), 0)
+  ,[data]);
   const onDelete = async (id : string) => {
     const ok = window.confirm("정말 삭제하시겠습니까??");
     if (ok) {
@@ -45,24 +44,24 @@ const Cart = () => {
     }
   };
   return (
-    <div>
-        {data?.map((item) => (
-            <div key={item.id}>
-                <BgImg src={item.이미지} width='300px' height='300px'></BgImg>
-                <p>{item.상품명}</p>
-                <p>{item.가격}원</p>
-                <button onClick={() => onDelete(item.id as string)}>X</button>
-            </div>
-        ))}
-        <h1>총 {data.length}개</h1>
-        <h1>합계 : {sum}원</h1>
-    </div>
+    <>
+      {data?.map((item) => (
+          <div key={item.id}>
+              <BgImg src={item.이미지} width='300px' height='300px'></BgImg>
+              <p>{item.상품명}</p>
+              <p>{item.가격}원</p>
+              <button onClick={() => onDelete(item.id as string)}>X</button>
+          </div>
+      ))}
+      <h1>총 {data.length}개</h1>
+      <h1>합계 : {sum}원</h1>
+    </>
   )
 }
 
 const BgImg = styled.img`
-    background-size: contain;
-    background-position: center;
-    background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
 `
 export default Cart

@@ -63,13 +63,17 @@ const Detail = () => {
             <p>가격 : {data?.가격}원</p>
             <p>{data?.상태}</p>
             </div>
-            {isOwner ? <div>
-                <button onClick={onModify}>수정</button>
-                <button onClick={onSoldOut}>판매완료</button>
-            </div> : isLogin ? <div>
-                <button onClick={onChat}>채팅</button>
-                <button onClick={onAddCart}>장바구니 담기</button>
-            </div> : ''
+            {isOwner ?
+                <>
+                    <button onClick={onModify}>수정</button>
+                    <button onClick={onSoldOut}>판매완료</button>
+                
+                </> : isLogin ?
+                <>
+                    <button onClick={onChat}>채팅</button>
+                    <button onClick={onAddCart}>장바구니 담기</button>
+                
+                </> : ''
             }
         </HelmetProvider>
     )

@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom"
 import styled from "styled-components"
-import { auth, db } from "../../firebase";
+import { auth } from "../../firebase";
 import {useDispatch , useSelector} from 'react-redux'
 import { userActions } from "../../store/userSlice";
 import SearchBar from "./SearchBar";
@@ -39,7 +39,7 @@ const Header = () => {
               <ProfileDiv>
                 <ProfileImg src={profileImg ? profileImg : defaultImg } alt='' ></ProfileImg>
               </ProfileDiv>
-              <StyledLink to='/profile' onClick={handleToggleOpen}>{user?.displayName}</StyledLink>
+              <StyledLink to='/profile' onClick={handleToggleOpen}>{user.displayName}</StyledLink>
             </Div> : ""
           }
         </LI>

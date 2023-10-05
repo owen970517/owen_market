@@ -12,15 +12,15 @@ const ChatRooms = () => {
   useEffect(() => {
     const getChatList = async () => {
       try {
-        const result = await db.collection('chatroom').where('chatUser', 'array-contains', user?.displayName).get();
+        const result = await db.collection('chatroom').where('chatUser', 'array-contains', user.displayName).get();
         const list = result.docs.map(doc => doc.data())
         setChatList(list)
       } catch(e) {
-        console.log(e);
+        console.error(e);
       }
     }
     getChatList()
-  },[user?.displayName])
+  },[user.displayName])
   useEffect(() => {
     const products = chatList.map((arr) => arr.product);
     const unsubscribe = products.map((product, index) =>
