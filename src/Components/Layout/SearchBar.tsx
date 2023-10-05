@@ -5,8 +5,8 @@ import styled from 'styled-components';
 import { IStyleProps } from '../../type/StyleProps';
 import searchIcon from '../../ImgSrc/search-icon.svg'
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../store/RootState';
 import { userActions } from '../../store/userSlice';
+import { RootState } from '../../store/store';
 
 const SearchBar = () => {
   const dispatch = useDispatch();

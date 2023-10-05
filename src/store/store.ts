@@ -9,4 +9,4 @@ export const store = configureStore({
     }
 })
 
-export type RootState = ReturnType<typeof userSlice> | ReturnType<typeof regionSlice>;
+export type RootState = ReturnType<typeof store.getState>;

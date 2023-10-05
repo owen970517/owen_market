@@ -1,7 +1,18 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialUserState = {
-    user : null,
+type UserState = {
+    user: { displayName: string; uid: string } ;
+    profileImg: string;
+    isLogin: boolean;
+    isSignUp: boolean;
+    cartItems: any[];
+    isSearchBar:boolean;
+};
+
+const initialUserState:UserState = {
+    user : { 
+            displayName: '',
+            uid: '' } ,
     profileImg : '',
     isLogin : false, 
     isSignUp : true,
@@ -14,10 +25,16 @@ const userSlice = createSlice({
     initialState : initialUserState,
     reducers : {
         login(state , action) {
-            state.user = action.payload
+            state.user = {
+                displayName : action.payload.displayName,
+                uid : action.payload.uid
+            }
         },
         logout(state) {
-            state.user = null;
+            state.user = { 
+                displayName: '',
+                uid: '' 
+            } 
         },
         setIsLogin(state,action) {
             state.isLogin = action.payload
@@ -26,14 +43,11 @@ const userSlice = createSlice({
             state.isSearchBar = action.payload
         },
         addProfileImg(state,action) {
-            return {
-                ...state,
-                profileImg : action.payload
-            }
+            state.profileImg = action.payload
         },
         modifyDisplayName(state,action) {
-            if (state.user) { // Ensure that 'user' is not null before updating 'displayName'
-                state.user = action.payload;
+            if (state.user?.displayName) { 
+                state.user.displayName = action.payload;
             }
         }
     }

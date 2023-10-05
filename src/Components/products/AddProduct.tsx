@@ -13,7 +13,7 @@ import { useUpoadImage } from "../../hooks/useUploadImage";
 
 const AddProduct = () => {
   const nav = useNavigate();
-  const userObj = useSelector((state:RootState) => state.user?.user)
+  const {user} = useSelector((state:RootState) => state.user)
   const {register , handleSubmit , watch } = useForm<IForm>();
   const {compressImage} = useCompressImage();
   const {uploadImageToStorage} = useUpoadImage()
@@ -36,12 +36,12 @@ const AddProduct = () => {
       url= await uploadImageToStorage(compressedImage);
     } 
     db.collection('Product').doc(props.title).set({
-      uid : userObj.uid,
+      uid : user.uid,
       상품명 : props.item,
       가격 : props.price,
       지역 : props.region,
       상태 : '판매중',
-      올린사람 : userObj.displayName,
+      올린사람 : user.displayName,
       날짜 : formattedDate,
       이미지 : url
     });
