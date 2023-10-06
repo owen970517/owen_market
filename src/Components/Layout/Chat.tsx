@@ -14,6 +14,7 @@ const Chat = () => {
     const {register , handleSubmit,setValue} = useForm<IForm>();
     const {product} = useParams();
     const {user} = useSelector((state:RootState) => state.user)
+    console.log(user.displayName,seller,chatData,user.uid)
     useEffect(() => {
         const getChatList = async () => {
             try {
@@ -79,17 +80,17 @@ const ChatContent = styled.span`
     background: #eee;
   padding: 5px;
   border-radius: 5px;
-  float: left;
+
 `
 
 const ChatList = styled.ul`
     display :flex;
     flex-direction: column;
-
+    align-items: flex-start; 
 `
 
 const Buyer = styled.li`
-    float: right;
+    align-self: flex-end;
     margin-top: 10px;
     list-style: none;
 `
