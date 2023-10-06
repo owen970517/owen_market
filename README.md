@@ -100,6 +100,30 @@
     </div>
 </details>
 
+### 3. Lighthouse properly-size-images 개선
+
+- 원인 : 실제 이미지의 사이즈가 렌더링되는 이미지의 사이즈와 차이가 많이 날 경우 발생
+- 개선 방법 : browser-image-compression 라이브러리 사용하여 이미지 사이즈 및 크기 압축
+- 이미지 압축 코드 custom hook으로 구현 
+<details>
+    <summary><b>👈코드 보기</b></summary>
+    <div markdown="1">
+        <ul>
+            https://github.com/owen970517/carrot_clone/blob/c908db800418ab35f47eb75da43b0c68858f07f7/src/hooks/useCompressImage.tsx#L1-L14
+        </ul>
+    </div>
+</details>
+
+- 실제 사용 코드
+<details>
+    <summary><b>👈코드 보기</b></summary>
+    <div markdown="1">
+        <ul>
+            https://github.com/owen970517/carrot_clone/blob/c908db800418ab35f47eb75da43b0c68858f07f7/src/Components/products/AddProduct.tsx#L29-L49
+        </ul>
+    </div>
+</details>
+
 
 
 ## 개선한 점  
