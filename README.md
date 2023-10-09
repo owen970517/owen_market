@@ -131,12 +131,12 @@
 
 - 적용 전 
     <br/>
-    <img width='100%' src='https://github.com/owen970517/carrot_clone/assets/75247323/95246907-bb78-49a8-9325-69785e6236f2'>
+    <img width='100%' src='https://github.com/owen970517/carrot_clone/assets/75247323/cb657ed0-3b90-4cbf-a6f7-fa81b7b67291'>
     <br/>
 
 - 적용 후 
     <br/>
-    <img width='100%' src='https://github.com/owen970517/carrot_clone/assets/75247323/150cefe9-4c9a-405a-b7e8-aaf927e0efb3'>
+    <img width='100%' src='https://github.com/owen970517/carrot_clone/assets/75247323/56549f6b-f463-4972-bd3e-89983d59b48f'>
     <br/>
 
 <details>
