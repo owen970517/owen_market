@@ -24,8 +24,8 @@ function App() {
   },[dispatch])
   return (
     <BrowserRouter>
-      <Suspense fallback={<div>Loading...</div>}>
-        <Header ></Header>
+      <Suspense fallback={<div>Component Loading...</div>}>
+        <Header />
         <Pages />
       </Suspense>
     </BrowserRouter>
