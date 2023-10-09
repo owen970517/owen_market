@@ -124,6 +124,30 @@
     </div>
 </details>
 
+### 4. 초기 로딩 속도 개선
+
+- 원인 : 첫 렌더링 시 모든 컴포넌트를 불러오기 때문에 속도가 느림
+- 해결 방법 : React.lazy 함수를 사용하여 각 컴포넌트가 필요할 때 렌더링 하도록 구현 
+
+- 적용 전 
+    <br/>
+    <img width='100%' src='https://github.com/owen970517/carrot_clone/assets/75247323/95246907-bb78-49a8-9325-69785e6236f2'>
+    <br/>
+
+- 적용 후 
+    <br/>
+    <img width='100%' src='https://github.com/owen970517/carrot_clone/assets/75247323/150cefe9-4c9a-405a-b7e8-aaf927e0efb3'>
+    <br/>
+
+<details>
+    <summary><b>👈코드 보기</b></summary>
+    <div markdown="1">
+        <ul>
+            https://github.com/owen970517/carrot_clone/blob/99c0e73e9ec0250769436bf0c660308c14b05bae/src/Components/Layout/Pages.tsx#L7-L31
+        </ul>
+    </div>
+</details>
+
 
 
 ## 개선한 점  
