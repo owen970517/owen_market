@@ -39,17 +39,37 @@ const Form = styled.form`
     justify-content : center;
     align-items : center;
     flex-direction : column;
-`
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #f8f8f8;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+`;
+
 const Input = styled.input`
     width : 500px;
     height : 50px;
     margin : 10px 10px;
-`
+    border-radius: 5px;
+    padding: 0 10px;
+    font-size: 16px;
+`;
 
 const Btn = styled.button`
-  width : 300px;
-  height : 50px;
-  margin-bottom : 10px;
-`
+    width : 300px;
+    height : 50px;
+    margin-bottom : 10px;
+    border-radius: 5px;
+    border: none;
+    background-color: #007BFF;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+
+    &:hover {
+        background-color: #0056b3;
+    }
+`;
+
 export default LoginForm
 
