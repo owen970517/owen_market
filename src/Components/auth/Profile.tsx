@@ -1,5 +1,5 @@
 import { useState,useRef, useEffect, lazy, Suspense } from "react"
-import { auth, db, storage } from "../../firebase";
+import { auth, db } from "../../firebase";
 import { useNavigate} from "react-router-dom"
 import styled from "styled-components";
 import { useDispatch, useSelector} from 'react-redux'
@@ -8,10 +8,10 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { IForm } from "../../type/InputForm";
 import { userActions } from "../../store/userSlice";
 import { Helmet ,HelmetProvider } from "react-helmet-async";
-import imageCompression from 'browser-image-compression';
 import { defaultImg } from "../../constants/user";
 import { useCompressImage } from "../../hooks/useCompressImage";
 import { useUpoadImage } from "../../hooks/useUploadImage";
+import camera from '../../ImgSrc/camera.svg'
 
 const SaleProducts = lazy(() => import("../products/SaleProducts"))
 const SoldProducts = lazy(() => import("../products/SoldProducts"))
@@ -21,7 +21,7 @@ const Profile = () => {
   const {user , profileImg} = useSelector((state:RootState) => state.user);
   const {register,handleSubmit,watch} = useForm<IForm>({
     defaultValues : {
-        nickname : user.displayName
+      nickname : user.displayName
     }
   });
   const imgSrc = watch('image');
@@ -101,22 +101,20 @@ const Profile = () => {
     return (
       <HelmetProvider>
           <Helmet>
-              <title>{`중고사이트 | 채팅방`}</title>
+              <title>{`${user.displayName} | 중고사이트`}</title>
           </Helmet>
           <Div>
             <ProfileDiv>
               <ProfileImg src={imgPreview || profileImg || defaultImg}></ProfileImg>
+              <FileInput onClick={() => {fileRef.current?.click()}}>
+                <img src={camera} alt='camera icon' />
+                <input {...register('image')} type="file" ref={(data) => {
+                    register('image').ref(data);
+                    fileRef.current = data
+                }}></input>
+              </FileInput>
             </ProfileDiv>
           </Div>
-          <PreviewImg>
-              <FileInput onClick={() => {fileRef.current?.click()}}>
-                  <label>사진 변경</label>
-                  <input {...register('image')} type="file" ref={(data) => {
-                      register('image').ref(data);
-                      fileRef.current = data
-                  }}></input>
-              </FileInput>
-          </PreviewImg>
           <UserForm onSubmit={handleSubmit(onFormSubmit)}>
               <TextInput {...register('nickname')} type='text' />
               <button type="submit">수정</button>
@@ -151,46 +149,42 @@ const UserForm = styled.form`
 `
 
 const Title = styled.h1`
-    text-align: center;
+  text-align: center;
 
 `
 const ToggleBtn = styled.div`
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 `
 const ProfileDiv = styled.div`
   width: 150px;
   height : 150px;
   border-radius: 50%;
-  overflow:hidden;
+  overflow: hidden;
 `
 const ProfileImg = styled.img`
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 `
-const PreviewImg = styled.div`
+const FileInput = styled.div`
+  position: absolute;
+  bottom: 0;
+  left: 100px;
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
-`
+  width: 50px;
+  height: 50px;
+  background-color: skyblue;
+  border-radius: 50%;
+  cursor: pointer;
 
-const FileInput = styled.div`
-  label {
-    display: inline-block;
-    padding: .5em .75em;
-    color: #fff;
-    font-size: inherit;
-    line-height: normal;
-    vertical-align: middle;
-    cursor: pointer;
-    background-color: #337ab7;
-    border-color: #2e6da4;
-    border-bottom-color: #e2e2e2;
-    border-radius: .25em;
+  img {
+    width: 70%;
   }
+
   input[type='file'] {
     position: absolute;
     width: 1px;
@@ -199,21 +193,19 @@ const FileInput = styled.div`
     margin: -1px;
     overflow: hidden;
     clip:rect(0,0,0,0);
-    border: 0;
   }
 `
-
 const Div = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  position: relative;
+  width: 150px;
+  height: 150px;
+  margin: 0 auto;
 `
 const TextInput = styled.input`
-    padding : 10px;
-    text-align: center;
-    width : 100px;
-    height : 25px;
-    border-radius: 20px;
-
+  padding : 10px;
+  text-align: center;
+  width : 100px;
+  height : 25px;
+  border-radius: 20px;
 `
 export default Profile
