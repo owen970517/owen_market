@@ -1,12 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { IData } from "../type/ItemProps";
 
 const initialRegionState:any = {
     activeRegion : '전체',
-    data : [], 
-    filteredData : [],
-    wholeData : [],
-    index : 0,
+    allProducts : [], 
+    filteredProducts : [],
 }
 
 const regionSlice = createSlice({
@@ -14,21 +11,17 @@ const regionSlice = createSlice({
     initialState : initialRegionState,
     reducers : {
         changeRegion(state , action) {
-            return {
-                ...state,
-                activeRegion: action.payload
-            }
+            state.activeRegion = action.payload
         },
-        setData(state ,action) {
-            state.data = action.payload
+        setAllProducts(state ,action) {
+            state.allProducts = action.payload
         },
-        setFilteredData(state,action) {
-            state.filteredData = action.payload.slice(0,10)
-            state.wholeData = action.payload
+        setFilteredProducts(state,action) {
+            state.filteredProducts = action.payload.slice(0,10)
         },
         getMoreDataList(state,action) {
-            const prevData = state.filteredData
-            state.filteredData = [...prevData,...action.payload]
+            const prevData = state.filteredProducts
+            state.filteredProducts = [...prevData,...action.payload]
         }
     }
 })
