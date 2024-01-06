@@ -11,4 +11,5 @@ export interface IForm {
     nickname :string
     passwordConfirm :string
     chat : string
+    description : string
   }
