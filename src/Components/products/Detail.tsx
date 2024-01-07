@@ -6,7 +6,7 @@ import { IData } from "../../type/ItemProps";
 import { useSelector} from 'react-redux'
 import { RootState } from "../../store/store";
 import noImg from '../../ImgSrc/noimage.jpg'
-import { Helmet ,HelmetProvider } from "react-helmet-async";
+import { Helmet } from "react-helmet-async";
 
 const Detail = () => {
     const {user , isLogin} = useSelector((state:RootState) => state.user);
@@ -51,36 +51,87 @@ const Detail = () => {
         return <div>Loading...</div>;
     }
     return (
-        <HelmetProvider>
+        <>
             <Helmet>
                 <title>{`${data?.상품명} | 중고사이트`}</title>
             </Helmet>
-            <BgImg src={data?.이미지 ? data?.이미지 : noImg } width='30%' height='300px'></BgImg>
-            <div>
-            <h5>올린사람 : {data?.올린사람} </h5>
-            <h5 >상품명 : {data?.상품명}</h5>
-            <p>올린날짜 : {data?.날짜}</p>
-            <p>가격 : {data?.가격}원</p>
-            <p>{data?.상태}</p>
-            </div>
-            {isOwner ?
-                <>
-                    <button onClick={onModify}>수정</button>
-                    <button onClick={onSoldOut}>판매완료</button>
-                
-                </> : isLogin ?
-                <>
-                    <button onClick={onChat}>채팅</button>
-                    <button onClick={onAddCart}>장바구니 담기</button>
-                
-                </> : ''
-            }
-        </HelmetProvider>
+            <Container>
+                <BgImg src={data?.이미지 ? data?.이미지 : noImg }></BgImg>
+                <InfoContainer>
+                    <Content>
+                        <h5>올린사람: {data?.올린사람}</h5>
+                        <h5>상품명: {data?.상품명}</h5>
+                        <p>올린날짜: {data?.날짜}</p>
+                        <p>{data?.가격}원</p>
+                        <Description>
+                            <p>{data.설명?.replace(/<br>/g, '\n')}</p>
+                        </Description>
+                        <p>{data?.상태}</p>
+                    </Content>
+                    {isOwner ?
+                        <ButtonGroup>
+                            <Button onClick={onModify}>수정</Button>
+                            <Button onClick={onSoldOut}>판매완료</Button>
+                        </ButtonGroup> : isLogin ?
+                        <ButtonGroup>
+                            <Button onClick={onChat}>채팅</Button>
+                            <Button onClick={onAddCart}>담기</Button>
+                        </ButtonGroup> : ''
+                    }
+                </InfoContainer>
+            </Container>
+        </>
     )
 }
+const Container = styled.div`
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+`;
+
 const BgImg = styled.img`
-    background-size: contain;
-    background-position: center;
-    background-repeat: no-repeat;
+    width: 45%;
+    height: 500px;
+    object-fit: cover;
+    border-radius: 10px;
+`;
+
+const InfoContainer = styled.div`
+    width: 50%;
+`;
+
+const Description = styled.div`
+    white-space: pre-line;
 `
+
+const Content = styled.div`
+    padding: 20px;
+    background-color: #f8f8f8;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+`;
+
+const ButtonGroup = styled.div`
+    display: flex;
+    justify-content: space-around;
+    margin: 0 auto;
+    width: 300px;
+`;
+
+const Button = styled.button`
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    background-color: #007BFF;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+
+    &:hover {
+        background-color: #0056b3;
+    }
+`;
+
 export default Detail

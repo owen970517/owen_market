@@ -99,7 +99,7 @@ const Profile = () => {
   }
     
     return (
-      <HelmetProvider>
+      <>
           <Helmet>
               <title>{`${user.displayName} | 중고사이트`}</title>
           </Helmet>
@@ -124,19 +124,19 @@ const Profile = () => {
               <button onClick={() => setSale((prev) => !prev)}>판매완료</button>
           </ToggleBtn>
           <Suspense fallback={<h1>Loading...</h1>}>
-              {sale ?
-                  <>
-                    <Title>판매중</Title>
-                    <SaleProducts />
-                  </>
-                  :  
-                  <>
-                    <Title>판매완료</Title>
-                    <SoldProducts />
-                  </>
-              }
+            {sale ?
+                <>
+                  <Title>판매중</Title>
+                  <SaleProducts />
+                </>
+                :  
+                <>
+                  <Title>판매완료</Title>
+                  <SoldProducts />
+                </>
+            }
           </Suspense>
-      </HelmetProvider>
+      </>
     )
 }
 

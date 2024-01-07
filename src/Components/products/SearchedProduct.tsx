@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { RootState } from '../../store/store';
 import { IData } from '../../type/ItemProps';
 import noImg from '../../ImgSrc/noimage.jpg'
-import { Helmet ,HelmetProvider } from "react-helmet-async";
+import { Helmet } from "react-helmet-async";
 
 const Search = () => {
   const params = useParams();
@@ -12,7 +12,7 @@ const Search = () => {
   const input = params.input;
   const searchedData = input ? data.filter((item: IData) => item.상품명?.includes(input)) : []
   return (
-    <HelmetProvider>
+    <>
       <Helmet>
         <title>{`${params.input} | 중고사이트`}</title>
       </Helmet>
@@ -31,7 +31,7 @@ const Search = () => {
           )
         })}
       </Grid>
-    </HelmetProvider>
+    </>
   )
 }
 const Grid = styled.div`

@@ -6,6 +6,7 @@ import { auth } from "./firebase";
 import { useDispatch } from "react-redux";
 import { userActions } from "./store/userSlice";
 import React , {Suspense} from "react"
+import { Helmet, HelmetProvider } from "react-helmet-async";
 
 function App() {
   const dispatch = useDispatch();
@@ -25,8 +26,13 @@ function App() {
   return (
     <BrowserRouter>
       <Suspense fallback={<div>Component Loading...</div>}>
-        <Header />
-        <Pages />
+        <HelmetProvider>
+          <Helmet>
+            <title>중고사이트</title>
+          </Helmet>
+          <Header />
+          <Pages />
+        </HelmetProvider>
       </Suspense>
     </BrowserRouter>
   );

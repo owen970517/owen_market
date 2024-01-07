@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import {  useState , useEffect,useRef } from "react";
 import { IForm } from "../../type/InputForm";
 import { useSelector} from 'react-redux'
-import { Helmet ,HelmetProvider } from "react-helmet-async";
+import { Helmet } from "react-helmet-async";
 import { RootState } from "../../store/store";
 import { useCompressImage } from "../../hooks/useCompressImage";
 import { useUpoadImage } from "../../hooks/useUploadImage";
@@ -56,7 +56,7 @@ const AddProduct = () => {
     }
   }
   return (
-    <HelmetProvider>
+    <>
       <Helmet>
         <title>{`상품 등록 | 중고사이트`}</title>
       </Helmet>
@@ -83,7 +83,7 @@ const AddProduct = () => {
             <Input type="submit" value='올리기' onClick={() => onAddProduct}></Input>
         </Form>
       </Wrapper>
-    </HelmetProvider>
+    </>
   )
 }
 const Wrapper = styled.div`
