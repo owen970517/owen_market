@@ -14,7 +14,7 @@ const Chat = () => {
     const {register , handleSubmit,setValue} = useForm<IForm>();
     const {product} = useParams();
     const {user} = useSelector((state:RootState) => state.user)
-    console.log(user.displayName,seller,chatData,user.uid)
+    
     useEffect(() => {
         const getChatList = async () => {
             try {

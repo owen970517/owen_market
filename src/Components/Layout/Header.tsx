@@ -56,7 +56,6 @@ const Header = () => {
 
 const Nav = styled.div`
   background-color: #74c0fc;
-  width: 100%;
   padding: 10px;
   display: flex;
   align-items: center;
@@ -109,7 +108,7 @@ const Btn = styled.button `
 
 const StyledLink = styled(Link)`
   text-decoration: none;
-  color : white;
+  color : #000;
   display: block;
   padding: 10px;
 `
