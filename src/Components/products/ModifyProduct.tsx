@@ -38,19 +38,27 @@ const Modify = () => {
   }, [uploadImg, data?.이미지]);
 
   const onModified:SubmitHandler<IForm> = async (props) => {
-    const Img = props.image[0];
-    if (Img) {
+    const description = data?.설명?.replace(/\n/g, '<br>');
+    const item = data?.상품명
+    const price = data?.가격
+    let imageUrl = imagePreview;
+    if (props.image[0]) {
+      const Img = props.image[0];
       const compressedImage = await compressImage(Img);
-      const url= await uploadImageToStorage(compressedImage);
-      await db.collection('Product').doc(params.uid).update({
-        이미지: url,
-        상품명: watch('item'),
-        가격: watch('price'),
-        날짜: formattedDate
-      });
-      nav('/');
-    }
-  };  
+      imageUrl = await uploadImageToStorage(compressedImage);
+    } 
+    
+    await db.collection('Product').doc(params.uid).update({
+      이미지: imageUrl,
+      상품명: props.item ? props.item : item,
+      가격: props.price ? props.price : price,
+      날짜: formattedDate,
+      설명 : props.description ? props.description.replace(/\n/g, '<br>') : description,
+    });
+  
+    nav('/');
+  };
+   
   return (
     <>
       <FileInput onClick={() => FileRef.current?.click()}>
@@ -66,12 +74,12 @@ const Modify = () => {
           <h5>상품명 : <input type='text' {...register('item')} defaultValue={data?.상품명}></input></h5>
           <p>올린날짜 : {data?.날짜}</p>
           <p>가격 : <input type='text' {...register('price')} defaultValue={data?.가격}></input></p>
+          <Textarea {...register("description")} defaultValue={data?.설명?.replace(/<br>/g, '\n')}></Textarea>
       </div>
       <button onClick={handleSubmit(onModified)}>수정 완료</button>
     </>
   )
 }
-
 
 const BgImg = styled.img`
   width: 50%;
@@ -107,6 +115,18 @@ const FileInput = styled.div`
     overflow: hidden;
     clip:rect(0,0,0,0);
     border: 0;
+  }
+`
+const Textarea = styled.textarea`
+  width: 100%;
+  height: 100px;
+  border-radius: 5px;
+  border: 1px solid #FF8A3D;
+  padding: 10px;
+  font-size: 16px;
+  margin-bottom: 10px;
+  &:focus {
+    border-color: #FF8A3D;
   }
 `
 export default Modify
