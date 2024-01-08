@@ -8,6 +8,8 @@ import { IForm } from "../../type/InputForm";
 import { useParams } from "react-router-dom"
 import { IMessage } from '../../type/messageProps';
 import React from 'react';
+import dayjs from 'dayjs';
+
 const Chat = () => {
     const [chatData,setChatData] = useState<IMessage[]>([]);
     const [seller , setSeller] = useState('');
@@ -39,63 +41,82 @@ const Chat = () => {
         setValue('chat' , '')
         db.collection('chatroom').doc(product).collection('messages').add({
             content : props.chat,
-            date : new Date(),
+            date : new Date(), // dayjs().toDate() 사용 가능 
             보낸사람 : user.uid
         })
     }
-
     return (
         <>
-            <h1>{seller}님 과의 채팅방</h1>
+            <h2>{seller}님 과의 채팅방</h2>
             <ChatBox>
                 <ChatList>
                     {chatData.map((item:IMessage) => {
                         return  (
                             <React.Fragment key={item.date}>
-                                {item.보낸사람 === user.uid ? <Buyer><ChatContent>{item.content}</ChatContent></Buyer> :
-                                    <Seller><ChatContent>{item.content}</ChatContent></Seller>
+                                {item.보낸사람 === user.uid ? <Buyer>{item.content}</Buyer> :
+                                    <Seller>{item.content}</Seller>
                                 }
                             </React.Fragment>
                         )
                     })}
                 </ChatList>
             </ChatBox>
-            <div>
-                <form onSubmit={handleSubmit(onChatSubmit)}>
-                    <input {...register('chat' , {required :true })} type='text' placeholder= '메시지를 입력하시오'/><button>전송</button>
-                </form>
-            </div>
+            <ChatForm onSubmit={handleSubmit(onChatSubmit)}>
+                <ChatInput {...register('chat' , {required :true })} type='text' placeholder= '메시지를 입력하시오'/>
+                <button>전송</button>
+            </ChatForm>
         </>
-        
     )
 }
-
 const ChatBox = styled.div`
-  height: 450px;
-  overflow-y: scroll;
-  padding: 10px;
-  background-color: whitesmoke;
-`
-const ChatContent = styled.span`
-    background: #eee;
-  padding: 5px;
-  border-radius: 5px;
+    width : 70%;
+    height: 450px;
+    overflow-y: scroll;
+    padding: 10px;
+    background-color: #f8f8f8;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin : 0 auto;
+`;
 
-`
-
-const ChatList = styled.ul`
+const ChatList = styled.div`
     display :flex;
     flex-direction: column;
     align-items: flex-start; 
-`
+`;
 
-const Buyer = styled.li`
+const Buyer = styled.div`
     align-self: flex-end;
     margin-top: 10px;
-    list-style: none;
-`
-const Seller = styled.li`
+    background-color: yellow;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 14px;
+    line-height: 1.5;
+    word-wrap: break-word;
+`;
+
+const Seller = styled.div`
     margin-top: 10px;
+    background-color: #474444;
+    color : #fff;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 14px;
+    line-height: 1.5;
+    word-wrap: break-word;
+`;
+
+const ChatForm = styled.form`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+`
+const ChatInput =styled.input`
+    width: 300px;
+    height: 30px;
 `
 
 export default Chat
