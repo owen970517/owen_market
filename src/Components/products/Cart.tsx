@@ -6,7 +6,6 @@ import { useSelector} from 'react-redux'
 import { RootState } from '../../store/store';
 import React from 'react';
 
-// data가 업데이트 마다 리렌더링 되는 문제를 고침 
 const Cart = () => {
   const userObj = useSelector((state:RootState) => state.user.user);
   const [data,setData] = useState<IData[]>([]);
@@ -44,18 +43,20 @@ const Cart = () => {
     }
   };
   return (
-    <>
+    <CartContainer>
       {data?.map((item) => (
-          <div key={item.id}>
-              <BgImg src={item.이미지} width='300px' height='300px'></BgImg>
-              <p>{item.상품명}</p>
-              <p>{item.가격}원</p>
-              <button onClick={() => onDelete(item.id as string)}>X</button>
-          </div>
+        <CartItem key={item.id}>
+          <ItemImage src={item.이미지} alt={item.상품명} />
+          <ItemInfo>
+            <p>{item.상품명}</p>
+            <p>{item.가격}원</p>
+          </ItemInfo>
+          <DeleteButton onClick={() => onDelete(item.id as string)}>X</DeleteButton>
+        </CartItem>
       ))}
       <h1>총 {data.length}개</h1>
       <h1>합계 : {sum}원</h1>
-    </>
+    </CartContainer>
   )
 }
 
@@ -64,4 +65,42 @@ const BgImg = styled.img`
   background-position: center;
   background-repeat: no-repeat;
 `
+
+const CartContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const CartItem = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 80%;
+  margin: 20px 0;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+`;
+
+const ItemImage = styled.img`
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 10px;
+`;
+
+const ItemInfo = styled.div`
+  flex-grow: 1;
+  margin-left: 20px;
+`;
+
+const DeleteButton = styled.button`
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+`;
 export default Cart
