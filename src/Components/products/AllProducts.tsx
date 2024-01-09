@@ -6,6 +6,12 @@ import noImg from '../../ImgSrc/noimage.jpg'
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import SkeletonUI from '../Layout/SkeletonUI'
 import useProducts from '../../hooks/useProducts'
+import dayjs from 'dayjs'
+import relativeTime from "dayjs/plugin/relativeTime";
+import "dayjs/locale/ko";
+
+dayjs.extend(relativeTime);
+dayjs.locale("ko");
 
 const AllProducts = () => {
   const { filteredProducts, ref } = useProducts();
@@ -14,16 +20,19 @@ const AllProducts = () => {
   return (
     <Grid>
       {filteredProducts.length > 0 
-        ? filteredProducts.map((p: IData, idx: number) => (
-          <Item key={p.id}>
-            <LazyLoadImage src={p.이미지 ? p.이미지 : noImg} alt='이미지를 불러오지 못했습니다.' width={300} height={300} effect='blur' />
-            <div ref={idx === filteredProducts.length - 1 ? ref : undefined}>
-              <StyledLink to={`/detail/${p.id}`}><h3>{p.상품명}</h3></StyledLink>
-              <h3>{p.날짜}</h3>
-              <h3>{p.지역}</h3>
-              <h3>{p.가격?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}원</h3>
-            </div>
-          </Item>))
+        ? filteredProducts.map((p: IData, idx: number) => {
+          return (
+            <Item key={p.id}>
+              <LazyLoadImage src={p.이미지 ? p.이미지 : noImg} alt='이미지를 불러오지 못했습니다.' width={300} height={300} effect='blur' />
+              <div ref={idx === filteredProducts.length - 1 ? ref : undefined}>
+                <StyledLink to={`/detail/${p.id}`}><h3>{p.상품명}</h3></StyledLink>
+                <h3>{dayjs(p.날짜).fromNow()}</h3>
+                <h3>{p.지역}</h3>
+                <h3>{p.가격?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}원</h3>
+              </div>
+            </Item>
+          )
+        })
         : defaultItems}
     </Grid>
   )

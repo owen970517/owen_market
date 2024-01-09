@@ -29,8 +29,6 @@ const AddProduct = () => {
   const onAddProduct:SubmitHandler<IForm> = async (props) => {
     let url =''
     const Img = props.image[0];
-    const date = dayjs();
-    const formattedDate = date.format('YYYY년MM월DD일');
     const description = props.description.replace(/\n/g, '<br>');
     if(Img) {
       const compressedImage = await compressImage(Img);
@@ -43,7 +41,7 @@ const AddProduct = () => {
       지역 : props.region,
       상태 : '판매중',
       올린사람 : user.displayName,
-      날짜 : formattedDate,
+      날짜 : dayjs().format(),
       이미지 : url,
       설명 : description,
     });
