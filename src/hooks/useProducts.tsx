@@ -7,11 +7,9 @@ import { regionActions } from '../store/regionSlice';
 
 const useProducts = () => {
     const dispatch = useDispatch();
-    const { filteredProducts, allProducts } = useSelector((state: RootState) => state.region);
+    const { filteredProducts, nowIndex, filteredAllProducts } = useSelector((state: RootState) => state.region);
     const [isLoading, setIsLoading] = useState(false);
-    const [nowIndex, setNowIndex] = useState(0);
     const [ref, inView] = useInView({ threshold: 0.5 });
-
     const fetchProducts = useCallback(() => {
         db.collection('Product')
             .where('상태', '==', '판매중')
@@ -27,22 +25,20 @@ const useProducts = () => {
 
     const getMoreProduct = useCallback(() => {
         setIsLoading(true);
-        dispatch(regionActions.getMoreDataList(allProducts.slice(nowIndex, nowIndex + 10)))
-        setNowIndex(prevIndex => prevIndex + 10);
-    }, [dispatch, nowIndex, allProducts]);
+        dispatch(regionActions.getMoreDataList(filteredAllProducts.slice(nowIndex, nowIndex + 10)))
+        dispatch(regionActions.setNowIndex())
+        setIsLoading(false);
+    }, [filteredAllProducts, dispatch, nowIndex]);
 
     useEffect(() => {
         fetchProducts();
     }, [fetchProducts]);
 
     useEffect(() => {
-        if (inView && !isLoading && nowIndex < allProducts.length) {
+        if (inView && !isLoading && filteredProducts.length < filteredAllProducts.length) {
             getMoreProduct();
         }
-        if (isLoading && inView) {
-            setIsLoading(false);
-        }
-    }, [inView, nowIndex, isLoading, allProducts.length, getMoreProduct]);
+    }, [inView, filteredProducts.length, isLoading, filteredAllProducts.length, getMoreProduct]);
 
     return { filteredProducts, ref, isLoading };
 }

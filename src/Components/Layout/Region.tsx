@@ -8,17 +8,17 @@ import { Regions } from "../../constants/region";
 
 const Region = () => {
     const dispatch = useDispatch()
-    const {activeRegion,allProducts} = useSelector((state:RootState)=> state.region);
+    const { activeRegion, allProducts } = useSelector((state: RootState) => state.region);
+
     useEffect(() => {
-        if (activeRegion === '전체') {
-            dispatch(regionActions.setFilteredProducts(allProducts));
-            return;
-        } 
-        const filtered = allProducts.filter((region:IData) => region.지역 === activeRegion)
-        dispatch(regionActions.setFilteredProducts(filtered));
-    },[allProducts, dispatch, activeRegion]);
-    const onRegionClick = (e:React.MouseEvent<HTMLButtonElement>) => {
-        dispatch(regionActions.changeRegion(e.currentTarget.innerText))
+      const filtered = activeRegion === '전체' ? allProducts : allProducts.filter((region: IData) => region.지역 === activeRegion);
+      dispatch(regionActions.setFilteredProducts(filtered));
+      dispatch(regionActions.setFilteredAllProducts(filtered));
+      dispatch(regionActions.resetIndex());
+    }, [allProducts, dispatch, activeRegion]);
+  
+    const onRegionClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+      dispatch(regionActions.changeRegion(e.currentTarget.innerText));
     }
     return (
         <Wrapper>
