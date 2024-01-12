@@ -60,12 +60,6 @@ const Cart = () => {
   )
 }
 
-const BgImg = styled.img`
-  background-size: contain;
-  background-position: center;
-  background-repeat: no-repeat;
-`
-
 const CartContainer = styled.div`
   display: flex;
   flex-direction: column;

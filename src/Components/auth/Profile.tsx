@@ -7,7 +7,7 @@ import { RootState } from "../../store/store";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { IForm } from "../../type/InputForm";
 import { userActions } from "../../store/userSlice";
-import { Helmet ,HelmetProvider } from "react-helmet-async";
+import { Helmet } from "react-helmet-async";
 import { defaultImg } from "../../constants/user";
 import { useCompressImage } from "../../hooks/useCompressImage";
 import { useUpoadImage } from "../../hooks/useUploadImage";
