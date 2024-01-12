@@ -47,7 +47,7 @@ const Header = () => {
         <LI><StyledLink to='/write' onClick={handleToggleOpen}>상품 등록</StyledLink></LI>
         {isLogin && <LI><StyledLink to='/cart' onClick={handleToggleOpen}>장바구니</StyledLink></LI> }
         {isLogin && <LI><StyledLink to='/chatrooms' onClick={handleToggleOpen}>채팅방</StyledLink></LI> }
-        {isLogin ? <LI><Btn onClick={onLogOut}>로그아웃</Btn></LI> : <LI><StyledLink to='/sign' onClick={handleToggleOpen}>회원가입</StyledLink></LI> }
+        {isLogin ? <LI><LogoutBtn onClick={onLogOut}>로그아웃</LogoutBtn></LI> : <LI><StyledLink to='/sign' onClick={handleToggleOpen}>회원가입</StyledLink></LI> }
       </UL>
       { isopen ?  <img src={times} className="ham" onClick={handleToggleOpen} alt='asdsa' style={{width :'40px', height : '40px'}}/> : <img className="ham" src={Hamburger} alt='햄버거' onClick={handleToggleOpen}/>}
     </Nav>
@@ -102,8 +102,19 @@ const LI =  styled.li`
     }
   }
 `
-const Btn = styled.button `
-  
+const LogoutBtn = styled.button `
+    background-color: #f44336; 
+    border: none; 
+    color: white;
+    padding: 10px 20px; 
+    cursor: pointer; 
+    font-size: 14px; 
+    border-radius: 4px; 
+    transition: inherit 0.3s ease; 
+
+    &:hover {
+      background-color: #da190b; 
+    }
 `
 
 const StyledLink = styled(Link)`
@@ -111,6 +122,9 @@ const StyledLink = styled(Link)`
   color : #000;
   display: block;
   padding: 10px;
+  &:hover {
+    color : #fff;
+  }
 `
 const ProfileDiv = styled.div`
   width : 50px;
