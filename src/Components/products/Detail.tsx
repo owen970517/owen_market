@@ -5,8 +5,8 @@ import { useEffect, useState } from "react";
 import { IData } from "../../type/ItemProps";
 import { useSelector} from 'react-redux'
 import { RootState } from "../../store/store";
-import noImg from '../../ImgSrc/noimage.jpg'
 import { Helmet } from "react-helmet-async";
+import ImageSlider from "./ImageSlider";
 
 const Detail = () => {
     const {user , isLogin} = useSelector((state:RootState) => state.user);
@@ -56,7 +56,8 @@ const Detail = () => {
                 <title>{`${data?.상품명} | 중고사이트`}</title>
             </Helmet>
             <Container>
-                <BgImg src={data?.이미지 ? data?.이미지 : noImg }></BgImg>
+                {/* <BgImg src={data?.이미지 ? data?.이미지 : noImg }></BgImg> */}
+                <ImageSlider images={data.이미지 as any}/>
                 <InfoContainer>
                     <Content>
                         <h5>올린사람: {data?.올린사람}</h5>
@@ -87,13 +88,6 @@ const Container = styled.div`
     display: flex;
     justify-content: space-between;
     padding: 20px;
-`;
-
-const BgImg = styled.img`
-    width: 45%;
-    height: 500px;
-    object-fit: cover;
-    border-radius: 10px;
 `;
 
 const InfoContainer = styled.div`

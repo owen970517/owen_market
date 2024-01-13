@@ -17,23 +17,24 @@ const AddProduct = () => {
   const {register , handleSubmit , watch } = useForm<IForm>();
   const {compressImage} = useCompressImage();
   const {uploadImageToStorage} = useUpoadImage()
-  const [imgPreview , setImgPreview] = useState('');
+  const [images,setImages] = useState<File[]>([]);
   const imgSrc = watch('image');
   const fileRef = useRef<HTMLInputElement | null>(null);
   useEffect(()=> {
     if(imgSrc && imgSrc.length > 0) {
       const file = imgSrc[0];
-      setImgPreview(URL.createObjectURL(file));
+      setImages((prev) => [...prev,file])
     }
   },[imgSrc])
   const onAddProduct:SubmitHandler<IForm> = async (props) => {
-    let url =''
-    const Img = props.image[0];
     const description = props.description.replace(/\n/g, '<br>');
-    if(Img) {
-      const compressedImage = await compressImage(Img);
-      url= await uploadImageToStorage(compressedImage);
-    } 
+    const urls = await Promise.all(
+      images.map(async (Img:File) => {
+        const compressedImage = await compressImage(Img);
+        const url = await uploadImageToStorage(compressedImage);
+        return url;
+      })
+    );
     db.collection('Product').doc(props.title).set({
       uid : user.uid,
       상품명 : props.item,
@@ -42,13 +43,16 @@ const AddProduct = () => {
       상태 : '판매중',
       올린사람 : user.displayName,
       날짜 : dayjs().format(),
-      이미지 : url,
+      이미지 : urls,
       설명 : description,
     });
     nav('/');
   }
-  const onImgDel = async () => {
-    setImgPreview("");
+  const onImgDel = (idx:number) => {
+    setImages(prevImages => {
+      const newImages = prevImages.filter((image, index) => index !== idx);
+      return newImages;
+    });
     if (fileRef.current) {
       fileRef.current.value = "";
     }
@@ -59,12 +63,16 @@ const AddProduct = () => {
         <title>{`상품 등록 | 중고사이트`}</title>
       </Helmet>
       <Wrapper>
-        {imgPreview && 
-          <PreviewWrapper>
-            <Preview src={imgPreview } alt="없음"/>
-            <DeleteBtn onClick={onImgDel}>❌</DeleteBtn>
-          </PreviewWrapper>
-        } 
+        <Container>
+          {images && images.map((image,idx:number) => {
+            return (
+              <PreviewWrapper key={idx}>
+                <Preview src={URL.createObjectURL(image)} alt="없음"/>
+                <DeleteBtn onClick={() => onImgDel(idx)}>❌</DeleteBtn>
+              </PreviewWrapper>
+            )
+          })}
+        </Container>
         <Form onSubmit={handleSubmit(onAddProduct)}>
             <FileInput onClick={() => {fileRef.current?.click()}}>
               <label>업로드</label>
@@ -114,6 +122,13 @@ const Input = styled.input`
     border-color: #FF8A3D;
   }
 `
+const Container = styled.div`
+  width: 550px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+`
+
 const PreviewWrapper = styled.div`
   position: relative;
 `
@@ -132,8 +147,8 @@ const DeleteBtn = styled.div`
 `
 
 const Preview = styled.img`
-  width: 100%;
-  height: 300px;
+  width: 100px;
+  height: 100px;
   object-fit: cover;
   border-radius: 10px;
   margin-bottom: 20px;
