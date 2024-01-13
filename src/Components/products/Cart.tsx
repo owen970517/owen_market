@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { IData } from '../../type/ItemProps';
 import { useSelector} from 'react-redux'
 import { RootState } from '../../store/store';
-import React from 'react';
+import noImg from '../../ImgSrc/noimage.jpg'
 
 const Cart = () => {
   const userObj = useSelector((state:RootState) => state.user.user);
@@ -46,7 +46,7 @@ const Cart = () => {
     <CartContainer>
       {data?.map((item) => (
         <CartItem key={item.id}>
-          <ItemImage src={item.이미지} alt={item.상품명} />
+          <ItemImage src={item.이미지 ? item.이미지 : noImg} alt={item.상품명} />
           <ItemInfo>
             <p>{item.상품명}</p>
             <p>{item.가격}원</p>

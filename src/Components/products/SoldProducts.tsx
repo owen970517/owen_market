@@ -5,6 +5,8 @@ import styled from 'styled-components'
 import { db } from '../../firebase'
 import { RootState } from '../../store/store';
 import { IData } from '../../type/ItemProps';
+import noImg from '../../ImgSrc/noimage.jpg'
+
 const SoldProducts = () => {
   const user = useSelector((state:RootState) => state.user.user)
   const [soldData , setSoldData] = useState<IData[]>([]);
@@ -30,10 +32,10 @@ const SoldProducts = () => {
   return (
     <Grid>
       {soldData.length === 0 && <h1>판매된 상품이 존재하지 않습니다.</h1>}
-    {soldData.map((p) =>  {
-        return (
+      {soldData.map((p) =>  {
+          return (
             <div key={p.id}>
-            <img src={p.이미지 ? p.이미지 : 'https://via.placeholder.com/350'} alt='img' width ='200px' height='200px'/>
+            <img src={p.이미지 ? p.이미지 : noImg} alt='img' width ='200px' height='200px'/>
             <div>
                 <Link to={`/detail/${p.id}`}><h3>{p.상품명}</h3></Link>
                 <h3>{p.날짜}</h3>
@@ -41,8 +43,8 @@ const SoldProducts = () => {
                 <h3>{p.가격?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}원</h3>
             </div>
             </div>
-            )
-    })}
+          )
+      })}
 </Grid>
   )
 }
