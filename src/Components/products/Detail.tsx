@@ -7,6 +7,11 @@ import { useSelector} from 'react-redux'
 import { RootState } from "../../store/store";
 import { Helmet } from "react-helmet-async";
 import ImageSlider from "./ImageSlider";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+import "dayjs/locale/ko";
+dayjs.extend(relativeTime);
+dayjs.locale("ko");
 
 const Detail = () => {
     const {user , isLogin} = useSelector((state:RootState) => state.user);
@@ -62,7 +67,7 @@ const Detail = () => {
                     <Content>
                         <h5>올린사람: {data?.올린사람}</h5>
                         <h5>상품명: {data?.상품명}</h5>
-                        <p>올린날짜: {data?.날짜}</p>
+                        <p>올린날짜: {dayjs(data.날짜).fromNow()}</p>
                         <p>{data?.가격}원</p>
                         <Description>
                             <p>{data.설명?.replace(/<br>/g, '\n')}</p>
