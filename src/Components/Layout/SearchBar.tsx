@@ -7,6 +7,7 @@ import searchIcon from '../../ImgSrc/search-icon.svg'
 import { useDispatch, useSelector } from 'react-redux';
 import { userActions } from '../../store/userSlice';
 import { RootState } from '../../store/store';
+import { useCallback } from 'react';
 
 const SearchBar = () => {
   const dispatch = useDispatch();
@@ -18,10 +19,10 @@ const SearchBar = () => {
     dispatch(userActions.searchToggle(false))
     setValue('search' , '')
   })
-  const toggleSearch = () => {
+  const toggleSearch = useCallback(() => {
     dispatch(userActions.searchToggle(!isSearchBar))
     setFocus('search');
-  }
+  },[dispatch, isSearchBar, setFocus])
   return (
     <SearchForm isopen={isSearchBar} onSubmit={onSearch}>
       <img src={searchIcon} alt='search' style={{width : '30px' , height : '30px' }} onClick={toggleSearch}/>
@@ -35,7 +36,7 @@ const SearchForm = styled.form`
   justify-content: center;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   background-color: #44a8f4;
-  width: ${(props:IStyleProps) => (props.isopen ? "30rem" : "2rem")};
+  width: ${(props:IStyleProps) => (props.isopen ? "25rem" : "2rem")};
   cursor: ${(props:IStyleProps)=> (props.isopen ? "auto" : "pointer")};
   padding: 10px;
   height: 20px;
@@ -49,8 +50,10 @@ const SearchInput = styled.input`
   width: 100%;
   border: none;
   color: white;
-  display : ${(props:IStyleProps) => props.isopen ? 'block' : 'none'};
-  transition: margin 300ms cubic-bezier(0.645, 0.045, 0.355, 1);
+  opacity: ${(props:IStyleProps) => props.isopen ? '1' : '0'};
+  visibility: ${(props:IStyleProps) => props.isopen ? 'visible' : 'hidden'};
+  transition: opacity 300ms cubic-bezier(0.645, 0.045, 0.355, 1),
+              visibility 300ms cubic-bezier(0.645, 0.045, 0.355, 1);
   ::placeholder {
     color : white
   }
