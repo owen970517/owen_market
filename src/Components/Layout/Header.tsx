@@ -102,19 +102,23 @@ const LI =  styled.li`
     }
   }
 `
-const LogoutBtn = styled.button `
-    background-color: #f44336; 
-    border: none; 
-    color: white;
-    padding: 10px 20px; 
-    cursor: pointer; 
-    font-size: 14px; 
-    border-radius: 4px; 
-    transition: inherit 0.3s ease; 
 
-    &:hover {
-      background-color: #da190b; 
-    }
+const LogoutBtn = styled.button`
+  background-color: #0056b3; 
+  color : #ffffff; 
+  border-radius: 10px;
+  border: none;
+  padding: 10px 20px;
+  margin: 0 10px;
+  font-size: 16px;
+  cursor: pointer;
+  position: relative;
+  transition: color 0.2s ease;
+  
+  &:hover {
+    background-color: #007BFF; 
+    color: #ffffff;
+  }
 `
 
 const StyledLink = styled(Link)`
