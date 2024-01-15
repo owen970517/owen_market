@@ -47,7 +47,8 @@ const userSlice = createSlice({
         },
         modifyDisplayName(state,action) {
             if (state.user?.displayName) { 
-                state.user.displayName = action.payload;
+                state.user.displayName = action.payload.displayName;
+                state.user.uid = action.payload.uid
             }
         }
     }
