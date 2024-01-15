@@ -49,7 +49,6 @@ const ChatRooms = () => {
     <ChatRoomContainer>
       {chatList.length === 0 && <h1>채팅방이 없습니다.</h1>}
       {chatList.map((chat, index) => {
-        console.log(dayjs(chat.date.toDate()).fromNow())
         const otherUser = chat.chatUser.find((p:any) => p !== user?.displayName);
         return (
           <ChatRoomItem key={index}>
