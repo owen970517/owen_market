@@ -58,17 +58,15 @@ const SignupForm = ({setLogin} :IProps) => {
     }
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
-        <h1>회원가입</h1>
-        <Input {...register('name', validationRules.name)} type='text' placeholder="닉네임" isError={errors.name ? 'red' : ''}></Input>
-        <ErrorMessage error={errors.name}/>
-        <Input {...register('mail', validationRules.mail)} type='email' placeholder="이메일" isError={errors.mail ? 'red' : ''}></Input>
-        <ErrorMessage error={errors.mail}/>
-        <Input {...register('password', validationRules.password)} type='password' placeholder="비밀번호" isError={errors.password ? 'red' : ''}></Input>
-        <ErrorMessage error={errors.password}/>
-        <Input {...register('passwordConfirm', validationRules.passwordConfirm)} type='password' placeholder="비밀번호 확인" isError={errors.passwordConfirm ? 'red' : ''}></Input>
-        <ErrorMessage error={errors.passwordConfirm}/>
-        <Btn type='submit'>회원 가입</Btn>
-        <button type='button' onClick={() => setLogin((prev) => !prev)}>로그인</button>
+      <Input {...register('name', validationRules.name)} type='text' placeholder="닉네임" isError={errors.name ? 'red' : ''}></Input>
+      <ErrorMessage error={errors.name}/>
+      <Input {...register('mail', validationRules.mail)} type='email' placeholder="이메일" isError={errors.mail ? 'red' : ''}></Input>
+      <ErrorMessage error={errors.mail}/>
+      <Input {...register('password', validationRules.password)} type='password' placeholder="비밀번호" isError={errors.password ? 'red' : ''}></Input>
+      <ErrorMessage error={errors.password}/>
+      <Input {...register('passwordConfirm', validationRules.passwordConfirm)} type='password' placeholder="비밀번호 확인" isError={errors.passwordConfirm ? 'red' : ''}></Input>
+      <ErrorMessage error={errors.passwordConfirm}/>
+      <Btn type='submit'>회원 가입</Btn>
     </Form>
   )
 }
@@ -77,10 +75,6 @@ const Form = styled.form`
     justify-content : center;
     align-items : center;
     flex-direction : column;
-    padding: 20px;
-    border-radius: 10px;
-    background-color: #f8f8f8;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 `;
 
 const Input = styled.input<{isError : string}>`

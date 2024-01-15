@@ -26,11 +26,9 @@ const LoginForm = ({setLogin}:IProps) => {
     };
     return (
       <Form onSubmit={handleSubmit(onLoginSubmit)}>
-          <h1>로그인</h1>
-          <Input {...register('mail' , {required :true })} type='email' placeholder="이메일"></Input>
-          <Input {...register('password' , {required :true , minLength : 6})} type='password' placeholder="비밀번호"></Input>
-          <Btn type='submit'>로그인</Btn>
-          <button type='button' onClick={() => setLogin((prev) => !prev)}>회원가입</button>
+        <Input {...register('mail' , {required :true })} type='email' placeholder="이메일"></Input>
+        <Input {...register('password' , {required :true , minLength : 6})} type='password' placeholder="비밀번호"></Input>
+        <Btn type='submit'>로그인</Btn>
       </Form>
   )
 }
@@ -39,10 +37,6 @@ const Form = styled.form`
     justify-content : center;
     align-items : center;
     flex-direction : column;
-    padding: 20px;
-    border-radius: 10px;
-    background-color: #f8f8f8;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 `;
 
 const Input = styled.input`
