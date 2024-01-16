@@ -12,4 +12,5 @@ export interface IForm {
     passwordConfirm :string
     chat : string
     description : string
+    district : string,
   }

@@ -1,11 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialRegionState:any = {
-    activeRegion : '전체',
+    activeRegion : '',
+    activeDistrict : '',
     nowIndex : 10,
     allProducts : [], 
     filteredProducts : [],
     filteredAllProducts : [],
+    region : '',
+    district : '',
 }
 
 const regionSlice = createSlice({
@@ -14,6 +17,9 @@ const regionSlice = createSlice({
     reducers : {
         changeRegion(state , action) {
             state.activeRegion = action.payload
+        },
+        changeDistrict(state,action) {
+            state.activeDistrict = action.payload
         },
         setAllProducts(state ,action) {
             state.allProducts = action.payload
@@ -33,6 +39,18 @@ const regionSlice = createSlice({
         },
         resetIndex(state) {
             state.nowIndex = 10
+        },
+        initializeRegions(state) {
+            state.region = ''
+            state.district = ''
+            state.activeRegion = ''
+            state.activeDistrict = ''
+        },
+        setRegion(state,action) {
+            state.region = action.payload
+        },
+        setDistrict(state,action) {
+            state.district = action.payload
         }
     }
 })

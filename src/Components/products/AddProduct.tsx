@@ -10,10 +10,12 @@ import { Helmet } from "react-helmet-async";
 import { RootState } from "../../store/store";
 import { useCompressImage } from "../../hooks/useCompressImage";
 import { useUpoadImage } from "../../hooks/useUploadImage";
+import SelectRegion from "../Layout/SelectRegion";
 
 const AddProduct = () => {
   const nav = useNavigate();
   const {user} = useSelector((state:RootState) => state.user)
+  const {region,district} = useSelector((state:RootState) => state.region);
   const {register , handleSubmit , watch } = useForm<IForm>();
   const {compressImage} = useCompressImage();
   const {uploadImageToStorage} = useUpoadImage()
@@ -39,7 +41,8 @@ const AddProduct = () => {
       uid : user.uid,
       상품명 : props.item,
       가격 : props.price,
-      지역 : props.region,
+      지역 : region,
+      세부지역 : district,
       상태 : '판매중',
       올린사람 : user.displayName,
       날짜 : dayjs().format(),
@@ -57,6 +60,7 @@ const AddProduct = () => {
       fileRef.current.value = "";
     }
   }
+
   return (
     <>
       <Helmet>
@@ -74,19 +78,19 @@ const AddProduct = () => {
           })}
         </Container>
         <Form onSubmit={handleSubmit(onAddProduct)}>
-            <FileInput onClick={() => {fileRef.current?.click()}}>
-              <label>업로드</label>
-              <input {...register('image')} type="file" ref={(data) => {
-                register('image').ref(data);
-                fileRef.current = data
-              }}></input>
-            </FileInput>
-            <Input {...register("title" , {required :true , maxLength:20})} placeholder="제목"></Input>
-            <Input {...register("region" , {required : true})} placeholder='지역'></Input>
-            <Input {...register("item" , {required :true , maxLength:10})} placeholder="상품명"></Input>
-            <Input {...register("price" , {required :true , maxLength:20})} placeholder="가격"></Input>
-            <Textarea {...register("description" , {required :true , maxLength:200})} placeholder="상품 설명"></Textarea>
-            <Input type="submit" value='올리기' onClick={() => onAddProduct}></Input>
+          <FileInput onClick={() => {fileRef.current?.click()}}>
+            <label>업로드</label>
+            <input {...register('image')} type="file" ref={(data) => {
+              register('image').ref(data);
+              fileRef.current = data
+            }}></input>
+          </FileInput>
+          <SelectRegion/>
+          <Input {...register("title" , {required :true , maxLength:20})} placeholder="제목"></Input>
+          <Input {...register("item" , {required :true , maxLength:10})} placeholder="상품명"></Input>
+          <Input {...register("price" , {required :true , maxLength:20})} placeholder="가격"></Input>
+          <Textarea {...register("description" , {required :true , maxLength:200})} placeholder="상품 설명"></Textarea>
+          <Input type="submit" value='올리기' onClick={() => onAddProduct}></Input>
         </Form>
       </Wrapper>
     </>

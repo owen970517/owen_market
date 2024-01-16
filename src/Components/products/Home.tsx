@@ -1,10 +1,10 @@
-import Region from "../Layout/Region";
+import FilterRegionBtn from "../Layout/FilterRegionBtn";
 import AllProducts from "./AllProducts";
 
 const Home = () => {
   return (
     <>
-      <Region />
+      <FilterRegionBtn />
       <AllProducts/>
     </>
   );
