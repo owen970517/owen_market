@@ -7,7 +7,7 @@ import searchIcon from '../../ImgSrc/search-icon.svg'
 import { useDispatch, useSelector } from 'react-redux';
 import { userActions } from '../../store/userSlice';
 import { RootState } from '../../store/store';
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 
 const SearchBar = () => {
   const dispatch = useDispatch();
@@ -22,7 +22,15 @@ const SearchBar = () => {
   const toggleSearch = useCallback(() => {
     dispatch(userActions.searchToggle(!isSearchBar))
     setFocus('search');
-  },[dispatch, isSearchBar, setFocus])
+    setValue('search' , '')
+  },[dispatch, isSearchBar, setFocus, setValue])
+  useEffect(() => {
+    if (isSearchBar) {
+      setTimeout(() => {
+        setFocus('search');
+      }, 300);  
+    }
+  }, [isSearchBar, setFocus]);
   return (
     <SearchForm isopen={isSearchBar} onSubmit={onSearch}>
       <img src={searchIcon} alt='search' style={{width : '30px' , height : '30px' }} onClick={toggleSearch}/>
