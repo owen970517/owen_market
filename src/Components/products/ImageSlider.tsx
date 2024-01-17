@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import noImg from '../../ImgSrc/noimage.jpg'
 
 interface SliderProps {
-    images: string[];
+    images: File[];
 }
 
 const ImageSlider: React.FC<SliderProps> = ({ images })=> {

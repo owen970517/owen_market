@@ -19,7 +19,7 @@ const Detail = () => {
     const params = useParams();
     const nav = useNavigate();
     useEffect(() => {
-        db.collection('Product').doc(params.id).get().then((result)=> {setData(result.data())})
+        db.collection('Product').doc(params.id).get().then((result)=> {setData(result.data() as IData)})
     },[params.id])
     const isOwner = data?.올린사람 === user?.displayName;
     const onChat = () => {
@@ -61,8 +61,7 @@ const Detail = () => {
                 <title>{`${data?.상품명} | 중고사이트`}</title>
             </Helmet>
             <Container>
-                {/* <BgImg src={data?.이미지 ? data?.이미지 : noImg }></BgImg> */}
-                <ImageSlider images={data.이미지 as any}/>
+                <ImageSlider images={data.이미지!}/>
                 <InfoContainer>
                     <Content>
                         <h5>올린사람: {data?.올린사람}</h5>
