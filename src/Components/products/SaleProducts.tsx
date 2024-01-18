@@ -4,7 +4,7 @@ import { db } from '../../firebase'
 import { RootState } from '../../store/store';
 import { IData } from '../../type/ItemProps';
 import noImg from '../../ImgSrc/noimage.jpg'
-import SkeletonUI from '../Layout/SkeletonUI';
+import SkeletonUI from '../common/SkeletonUI';
 import * as S from '../../styles/Products.styled';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import dayjs from 'dayjs'

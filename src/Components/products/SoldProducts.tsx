@@ -5,7 +5,7 @@ import { RootState } from '../../store/store';
 import { IData } from '../../type/ItemProps';
 import noImg from '../../ImgSrc/noimage.jpg'
 import * as S from '../../styles/Products.styled';
-import SkeletonUI from '../Layout/SkeletonUI';
+import SkeletonUI from '../common/SkeletonUI';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import dayjs from 'dayjs'
 import relativeTime from "dayjs/plugin/relativeTime";
