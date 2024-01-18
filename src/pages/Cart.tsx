@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { IData } from '../type/ItemProps';
 import { useSelector} from 'react-redux'
 import { RootState } from '../store/store';
-import noImg from '../../ImgSrc/noimage.jpg'
+import noImg from '../ImgSrc/noimage.jpg'
 
 const Cart = () => {
   const userObj = useSelector((state:RootState) => state.user.user);
