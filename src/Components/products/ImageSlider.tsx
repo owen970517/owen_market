@@ -9,25 +9,25 @@ interface SliderProps {
 const ImageSlider: React.FC<SliderProps> = ({ images })=> {
     const [current, setCurrent] = useState(0);
 
-    const nextSlide = () => {
+    const nextImage = () => {
       setCurrent(current === images.length - 1 ? 0 : current + 1);
     };
   
-    const prevSlide = () => {
+    const prevImage = () => {
       setCurrent(current === 0 ? images.length - 1 : current - 1);
     };
   
     return (
-        <SliderWrapper>
-            <PrevButton onClick={prevSlide}>이전</PrevButton>
-            <Image src={images.length > 0 ? images[current] : noImg} alt="Slide" />
-            <NextButton onClick={nextSlide}>다음</NextButton>
-            <DotWrapper>
-                {images.map((_, index) => (
-                <Dot key={index} active={current === index} />
-                ))}
-            </DotWrapper>
-        </SliderWrapper>
+      <SliderWrapper>
+          <PrevButton onClick={prevImage}>이전</PrevButton>
+          <Image src={images.length > 0 ? images[current] : noImg} alt="Slide" />
+          <NextButton onClick={nextImage}>다음</NextButton>
+          <DotWrapper>
+              {images.map((_, index) => (
+              <Dot key={index} active={current === index} />
+              ))}
+          </DotWrapper>
+      </SliderWrapper>
     )
 }
 
@@ -42,10 +42,10 @@ const SliderWrapper = styled.div`
 `;
 
 const Image = styled.img`
-    width: 70%;
-    height: 500px;
-    object-fit: contain;
-    border-radius: 10px;
+  width: 70%;
+  height: 500px;
+  object-fit: contain;
+  border-radius: 10px;
 `;
 
 const Button = styled.button`
