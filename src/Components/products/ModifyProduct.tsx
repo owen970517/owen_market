@@ -1,7 +1,6 @@
 import { useEffect, useState, useRef, useCallback} from "react";
 import { useNavigate, useParams } from "react-router-dom"
 import { db } from "../../firebase";
-import styled from "styled-components";
 import * as S from '../../styles/Images.styled';
 import { IData } from "../../type/ItemProps";
 import { SubmitHandler, useForm } from "react-hook-form";

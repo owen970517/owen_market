@@ -1,6 +1,5 @@
 import {useEffect,useState} from 'react'
 import { useSelector } from 'react-redux';
-import styled from 'styled-components'
 import { db } from '../../firebase'
 import { RootState } from '../../store/store';
 import { IData } from '../../type/ItemProps';
