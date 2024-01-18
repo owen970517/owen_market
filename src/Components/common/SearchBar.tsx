@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { IForm } from '../../type/InputForm';
 import styled from 'styled-components';
 import { IStyleProps } from '../../type/StyleProps';
-import searchIcon from '../../ImgSrc/search-icon.svg'
+import searchIcon from '../../assets/search-icon.svg'
 import { useDispatch, useSelector } from 'react-redux';
 import { userActions } from '../../store/userSlice';
 import { RootState } from '../../store/store';

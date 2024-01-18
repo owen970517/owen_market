@@ -7,8 +7,8 @@ import SearchBar from "./SearchBar";
 import { RootState } from "../../store/store";
 import { useCallback, useState } from "react";
 import { IStyleProps } from '../../type/StyleProps';
-import Hamburger from '../../ImgSrc/Hamburger_icon.svg'
-import times from '../../ImgSrc/times.svg'
+import Hamburger from '../../assets/Hamburger_icon.svg'
+import times from '../../assets/times.svg'
 import { defaultImg } from "../../constants/user";
 
 const Header = () => {

@@ -3,7 +3,7 @@ import { Route, Routes } from "react-router-dom"
 import { ROUTES } from "../constants/routes"
 
 const Home = lazy(() =>import('./Home'))
-const Profile = lazy(() => import("../Components/auth/Profile"))
+const Profile = lazy(() => import("./Profile"))
 const AddProduct = lazy(() => import('./AddProduct'))
 const Detail = lazy(() => import('./Detail'))
 const Sign = lazy(() => import("./AuthContainer"))

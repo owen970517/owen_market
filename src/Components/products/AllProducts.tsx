@@ -1,6 +1,6 @@
 import * as S from '../../styles/Products.styled';
 import { IData } from '../../type/ItemProps'
-import noImg from '../../ImgSrc/noimage.jpg'
+import noImg from '../../assets/noimage.jpg'
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import SkeletonUI from '../common/SkeletonUI'
 import useProducts from '../../hooks/useProducts'

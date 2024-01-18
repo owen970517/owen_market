@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom'
 import { RootState } from '../store/store';
 import { IData } from '../type/ItemProps';
-import noImg from '../ImgSrc/noimage.jpg'
+import noImg from '../assets/noimage.jpg'
 import { Helmet } from "react-helmet-async";
 import dayjs from 'dayjs'
 import relativeTime from "dayjs/plugin/relativeTime";

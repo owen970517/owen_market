@@ -1,20 +1,20 @@
 import { useState,useRef, useEffect, lazy, Suspense } from "react"
-import { auth, db } from "../../firebase";
+import { auth, db } from "../firebase";
 import { useNavigate} from "react-router-dom"
 import styled from "styled-components";
 import { useDispatch, useSelector} from 'react-redux'
-import { RootState } from "../../store/store";
+import { RootState } from "../store/store";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { IForm } from "../../type/InputForm";
-import { userActions } from "../../store/userSlice";
+import { IForm } from "../type/InputForm";
+import { userActions } from "../store/userSlice";
 import { Helmet } from "react-helmet-async";
-import { defaultImg } from "../../constants/user";
-import { useCompressImage } from "../../hooks/useCompressImage";
-import { useUpoadImage } from "../../hooks/useUploadImage";
-import camera from '../../ImgSrc/camera.svg'
+import { defaultImg } from "../constants/user";
+import { useCompressImage } from "../hooks/useCompressImage";
+import { useUpoadImage } from "../hooks/useUploadImage";
+import camera from '../assets/camera.svg'
 
-const SaleProducts = lazy(() => import("../products/SaleProducts"))
-const SoldProducts = lazy(() => import("../products/SoldProducts"))
+const SaleProducts = lazy(() => import("../Components/products/SaleProducts"))
+const SoldProducts = lazy(() => import("../Components/products/SoldProducts"))
 
 const Profile = () => {
   const dispatch = useDispatch();

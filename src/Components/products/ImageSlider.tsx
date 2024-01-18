@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components';
-import noImg from '../../ImgSrc/noimage.jpg'
+import noImg from '../../assets/noimage.jpg'
 
 interface SliderProps {
     images: File[];
