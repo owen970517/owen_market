@@ -2,6 +2,7 @@ import { useEffect, useState, useRef, useCallback} from "react";
 import { useNavigate, useParams } from "react-router-dom"
 import { db } from "../../firebase";
 import styled from "styled-components";
+import * as S from '../../styles/Images.styled';
 import { IData } from "../../type/ItemProps";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { IForm } from "../../type/InputForm";
@@ -74,110 +75,35 @@ const Modify = () => {
   }
    
   return (
-    <>
-      <Container>
+    <S.Wrapper>
+      <S.Container>
         {images && images.map((image,idx:number) => {
           return (
-            <PreviewWrapper key={idx}>
-              <Preview src={typeof image === 'string' ? image : URL.createObjectURL(image)} alt="없음"/>
-              <DeleteBtn onClick={() => onImgDel(idx)}>❌</DeleteBtn>
-            </PreviewWrapper>
+            <S.PreviewWrapper key={idx}>
+              <S.PreviewImg src={typeof image === 'string' ? image : URL.createObjectURL(image)} alt="없음"/>
+              <S.DeleteBtn onClick={() => onImgDel(idx)}>❌</S.DeleteBtn>
+            </S.PreviewWrapper>
           )
         })}
-      </Container>
-      <FileInput onClick={() => FileRef.current?.click()}>
+      </S.Container>
+      <S.FileInput onClick={() => FileRef.current?.click()}>
         <label>업로드 {images.length} / 10</label>
         <input {...register('image')} type="file" ref={(data) => {
             register('image').ref(data);
             FileRef.current = data
         }}></input>
-      </FileInput>
-      <div>
-          <h5>올린사람 : {data?.올린사람} </h5>
-          <h5>상품명 : <input type='text' {...register('item')} defaultValue={data?.상품명}></input></h5>
-          <p>올린날짜 : {dayjs(data?.날짜).fromNow()}</p>
-          <p>가격 : <input type='text' {...register('price')} defaultValue={data?.가격}></input></p>
-          <Textarea {...register("description")} defaultValue={data?.설명?.replace(/<br>/g, '\n')}></Textarea>
-      </div>
-      <button onClick={handleSubmit(onModified)}>수정 완료</button>
-    </>
+      </S.FileInput>
+      <S.Form>
+        <h3>올린사람 : {data?.올린사람} </h3>
+        <h3>상품명<S.Input type='text' {...register('item')} defaultValue={data?.상품명}></S.Input></h3>
+        <p>올린날짜 : {dayjs(data?.날짜).fromNow()}</p>
+        <h3>가격<S.Input type='text' {...register('price')} defaultValue={data?.가격}></S.Input></h3>
+        <S.Textarea {...register("description")} defaultValue={data?.설명?.replace(/<br>/g, '\n')}></S.Textarea>
+      </S.Form>
+      <S.SubmitButton onClick={handleSubmit(onModified)}>수정 완료</S.SubmitButton>
+    </S.Wrapper>
   )
 }
-
-const FileInput = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  label {
-    display: inline-block;
-    padding: .5em .75em;
-    color: #fff;
-    font-size: inherit;
-    line-height: normal;
-    vertical-align: middle;
-    cursor: pointer;
-    background-color: #337ab7;
-    border-color: #2e6da4;
-    border-bottom-color: #e2e2e2;
-    border-radius: .25em;
-  }
-  input[type='file'] {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip:rect(0,0,0,0);
-    border: 0;
-  }
-`
-const Textarea = styled.textarea`
-  width: 100%;
-  height: 100px;
-  border-radius: 5px;
-  border: 1px solid #FF8A3D;
-  padding: 10px;
-  font-size: 16px;
-  margin-bottom: 10px;
-  &:focus {
-    border-color: #FF8A3D;
-  }
-`
-const Container = styled.div`
-  width: 550px;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  margin: 0 auto;
-`
-
-const PreviewWrapper = styled.div`
-  position: relative;
-`
-const DeleteBtn = styled.div`
-  position: absolute;
-  top : -10px;
-  right: -10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  background-color: #000;
-  cursor : pointer;
-`
-
-const Preview = styled.img`
-  width: 100px;
-  height: 100px;
-  object-fit: cover;
-  border-radius: 10px;
-  margin-bottom: 20px;
-`
-
 export default Modify
 
 

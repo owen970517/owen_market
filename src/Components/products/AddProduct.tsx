@@ -1,6 +1,6 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import { db } from '../../firebase';
-import styled from "styled-components";
+import * as S from '../../styles/Images.styled';
 import dayjs from 'dayjs';
 import { useNavigate } from "react-router-dom";
 import {  useState , useEffect,useRef } from "react";
@@ -24,8 +24,11 @@ const AddProduct = () => {
   const fileRef = useRef<HTMLInputElement | null>(null);
   useEffect(()=> {
     if(imgSrc && imgSrc.length > 0) {
-      const file = imgSrc[0];
-      setImages((prev) => [...prev,file])
+      if (images.length < 10) {
+        setImages((prev) => [...prev,imgSrc[0]])
+      } else {
+        alert('이미지는 최대 10장까지 가능합니다.')
+      }
     }
   },[imgSrc])
   const onAddProduct:SubmitHandler<IForm> = async (props) => {
@@ -53,7 +56,7 @@ const AddProduct = () => {
   }
   const onImgDel = (idx:number) => {
     setImages(prevImages => {
-      const newImages = prevImages.filter((image, index) => index !== idx);
+      const newImages = prevImages.filter((_, index) => index !== idx);
       return newImages;
     });
     if (fileRef.current) {
@@ -66,133 +69,34 @@ const AddProduct = () => {
       <Helmet>
         <title>{`상품 등록 | 중고사이트`}</title>
       </Helmet>
-      <Wrapper>
-        <Container>
+      <S.Wrapper>
+        <S.Container>
           {images && images.map((image,idx:number) => {
             return (
-              <PreviewWrapper key={idx}>
-                <Preview src={URL.createObjectURL(image)} alt="없음"/>
-                <DeleteBtn onClick={() => onImgDel(idx)}>❌</DeleteBtn>
-              </PreviewWrapper>
+              <S.PreviewWrapper key={idx}>
+                <S.PreviewImg src={URL.createObjectURL(image)} alt="없음"/>
+                <S.DeleteBtn onClick={() => onImgDel(idx)}>❌</S.DeleteBtn>
+              </S.PreviewWrapper>
             )
           })}
-        </Container>
-        <Form onSubmit={handleSubmit(onAddProduct)}>
-          <FileInput onClick={() => {fileRef.current?.click()}}>
-            <label>업로드</label>
+        </S.Container>
+        <S.Form onSubmit={handleSubmit(onAddProduct)}>
+          <S.FileInput onClick={() => {fileRef.current?.click()}}>
+            <label>업로드 {images.length} / 10</label>
             <input {...register('image')} type="file" ref={(data) => {
               register('image').ref(data);
               fileRef.current = data
             }}></input>
-          </FileInput>
+          </S.FileInput>
           <SelectRegion/>
-          <Input {...register("title" , {required :true , maxLength:20})} placeholder="제목"></Input>
-          <Input {...register("item" , {required :true , maxLength:10})} placeholder="상품명"></Input>
-          <Input {...register("price" , {required :true , maxLength:20})} placeholder="가격"></Input>
-          <Textarea {...register("description" , {required :true , maxLength:200})} placeholder="상품 설명"></Textarea>
-          <Input type="submit" value='올리기' onClick={() => onAddProduct}></Input>
-        </Form>
-      </Wrapper>
+          <S.Input {...register("title" , {required :true , maxLength:20})} placeholder="제목"></S.Input>
+          <S.Input {...register("item" , {required :true , maxLength:10})} placeholder="상품명"></S.Input>
+          <S.Input {...register("price" , {required :true , maxLength:20})} placeholder="가격"></S.Input>
+          <S.Textarea {...register("description" , {required :true , maxLength:200})} placeholder="상품 설명"></S.Textarea>
+          <S.SubmitButton onClick={() => onAddProduct}>올리기</S.SubmitButton>
+        </S.Form>
+      </S.Wrapper>
     </>
-  )
-}
-const Wrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  background-color: #FFF5E1;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-`
-
-const Form = styled.form`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  max-width: 500px;
-`
-
-const Input = styled.input`
-  width: 100%;
-  height: 50px;
-  border-radius: 5px;
-  border: 1px solid #FF8A3D;
-  padding: 10px;
-  font-size: 16px;
-  margin-bottom: 10px;
-  &:focus {
-    border-color: #FF8A3D;
+    )
   }
-`
-const Container = styled.div`
-  width: 550px;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-`
-
-const PreviewWrapper = styled.div`
-  position: relative;
-`
-const DeleteBtn = styled.div`
-  position: absolute;
-  top : -10px;
-  right: -10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  background-color: #000;
-  cursor : pointer;
-`
-
-const Preview = styled.img`
-  width: 100px;
-  height: 100px;
-  object-fit: cover;
-  border-radius: 10px;
-  margin-bottom: 20px;
-`
-
-const FileInput = styled.div`
-  label {
-    display: inline-block;
-    padding: .5em .75em;
-    color: #fff;
-    font-size: inherit;
-    line-height: normal;
-    vertical-align: middle;
-    cursor: pointer;
-    background-color: #FF8A3D;
-    border-radius: .25em;
-    margin-bottom: 10px;
-  }
-  input[type='file'] {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip:rect(0,0,0,0);
-    border: 0;
-  }
-`
-
-const Textarea = styled.textarea`
-  width: 100%;
-  height: 100px;
-  border-radius: 5px;
-  border: 1px solid #FF8A3D;
-  padding: 10px;
-  font-size: 16px;
-  margin-bottom: 10px;
-  &:focus {
-    border-color: #FF8A3D;
-  }
-`
 export default AddProduct
