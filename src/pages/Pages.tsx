@@ -1,15 +1,15 @@
 import { lazy} from "react"
 import { Route, Routes } from "react-router-dom"
-import { ROUTES } from "../../constants/routes"
+import { ROUTES } from "../constants/routes"
 
-const Home = lazy(() =>import('../products/Home'))
-const Profile = lazy(() => import("../auth/Profile"))
-const AddProduct = lazy(() => import('../products/AddProduct'))
-const Detail = lazy(() => import('../products/Detail'))
-const Sign = lazy(() => import("../auth/AuthContainer"))
-const ModifyProduct = lazy(() => import("../products/ModifyProduct"))
-const Cart = lazy(() => import("../products/Cart"))
-const Search = lazy(() => import("../products/SearchedProduct"))
+const Home = lazy(() =>import('./Home'))
+const Profile = lazy(() => import("../Components/auth/Profile"))
+const AddProduct = lazy(() => import('./AddProduct'))
+const Detail = lazy(() => import('./Detail'))
+const Sign = lazy(() => import("./AuthContainer"))
+const ModifyProduct = lazy(() => import("./ModifyProduct"))
+const Cart = lazy(() => import("./Cart"))
+const Search = lazy(() => import("./SearchedProduct"))
 const Chat = lazy(() => import("./Chat"))
 const ChatRooms = lazy(() => import("./ChatRooms"))
 

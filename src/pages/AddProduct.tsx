@@ -1,16 +1,16 @@
 import { SubmitHandler, useForm } from "react-hook-form";
-import { db } from '../../firebase';
-import * as S from '../../styles/Images.styled';
+import { db } from '../firebase';
+import * as S from '../styles/Images.styled';
 import dayjs from 'dayjs';
 import { useNavigate } from "react-router-dom";
 import {  useState , useEffect,useRef } from "react";
-import { IForm } from "../../type/InputForm";
+import { IForm } from "../type/InputForm";
 import { useSelector} from 'react-redux'
 import { Helmet } from "react-helmet-async";
-import { RootState } from "../../store/store";
-import { useCompressImage } from "../../hooks/useCompressImage";
-import { useUpoadImage } from "../../hooks/useUploadImage";
-import SelectRegion from "../Layout/SelectRegion";
+import { RootState } from "../store/store";
+import { useCompressImage } from "../hooks/useCompressImage";
+import { useUpoadImage } from "../hooks/useUploadImage";
+import SelectRegion from "../Components/Layout/SelectRegion";
 
 const AddProduct = () => {
   const nav = useNavigate();

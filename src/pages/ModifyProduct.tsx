@@ -1,12 +1,12 @@
 import { useEffect, useState, useRef, useCallback} from "react";
 import { useNavigate, useParams } from "react-router-dom"
-import { db } from "../../firebase";
-import * as S from '../../styles/Images.styled';
-import { IData } from "../../type/ItemProps";
+import { db } from "../firebase";
+import * as S from '../styles/Images.styled';
+import { IData } from "../type/ItemProps";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { IForm } from "../../type/InputForm";
-import { useCompressImage } from "../../hooks/useCompressImage";
-import { useUpoadImage } from "../../hooks/useUploadImage";
+import { IForm } from "../type/InputForm";
+import { useCompressImage } from "../hooks/useCompressImage";
+import { useUpoadImage } from "../hooks/useUploadImage";
 import dayjs from 'dayjs'
 import relativeTime from "dayjs/plugin/relativeTime";
 import "dayjs/locale/ko";

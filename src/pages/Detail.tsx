@@ -1,12 +1,12 @@
 import { useNavigate, useParams } from "react-router-dom"
-import { db } from "../../firebase";
+import { db } from "../firebase";
 import styled from "styled-components";
 import { useEffect, useState } from "react";
-import { IData } from "../../type/ItemProps";
+import { IData } from "../type/ItemProps";
 import { useSelector} from 'react-redux'
-import { RootState } from "../../store/store";
+import { RootState } from "../store/store";
 import { Helmet } from "react-helmet-async";
-import ImageSlider from "./ImageSlider";
+import ImageSlider from "../Components/products/ImageSlider";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import "dayjs/locale/ko";

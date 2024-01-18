@@ -1,6 +1,6 @@
 import { useState } from "react";
-import LoginForm from "./LoginForm";
-import SignupForm from "./SignupForm";
+import LoginForm from "../Components/auth/LoginForm";
+import SignupForm from "../Components/auth/SignupForm";
 import styled from "styled-components";
 
 const AuthContainer = () => {

@@ -2,11 +2,11 @@ import { useEffect ,useState} from 'react'
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
-import { db } from "../../firebase";
-import { RootState } from "../../store/store";
-import { IForm } from "../../type/InputForm";
+import { db } from "../firebase";
+import { RootState } from "../store/store";
+import { IForm } from "../type/InputForm";
 import { useParams } from "react-router-dom"
-import { IMessage } from '../../type/messageProps';
+import { IMessage } from '../type/messageProps';
 import React from 'react';
 import dayjs from 'dayjs';
 

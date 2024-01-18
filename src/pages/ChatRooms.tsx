@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
-import { RootState } from '../../store/store'
-import { db } from '../../firebase'
+import { RootState } from '../store/store'
+import { db } from '../firebase'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import dayjs from 'dayjs';

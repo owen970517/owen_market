@@ -1,5 +1,5 @@
 import Header from "./Components/common/Header";
-import Pages from './Components/Layout/Pages';
+import Pages from './pages/Pages';
 import { BrowserRouter} from "react-router-dom";
 import { useEffect } from "react";
 import { auth } from "./firebase";

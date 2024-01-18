@@ -1,9 +1,9 @@
 import { useEffect ,useMemo,useState} from 'react'
-import { db } from '../../firebase';
+import { db } from '../firebase';
 import styled from 'styled-components';
-import { IData } from '../../type/ItemProps';
+import { IData } from '../type/ItemProps';
 import { useSelector} from 'react-redux'
-import { RootState } from '../../store/store';
+import { RootState } from '../store/store';
 import noImg from '../../ImgSrc/noimage.jpg'
 
 const Cart = () => {
