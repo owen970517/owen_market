@@ -48,8 +48,8 @@ const Modify = () => {
         if (typeof Img === 'string') {
           return Img; 
         } else {
-          const compressedImage = await compressImage(Img);
-          const url = await uploadImageToStorage(compressedImage);
+          const compressedImage = await compressImage(Img,300,300);
+          const url = await uploadImageToStorage(compressedImage,'image');
           return url; 
         }
       })

@@ -35,8 +35,8 @@ const AddProduct = () => {
     const description = props.description.replace(/\n/g, '<br>');
     const urls = await Promise.all(
       images.map(async (Img:File) => {
-        const compressedImage = await compressImage(Img);
-        const url = await uploadImageToStorage(compressedImage);
+        const compressedImage = await compressImage(Img,300,300);
+        const url = await uploadImageToStorage(compressedImage,'image');
         return url;
       })
     );

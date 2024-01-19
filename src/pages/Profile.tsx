@@ -71,8 +71,8 @@ const Profile = () => {
   const updateProfileImage = async (image:File) => {
     const Img = image;
     if (Img) {
-      const compressedImage = await compressImage(Img);
-      const url = await uploadImageToStorage(compressedImage)
+      const compressedImage = await compressImage(Img,100,100);
+      const url = await uploadImageToStorage(compressedImage,'user_image')
       auth.currentUser?.updateProfile({
         photoURL : url
       })
