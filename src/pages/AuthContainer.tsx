@@ -4,7 +4,7 @@ import SignupForm from "../Components/auth/SignupForm";
 import styled from "styled-components";
 
 const AuthContainer = () => {
-    const [login , setLogin] = useState(false);
+    const [login , setLogin] = useState(true);
     return (
         <Container>
             <Wrapper>
