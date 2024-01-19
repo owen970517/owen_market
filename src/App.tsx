@@ -28,6 +28,12 @@ function App() {
       <Suspense fallback={<div>Component Loading...</div>}>
         <HelmetProvider>
           <Helmet>
+            <link rel="preconnect" href="https://firebasestorage.googleapis.com" />
+            <link rel="preconnect" href="https://firestore.googleapis.com" />
+            <link rel="preconnect" href="https://identitytoolkit.googleapis.com" />
+            <link rel="dns-prefetch" href="https://firebasestorage.googleapis.com" />
+            <link rel="dns-prefetch" href="https://firestore.googleapis.com" />
+            <link rel="dns-prefetch" href="https://identitytoolkit.googleapis.com" />
             <title>중고사이트</title>
           </Helmet>
           <Header />
