@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import styled from "styled-components"
+import * as S from '../../styles/Region.styled';
 import { regionActions } from "../../store/regionSlice";
 import { RootState } from "../../store/store";
 import { IData } from "../../type/ItemProps";
@@ -32,46 +32,23 @@ const FilterRegionBtn = () => {
     dispatch(regionActions.changeDistrict(e.target.value))
   }
   return (
-    <StyledDiv>
-      <StyledSelect {...register('region' ,{required : true})} value={activeRegion} onChange={handleRegionChange}>
-        <StyledOption value=''>지역 선택</StyledOption>
+    <S.RegionContainer>
+      <S.RegionSelectBox {...register('region' ,{required : true})} value={activeRegion} onChange={handleRegionChange}>
+        <S.RegionOption value=''>지역 선택</S.RegionOption>
         {Object.keys(allRegions).map((region, index) => (
-          <StyledOption key={index} value={region}>{region}</StyledOption>
+          <S.RegionOption key={index} value={region}>{region}</S.RegionOption>
         ))}
-      </StyledSelect>
+      </S.RegionSelectBox>
       {activeRegion && (
-      <StyledSelect {...register('district' ,{required : true})} value={activeDistrict} onChange={handleDistrictChange}>
-        <StyledOption value=''>세부지역 선택</StyledOption>
+      <S.RegionSelectBox {...register('district' ,{required : true})} value={activeDistrict} onChange={handleDistrictChange}>
+        <S.RegionOption value=''>세부지역 선택</S.RegionOption>
         {allRegions[activeRegion].map((district:string, index:number) => (
-        <StyledOption key={index} value={district}>{district}</StyledOption>
+          <S.RegionOption key={index} value={district}>{district}</S.RegionOption>
         ))}
-      </StyledSelect>
+      </S.RegionSelectBox>
       )}
-    </StyledDiv>
+    </S.RegionContainer>
   )
 }
-const StyledDiv = styled.div`
-  display: flex;
-  align-items: center;
-  margin: 20px;
-`;
-
-const StyledSelect = styled.select`
-  width: 200px;
-  height: 40px;
-  margin: 10px;
-  padding: 5px;
-  border: none;
-  border-radius: 5px;
-  background-color: #f8f8f8;
-  font-size: 16px;
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-  transition: 0.3s;
-`;
-
-const StyledOption = styled.option`
-  padding: 5px;
-  font-size: 16px;
-`;
 
 export default FilterRegionBtn
