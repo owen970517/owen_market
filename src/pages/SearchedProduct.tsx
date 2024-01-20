@@ -3,7 +3,6 @@ import { useParams } from 'react-router-dom'
 import { RootState } from '../store/store';
 import { IData } from '../type/ItemProps';
 import noImg from '../assets/noimage.jpg'
-import { Helmet } from "react-helmet-async";
 import dayjs from 'dayjs'
 import relativeTime from "dayjs/plugin/relativeTime";
 import "dayjs/locale/ko";
@@ -28,9 +27,6 @@ const Search = () => {
   },[allProducts, dispatch, input])
   return (
     <>
-      <Helmet>
-        <title>{`${params.input} | 중고사이트`}</title>
-      </Helmet>
       <S.Grid>
         {filteredProducts.map((p:IData,idx:number) => {
           return (
