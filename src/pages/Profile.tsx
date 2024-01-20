@@ -7,7 +7,6 @@ import { RootState } from "../store/store";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { IForm } from "../type/InputForm";
 import { userActions } from "../store/userSlice";
-import { Helmet } from "react-helmet-async";
 import { defaultImg } from "../constants/user";
 import { useCompressImage } from "../hooks/useCompressImage";
 import { useUpoadImage } from "../hooks/useUploadImage";
@@ -100,42 +99,39 @@ const Profile = () => {
     
     return (
       <>
-          <Helmet>
-              <title>{`${user.displayName} | 중고사이트`}</title>
-          </Helmet>
-          <Div>
-            <ProfileDiv>
-              <ProfileImg src={imgPreview || profileImg || defaultImg}></ProfileImg>
-              <FileInput onClick={() => {fileRef.current?.click()}}>
-                <img src={camera} alt='camera icon' />
-                <input {...register('image')} type="file" ref={(data) => {
-                    register('image').ref(data);
-                    fileRef.current = data
-                }}></input>
-              </FileInput>
-            </ProfileDiv>
-          </Div>
-          <UserForm onSubmit={handleSubmit(onFormSubmit)}>
-              <TextInput {...register('nickname')} type='text' />
-              <button type="submit">수정</button>
-          </UserForm>            
-          <ToggleBtn>
-              <button onClick={() => setSale((prev) => !prev)}>판매중</button>
-              <button onClick={() => setSale((prev) => !prev)}>판매완료</button>
-          </ToggleBtn>
-          <Suspense fallback={<h1>Loading...</h1>}>
-            {sale ?
-                <>
-                  <Title>판매중</Title>
-                  <SaleProducts />
-                </>
-                :  
-                <>
-                  <Title>판매완료</Title>
-                  <SoldProducts />
-                </>
-            }
-          </Suspense>
+        <Div>
+          <ProfileDiv>
+            <ProfileImg src={imgPreview || profileImg || defaultImg}></ProfileImg>
+            <FileInput onClick={() => {fileRef.current?.click()}}>
+              <img src={camera} alt='camera icon' />
+              <input {...register('image')} type="file" ref={(data) => {
+                  register('image').ref(data);
+                  fileRef.current = data
+              }}></input>
+            </FileInput>
+          </ProfileDiv>
+        </Div>
+        <UserForm onSubmit={handleSubmit(onFormSubmit)}>
+            <TextInput {...register('nickname')} type='text' />
+            <button type="submit">수정</button>
+        </UserForm>            
+        <ToggleBtn>
+            <button onClick={() => setSale((prev) => !prev)}>판매중</button>
+            <button onClick={() => setSale((prev) => !prev)}>판매완료</button>
+        </ToggleBtn>
+        <Suspense fallback={<h1>Loading...</h1>}>
+          {sale ?
+              <>
+                <Title>판매중</Title>
+                <SaleProducts />
+              </>
+              :  
+              <>
+                <Title>판매완료</Title>
+                <SoldProducts />
+              </>
+          }
+        </Suspense>
       </>
     )
 }
