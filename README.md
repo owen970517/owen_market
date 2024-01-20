@@ -1,21 +1,14 @@
 # 당근마켓 클론코딩
 
+## 배포 주소 
+
+🔗 https://carrot-clone.vercel.app
+
 ## 설치 방법 및 실행
 
 - git clone https://github.com/owen970517/carrot_clone.git
 - npm install
 - npm start
-
-## 화면 구성
-
-|        로그인/회원가입    |       프로필 수정     |
-| :-------------------------: | :-----------------------------------------------: |
-| <img width="400" height='600' src="https://github.com/owen970517/carrot_clone/assets/75247323/947e13b2-6779-4a62-864a-97f5d1431876" /> | <img width="400" height='600' src="https://github.com/owen970517/carrot_clone/assets/75247323/5945cda6-a3db-469b-aea5-dc23999b118f" />|
-
-
-|          상세페이지, 수정             |     채팅, 장바구니   |
-| :----------------------------: | :-----------------------------------: |
-| <img width="400" height='600' src="https://github.com/owen970517/carrot_clone/assets/75247323/e625fc75-df62-4e87-9e05-94147d69792a"> | <img width="400" height='600' src="https://github.com/owen970517/carrot_clone/assets/75247323/79682c6c-dc57-4717-9b2c-9a2121cf266b"> |
 
 ## 사용한 라이브러리
 
@@ -38,10 +31,12 @@
     - query string의 매개변수 값을 받아오기 위해 사용 
 - redux toolkit
     - 상태관리를 위해 사용 
+- react-image-file-resizer
+    - 이미지 압축 및 포맷 변환을 위해 사용
 
 ## 기능 구현 
 
-- 로그인 
+- 로그인 / 회원가입
     - firebase Authentication을 사용 
 
 - 프로필
@@ -51,13 +46,18 @@
 
 - 메인 페이지
     - 무한 스크롤
-    - 지역 버튼을 누르면 해당 지역에서 파는 상품만 보여주도록 filter 기능을 추가
-    - 각 상품 클릭 시 상세 페이지로 이동
+    - select box로 지역 선택 가능
+    - 선택한 지역에서 팔고 있는 상품을 볼 수 있도록 구현 
 
 - 상세 페이지
     - 해당 상품에 대한 상세 정보를 보여줌
     - 상품 판매자와 현재 로그인 된 아이디가 같을 경우 수정, 판매완료 버튼 보여줌
     - 다를 경우 채팅, 장바구니 담기 버튼을 보여줌
+
+- 상품 등록 
+    - 이미지 최대 10개까지 업로드 가능
+    - 시/도 및 시/군/구 선택
+    - 제목, 상품명, 가격, 설명 입력 가능 
 
 - 장바구니 
     - 장바구니에는 자신이 담은 상품과 총 가격을 보여줌 
@@ -100,29 +100,49 @@
     </div>
 </details>
 
-### 3. Lighthouse properly-size-images 개선
+### 3. Lighthouse 성능 개선
 
 - 원인 : 실제 이미지의 사이즈가 렌더링되는 이미지의 사이즈와 차이가 많이 날 경우 발생
-- 개선 방법 : browser-image-compression 라이브러리 사용하여 이미지 사이즈 및 크기 압축
+- 개선 방법 : react-image-file-resizer 라이브러리 사용하여 이미지 원하는 크기로 압축 및 포맷 변경 
 - 이미지 압축 코드 custom hook으로 구현 
-<details>
-    <summary><b>👈코드 보기</b></summary>
-    <div markdown="1">
-        <ul>
-            https://github.com/owen970517/carrot_clone/blob/c908db800418ab35f47eb75da43b0c68858f07f7/src/hooks/useCompressImage.tsx#L1-L14
-        </ul>
-    </div>
-</details>
+    <details>
+        <summary><b>👈코드 보기</b></summary>
+        <div markdown="1">
+            <ul>
+                https://github.com/owen970517/carrot_clone/blob/6329b77130013278cb5aa1170e8d8e894c984c64/src/hooks/useCompressImage.tsx#L1-L32
+            </ul>
+        </div>
+    </details>
 
-- 실제 사용 코드
-<details>
-    <summary><b>👈코드 보기</b></summary>
-    <div markdown="1">
-        <ul>
-            https://github.com/owen970517/carrot_clone/blob/c908db800418ab35f47eb75da43b0c68858f07f7/src/Components/products/AddProduct.tsx#L29-L49
-        </ul>
-    </div>
-</details>
+- 상품 등록
+    <details>
+        <summary><b>👈코드 보기</b></summary>
+        <div markdown="1">
+            <ul>
+                https://github.com/owen970517/carrot_clone/blob/6329b77130013278cb5aa1170e8d8e894c984c64/src/pages/AddProduct.tsx#L33-L55
+            </ul>
+        </div>
+    </details>
+
+- 프로필 이미지 변경
+    <details>
+        <summary><b>👈코드 보기</b></summary>
+        <div markdown="1">
+            <ul>
+                https://github.com/owen970517/carrot_clone/blob/6329b77130013278cb5aa1170e8d8e894c984c64/src/pages/Profile.tsx#L70-L80
+            </ul>
+        </div>
+    </details>
+
+- 상품 수정 
+    <details>
+        <summary><b>👈코드 보기</b></summary>
+        <div markdown="1">
+            <ul>
+                https://github.com/owen970517/carrot_clone/blob/6329b77130013278cb5aa1170e8d8e894c984c64/src/pages/ModifyProduct.tsx#L42-L65
+            </ul>
+        </div>
+    </details>
 
 ### 4. 초기 로딩 속도 개선
 
