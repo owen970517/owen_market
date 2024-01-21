@@ -36,13 +36,13 @@ const SliderWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 45%;
+  width: 60%;
   height: 400px;
   overflow: hidden;
 `;
 
 const Image = styled.img`
-  width: 70%;
+  width: 100%;
   height: 500px;
   object-fit: contain;
   border-radius: 10px;
