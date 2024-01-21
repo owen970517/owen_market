@@ -1,5 +1,4 @@
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
 import { IForm } from '../../type/InputForm';
 import styled from 'styled-components';
 import { IStyleProps } from '../../type/StyleProps';
@@ -8,14 +7,19 @@ import { useDispatch, useSelector } from 'react-redux';
 import { userActions } from '../../store/userSlice';
 import { RootState } from '../../store/store';
 import { useCallback, useEffect } from 'react';
+import { IData } from '../../type/ItemProps';
+import { regionActions } from '../../store/regionSlice';
 
 const SearchBar = () => {
   const dispatch = useDispatch();
   const {isSearchBar} = useSelector((state:RootState) => state.user)
-  const nav = useNavigate();
+  const { allProducts } = useSelector((state: RootState) => state.region);
   const {register , handleSubmit , setValue, setFocus } = useForm<IForm>();
   const onSearch = handleSubmit((e) => {
-    nav('/search/' + e.search)
+    const searchedData = allProducts.filter((item: IData) => item.상품명?.includes(e.search))
+    dispatch(regionActions.setFilteredProducts(searchedData));
+    dispatch(regionActions.setFilteredAllProducts(searchedData));
+    dispatch(regionActions.resetIndex());
     dispatch(userActions.searchToggle(false))
     setValue('search' , '')
   })
