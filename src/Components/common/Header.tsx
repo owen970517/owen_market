@@ -29,32 +29,32 @@ const Header = () => {
   },[dispatch, nav])
 
   return (
-    <Nav>
+    <HeaderContainer>
       <h1>Logo</h1>
-      <UL isopen={isopen }>
-        <LI><SearchBar/></LI>
-        <LI>
+      <HeaderList isopen={isopen }>
+        <HeaderItem><SearchBar/></HeaderItem>
+        <HeaderItem>
           {isLogin ? 
-            <Div>
-              <ProfileDiv>
-                <ProfileImg src={profileImg ? profileImg : defaultImg } alt='' ></ProfileImg>
-              </ProfileDiv>
+            <ProfileWrapper>
+              <ProfileImageWrapper>
+                <ProfileImg src={profileImg ? profileImg : defaultImg } alt='프로필 이미지'/>
+              </ProfileImageWrapper>
               <StyledLink to='/profile' onClick={handleToggleOpen}>{user.displayName}</StyledLink>
-            </Div> : ""
+            </ProfileWrapper> : ""
           }
-        </LI>
-        <LI><StyledLink to='/' onClick={handleToggleOpen}>중고거래</StyledLink></LI>
-        <LI><StyledLink to='/write' onClick={handleToggleOpen}>상품 등록</StyledLink></LI>
-        {isLogin && <LI><StyledLink to='/cart' onClick={handleToggleOpen}>장바구니</StyledLink></LI> }
-        {isLogin && <LI><StyledLink to='/chatrooms' onClick={handleToggleOpen}>채팅방</StyledLink></LI> }
-        {isLogin ? <LI><LogoutBtn onClick={onLogOut}>로그아웃</LogoutBtn></LI> : <LI><StyledLink to='/sign' onClick={handleToggleOpen}>회원가입</StyledLink></LI> }
-      </UL>
+        </HeaderItem>
+        <HeaderItem><StyledLink to='/' onClick={handleToggleOpen}>중고거래</StyledLink></HeaderItem>
+        <HeaderItem><StyledLink to='/write' onClick={handleToggleOpen}>상품 등록</StyledLink></HeaderItem>
+        {isLogin && <HeaderItem><StyledLink to='/cart' onClick={handleToggleOpen}>장바구니</StyledLink></HeaderItem> }
+        {isLogin && <HeaderItem><StyledLink to='/chatrooms' onClick={handleToggleOpen}>채팅방</StyledLink></HeaderItem> }
+        {isLogin ? <HeaderItem><LogoutBtn onClick={onLogOut}>로그아웃</LogoutBtn></HeaderItem> : <HeaderItem><StyledLink to='/sign' onClick={handleToggleOpen}>로그인</StyledLink></HeaderItem> }
+      </HeaderList>
       { isopen ?  <img src={times} className="ham" onClick={handleToggleOpen} alt='asdsa' style={{width :'40px', height : '40px'}}/> : <img className="ham" src={Hamburger} alt='햄버거' onClick={handleToggleOpen}/>}
-    </Nav>
+    </HeaderContainer>
   )
 }
 
-const Nav = styled.div`
+const HeaderContainer = styled.div`
   background-color: #74c0fc;
   padding: 10px;
   display: flex;
@@ -78,7 +78,7 @@ const Nav = styled.div`
     }
   }
 `
-const UL = styled.ul`
+const HeaderList = styled.ul`
   display:flex;
   justify-content: center;
   align-items: center;
@@ -89,7 +89,7 @@ const UL = styled.ul`
     width: 100%;
   }
 `
-const LI =  styled.li`
+const HeaderItem =  styled.li`
   font-size : 20px;
   list-style : none;
   display: block;
@@ -130,7 +130,12 @@ const StyledLink = styled(Link)`
     color : #fff;
   }
 `
-const ProfileDiv = styled.div`
+const ProfileWrapper = styled.div`
+  display:flex;
+  justify-content: center;
+  align-items: center;
+`
+const ProfileImageWrapper = styled.div`
   width : 50px;
   height : 50px;
   border-radius: 50%;
@@ -142,12 +147,5 @@ const ProfileImg = styled.img`
     object-fit: cover;
 
 `
-const Div = styled.div`
-  display:flex;
-  justify-content: center;
-  align-items: center;
-`
-
-
 
 export default Header
