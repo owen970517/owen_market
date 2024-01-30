@@ -11,6 +11,7 @@ import { defaultImg } from "../constants/user";
 import { useCompressImage } from "../hooks/useCompressImage";
 import { useUpoadImage } from "../hooks/useUploadImage";
 import camera from '../assets/camera.svg'
+import * as S from '../styles/ToggleBtn.styled';
 
 const SaleProducts = lazy(() => import("../Components/products/SaleProducts"))
 const SoldProducts = lazy(() => import("../Components/products/SoldProducts"))
@@ -95,65 +96,43 @@ const Profile = () => {
       await updateProfileImage(props.image[0])
     }
     nav('/');
-  }
-    
-    return (
-      <>
-        <Div>
-          <ProfileDiv>
-            <ProfileImg src={imgPreview || profileImg || defaultImg}></ProfileImg>
-            <FileInput onClick={() => {fileRef.current?.click()}}>
-              <img src={camera} alt='camera icon' />
-              <input {...register('image')} type="file" ref={(data) => {
-                  register('image').ref(data);
-                  fileRef.current = data
-              }}></input>
-            </FileInput>
-          </ProfileDiv>
-        </Div>
-        <UserForm onSubmit={handleSubmit(onFormSubmit)}>
-            <TextInput {...register('nickname')} type='text' />
-            <button type="submit">수정</button>
-        </UserForm>            
-        <ToggleBtn>
-            <button onClick={() => setSale((prev) => !prev)}>판매중</button>
-            <button onClick={() => setSale((prev) => !prev)}>판매완료</button>
-        </ToggleBtn>
-        <Suspense fallback={<h1>Loading...</h1>}>
-          {sale ?
-              <>
-                <Title>판매중</Title>
-                <SaleProducts />
-              </>
-              :  
-              <>
-                <Title>판매완료</Title>
-                <SoldProducts />
-              </>
-          }
-        </Suspense>
-      </>
-    )
+  }   
+  return (
+    <>
+      <ProfileContainer>
+        <ProfileImageWrapper>
+          <ProfileImg src={imgPreview || profileImg || defaultImg}></ProfileImg>
+          <ImageUploadButton onClick={() => {fileRef.current?.click()}}>
+            <img src={camera} alt='camera icon' />
+            <input {...register('image')} type="file" ref={(data) => {
+                register('image').ref(data);
+                fileRef.current = data
+            }}></input>
+          </ImageUploadButton>
+        </ProfileImageWrapper>
+      </ProfileContainer>
+      <UserForm onSubmit={handleSubmit(onFormSubmit)}>
+        <StyledInput {...register('nickname')} type='text' placeholder="닉네임을 입력해주세요."/>
+        <ModifyButton type="submit">수정</ModifyButton>
+      </UserForm>            
+      <S.Wrapper>
+        <S.Button active={sale} onClick={() => setSale(true)}>판매중</S.Button>
+        <S.Button active={!sale} onClick={() => setSale(false)}>판매완료</S.Button>
+      </S.Wrapper>
+      <Suspense fallback={<h1>Loading...</h1>}>
+        { sale ? <SaleProducts /> : <SoldProducts /> }
+      </Suspense>
+    </>
+  )
 }
 
 const UserForm = styled.form`
   display : flex;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
   margin-bottom: 20px;
 `
-
-const Title = styled.h1`
-  text-align: center;
-
-`
-const ToggleBtn = styled.div`
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-`
-const ProfileDiv = styled.div`
+const ProfileImageWrapper = styled.div`
   width: 150px;
   height : 150px;
   border-radius: 50%;
@@ -164,7 +143,7 @@ const ProfileImg = styled.img`
   height: 100%;
   object-fit: cover;
 `
-const FileInput = styled.div`
+const ImageUploadButton = styled.div`
   position: absolute;
   bottom: 0;
   left: 100px;
@@ -191,17 +170,37 @@ const FileInput = styled.div`
     clip:rect(0,0,0,0);
   }
 `
-const Div = styled.div`
+const ProfileContainer = styled.div`
   position: relative;
   width: 150px;
   height: 150px;
   margin: 0 auto;
+  margin-bottom: 10px;
 `
-const TextInput = styled.input`
-  padding : 10px;
+const StyledInput = styled.input`
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: vertical;
+`;
+
+const ModifyButton = styled.button`
+  margin-left: 10px;
+  padding: 10px 15px;
+  background-color: #007BFF;
+  border: none;
+  color: white;
   text-align: center;
-  width : 100px;
-  height : 25px;
-  border-radius: 20px;
-`
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  border-radius: 12px;
+
+  &:hover {
+    background-color: #0056b3;
+  }
+`;
+
 export default Profile
