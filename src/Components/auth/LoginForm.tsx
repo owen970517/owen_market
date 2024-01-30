@@ -3,11 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components'
 import { auth } from '../../firebase';
 import { IForm } from '../../type/InputForm';
-import { IProps } from '../../type/StateProps';
 import { useDispatch } from 'react-redux';
 import { userActions } from '../../store/userSlice';
 
-const LoginForm = ({setLogin}:IProps) => {
+const LoginForm = () => {
     const dispatch = useDispatch();
     const {register , handleSubmit  } = useForm<IForm>();
     const nav = useNavigate();

@@ -12,7 +12,7 @@ const AuthContainer = () => {
                 <S.Button active={!login} onClick={() => setLogin(false)}>회원가입</S.Button>
                 <S.Button active={login} onClick={() => setLogin(true)}>로그인</S.Button>
             </S.Wrapper>
-            { login ? <LoginForm setLogin={setLogin}/> : <SignupForm setLogin={setLogin}/> }   
+            { login ? <LoginForm/> : <SignupForm setLogin={setLogin}/> }   
         </Container>
     )
 }
