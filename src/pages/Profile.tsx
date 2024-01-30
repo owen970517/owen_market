@@ -12,6 +12,7 @@ import { useCompressImage } from "../hooks/useCompressImage";
 import { useUpoadImage } from "../hooks/useUploadImage";
 import camera from '../assets/camera.svg'
 import * as S from '../styles/ToggleBtn.styled';
+import LoadingSpinner from "../Components/common/LoadingSpinner";
 
 const SaleProducts = lazy(() => import("../Components/products/SaleProducts"))
 const SoldProducts = lazy(() => import("../Components/products/SoldProducts"))
@@ -119,7 +120,7 @@ const Profile = () => {
         <S.Button active={sale} onClick={() => setSale(true)}>판매중</S.Button>
         <S.Button active={!sale} onClick={() => setSale(false)}>판매완료</S.Button>
       </S.Wrapper>
-      <Suspense fallback={<h1>Loading...</h1>}>
+      <Suspense fallback={<LoadingSpinner/>}>
         { sale ? <SaleProducts /> : <SoldProducts /> }
       </Suspense>
     </>

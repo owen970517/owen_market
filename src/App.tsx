@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import { userActions } from "./store/userSlice";
 import React , {Suspense} from "react"
 import { Helmet, HelmetProvider } from "react-helmet-async";
+import LoadingSpinner from "./Components/common/LoadingSpinner";
 
 function App() {
   const dispatch = useDispatch();
@@ -25,7 +26,7 @@ function App() {
   },[dispatch])
   return (
     <BrowserRouter>
-      <Suspense fallback={<div>Component Loading...</div>}>
+      <Suspense fallback={<LoadingSpinner/>}>
         <HelmetProvider>
           <Helmet>
             <link rel="preconnect" href="https://firebasestorage.googleapis.com" />
