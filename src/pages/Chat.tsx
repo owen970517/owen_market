@@ -8,7 +8,6 @@ import { IForm } from "../type/InputForm";
 import { useParams } from "react-router-dom"
 import { IMessage } from '../type/messageProps';
 import React from 'react';
-import dayjs from 'dayjs';
 
 const Chat = () => {
     const [chatData,setChatData] = useState<IMessage[]>([]);
