@@ -10,6 +10,7 @@ import ImageSlider from "../Components/products/ImageSlider";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import "dayjs/locale/ko";
+import LoadingSpinner from "../Components/common/LoadingSpinner";
 dayjs.extend(relativeTime);
 dayjs.locale("ko");
 
@@ -52,8 +53,15 @@ const Detail = () => {
             }).then(()=> alert('장바구니에 추가되었습니다.'))
         }
     }
+    const onDelete = async (id : string) => {
+        const ok = window.confirm("정말 삭제하시겠습니까??");
+        if (ok) {
+          await db.collection('Product').doc(id).delete();
+          nav('/')
+        }
+      };
     if (!data) {
-        return <div>Loading...</div>;
+        return <LoadingSpinner/>;
     }
     return (
         <>
@@ -77,6 +85,7 @@ const Detail = () => {
                         <ButtonGroup>
                             <Button onClick={onModify}>수정</Button>
                             <Button onClick={onSoldOut}>판매완료</Button>
+                            <Button onClick={() => onDelete(params.id!)}>삭제</Button>
                         </ButtonGroup> : isLogin ?
                         <ButtonGroup>
                             <Button onClick={onChat}>채팅</Button>
