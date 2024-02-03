@@ -8,6 +8,7 @@ import { IForm } from "../type/InputForm";
 import { useParams } from "react-router-dom"
 import { IMessage } from '../type/messageProps';
 import React from 'react';
+import dayjs from 'dayjs';
 
 const Chat = () => {
     const [chatData,setChatData] = useState<IMessage[]>([]);
@@ -40,7 +41,7 @@ const Chat = () => {
         setValue('chat' , '')
         db.collection('chatroom').doc(product).collection('messages').add({
             content : props.chat,
-            date : new Date(), // dayjs().toDate() 사용 가능 
+            date : dayjs().format(),
             보낸사람 : user.uid
         })
     }
