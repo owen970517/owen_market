@@ -20,7 +20,7 @@ const Detail = () => {
     const params = useParams();
     const nav = useNavigate();
     useEffect(() => {
-        db.collection('Product').doc(params.id).get().then((result)=> {setData(result.data() as IData)})
+        db.collection('Product').doc(params.id).get().then((result)=> {setData(result.data())})
     },[params.id])
     const isOwner = data?.올린사람 === user?.displayName;
     const onChat = () => {
