@@ -13,6 +13,7 @@ import { useUpoadImage } from "../hooks/useUploadImage";
 import camera from '../assets/camera.svg'
 import * as S from '../styles/ToggleBtn.styled';
 import LoadingSpinner from "../Components/common/LoadingSpinner";
+import Title from "../Components/common/Title";
 
 const SaleProducts = lazy(() => import("../Components/products/SaleProducts"))
 const SoldProducts = lazy(() => import("../Components/products/SoldProducts"))
@@ -100,6 +101,7 @@ const Profile = () => {
   }   
   return (
     <>
+      <Title title='마이페이지'/>
       <ProfileContainer>
         <ProfileImageWrapper>
           <ProfileImg src={imgPreview || profileImg || defaultImg}></ProfileImg>
