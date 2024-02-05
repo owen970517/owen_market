@@ -5,12 +5,12 @@ import { useEffect, useState } from "react";
 import { IData } from "../type/ItemProps";
 import { useSelector} from 'react-redux'
 import { RootState } from "../store/store";
-import { Helmet } from "react-helmet-async";
 import ImageSlider from "../Components/products/ImageSlider";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import "dayjs/locale/ko";
 import LoadingSpinner from "../Components/common/LoadingSpinner";
+import Title from "../Components/common/Title";
 dayjs.extend(relativeTime);
 dayjs.locale("ko");
 
@@ -65,9 +65,7 @@ const Detail = () => {
     }
     return (
         <>
-            <Helmet>
-                <title>{`${data?.상품명} | 중고사이트`}</title>
-            </Helmet>
+            <Title title={data.상품명}/>
             <Container>
                 <ImageSlider images={data.이미지!}/>
                 <InfoContainer>

@@ -5,6 +5,7 @@ import { IData } from '../type/ItemProps';
 import { useSelector} from 'react-redux'
 import { RootState } from '../store/store';
 import noImg from '../assets/noimage.jpg'
+import Title from '../Components/common/Title';
 
 const Cart = () => {
   const userObj = useSelector((state:RootState) => state.user.user);
@@ -43,20 +44,23 @@ const Cart = () => {
     }
   };
   return (
-    <CartContainer>
-      {data?.map((item) => (
-        <CartItem key={item.id}>
-          <ItemImage src={item.이미지 ? item.이미지 : noImg} alt={item.상품명} />
-          <ItemInfo>
-            <p>{item.상품명}</p>
-            <p>{item.가격}원</p>
-          </ItemInfo>
-          <DeleteButton onClick={() => onDelete(item.id as string)}>X</DeleteButton>
-        </CartItem>
-      ))}
-      <h1>총 {data.length}개</h1>
-      <h1>합계 : {sum}원</h1>
-    </CartContainer>
+    <>
+      <Title title='장바구니'/>
+      <CartContainer>
+        {data?.map((item) => (
+          <CartItem key={item.id}>
+            <ItemImage src={item.이미지 ? item.이미지 : noImg} alt={item.상품명} />
+            <ItemInfo>
+              <p>{item.상품명}</p>
+              <p>{item.가격}원</p>
+            </ItemInfo>
+            <DeleteButton onClick={() => onDelete(item.id as string)}>X</DeleteButton>
+          </CartItem>
+        ))}
+        <h1>총 {data.length}개</h1>
+        <h1>합계 : {sum}원</h1>
+      </CartContainer>
+    </>
   )
 }
 

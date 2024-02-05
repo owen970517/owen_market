@@ -10,6 +10,7 @@ import { RootState } from "../store/store";
 import { useCompressImage } from "../hooks/useCompressImage";
 import { useUpoadImage } from "../hooks/useUploadImage";
 import SelectRegion from "../Components/Layout/SelectRegion";
+import Title from "../Components/common/Title";
 
 const AddProduct = () => {
   const nav = useNavigate();
@@ -65,6 +66,7 @@ const AddProduct = () => {
 
   return (
     <>
+      <Title title='상품 등록'/>
       <S.Wrapper>
         <S.Container>
           {images && images.map((image,idx:number) => {

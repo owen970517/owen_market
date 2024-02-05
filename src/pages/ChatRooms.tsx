@@ -8,6 +8,7 @@ import dayjs from 'dayjs';
 import relativeTime from "dayjs/plugin/relativeTime";
 import "dayjs/locale/ko";
 import { ChatProps, MessageProps } from '../type/Chat'
+import Title from '../Components/common/Title'
 
 dayjs.extend(relativeTime);
 dayjs.locale("ko");
@@ -62,22 +63,25 @@ const ChatRooms = () => {
   };
 
   return (
-    <ChatRoomContainer>
-      {chatList.length === 0 && <h1>채팅방이 없습니다.</h1>}
-      {chatList.map((chat, index) => {
-        const otherUser = chat.chatUser?.find((p) => p !== user.displayName)
-        return (
-          <ChatRoomItem key={index}>
-            <ChatInfo>
-              <Link to={`/chat/${chat.product}`} >{otherUser}</Link>
-              <span>{dayjs(messages[index]?.date).fromNow()}</span>
-            </ChatInfo>
-            <p>{messages[index]?.content}</p>
-            <OutBtn onClick={() => onDelete(chat.product!)}>나가기</OutBtn>
-          </ChatRoomItem>
-        );
-      })}
-    </ChatRoomContainer>
+    <>
+      <Title title='채팅방'/>
+      <ChatRoomContainer>
+        {chatList.length === 0 && <h1>채팅방이 없습니다.</h1>}
+        {chatList.map((chat, index) => {
+          const otherUser = chat.chatUser?.find((p) => p !== user.displayName)
+          return (
+            <ChatRoomItem key={index}>
+              <ChatInfo>
+                <Link to={`/chat/${chat.product}`} >{otherUser}</Link>
+                <span>{dayjs(messages[index]?.date).fromNow()}</span>
+              </ChatInfo>
+              <p>{messages[index]?.content}</p>
+              <OutBtn onClick={() => onDelete(chat.product!)}>나가기</OutBtn>
+            </ChatRoomItem>
+          );
+        })}
+      </ChatRoomContainer>
+    </>
   )
 }
 
