@@ -45,7 +45,7 @@ const Header = () => {
         </HeaderItem>
         <HeaderItem><StyledLink to='/' onClick={handleToggleOpen}>중고거래</StyledLink></HeaderItem>
         <HeaderItem><StyledLink to='/write' onClick={handleToggleOpen}>상품 등록</StyledLink></HeaderItem>
-        {isLogin && <HeaderItem><StyledLink to='/cart' onClick={handleToggleOpen}>장바구니</StyledLink></HeaderItem> }
+        {isLogin && <HeaderItem><StyledLink to='/cart' onClick={handleToggleOpen}>관심목록</StyledLink></HeaderItem> }
         {isLogin && <HeaderItem><StyledLink to='/chatrooms' onClick={handleToggleOpen}>채팅방</StyledLink></HeaderItem> }
         {isLogin ? <HeaderItem><LogoutBtn onClick={onLogOut}>로그아웃</LogoutBtn></HeaderItem> : <HeaderItem><StyledLink to='/sign' onClick={handleToggleOpen}>로그인</StyledLink></HeaderItem> }
       </HeaderList>

@@ -1,4 +1,5 @@
 export interface IData {
+    title? : string;
     id? : string ;
     uid? : string;
     가격? : string;

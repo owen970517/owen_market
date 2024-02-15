@@ -46,11 +46,12 @@ const Detail = () => {
         nav('/');
     }
     const onAddCart = () => {
-        const ok = window.confirm('장바구니에 추가하시겠습니까?')
+        const ok = window.confirm('관심목록에 추가하시겠습니까?')
         if(ok) {
             db.collection('Cart').doc(user.uid).collection('items').add({
+                title : params.id,
                 ...data
-            }).then(()=> alert('장바구니에 추가되었습니다.'))
+            }).then(()=> alert('관심목록에 추가되었습니다.'))
         }
     }
     const onDelete = async (id : string) => {
@@ -87,7 +88,7 @@ const Detail = () => {
                         </ButtonGroup> : isLogin ?
                         <ButtonGroup>
                             <Button onClick={onChat}>채팅</Button>
-                            <Button onClick={onAddCart}>담기</Button>
+                            <Button onClick={onAddCart}>관심</Button>
                         </ButtonGroup> : ''
                     }
                 </InfoContainer>

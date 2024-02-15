@@ -8,7 +8,7 @@ const AddProduct = lazy(() => import('./AddProduct'))
 const Detail = lazy(() => import('./Detail'))
 const Sign = lazy(() => import("./AuthContainer"))
 const ModifyProduct = lazy(() => import("./ModifyProduct"))
-const Cart = lazy(() => import("./Cart"))
+const InterestList = lazy(() => import("./InterestList"))
 const Chat = lazy(() => import("./Chat"))
 const ChatRooms = lazy(() => import("./ChatRooms"))
 
@@ -23,7 +23,7 @@ const Pages = () => {
       <Route path={ROUTES.CHATROOMS} element={<ChatRooms/>}/>
       <Route path={ROUTES.CHAT_PRODUCT} element={<Chat/>}/>
       <Route path={ROUTES.MODIFY_UID }element={<ModifyProduct/>}/>
-      <Route path={ROUTES.CART }element={<Cart />}/>
+      <Route path={ROUTES.CART}element={<InterestList />}/>
     </Routes>
   )
 }

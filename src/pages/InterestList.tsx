@@ -6,6 +6,7 @@ import { useSelector} from 'react-redux'
 import { RootState } from '../store/store';
 import noImg from '../assets/noimage.jpg'
 import Title from '../Components/common/Title';
+import { Link } from 'react-router-dom';
 
 const Cart = () => {
   const userObj = useSelector((state:RootState) => state.user.user);
@@ -33,9 +34,6 @@ const Cart = () => {
       fetchData();
     }
   }, [userObj.uid]);
-  const sum = useMemo(() => 
-    data.reduce((acc, curr) => acc + Number(curr.가격), 0)
-  ,[data]);
   const onDelete = async (id : string) => {
     const ok = window.confirm("정말 삭제하시겠습니까??");
     if (ok) {
@@ -43,22 +41,21 @@ const Cart = () => {
       setData((prevData) => prevData.filter((d) => d.id !== id));
     }
   };
+
   return (
     <>
       <Title title='장바구니'/>
       <CartContainer>
-        {data?.map((item) => (
+        { data.length > 0 ? data?.map((item) => (
           <CartItem key={item.id}>
             <ItemImage src={item.이미지 ? item.이미지 : noImg} alt={item.상품명} />
             <ItemInfo>
-              <p>{item.상품명}</p>
+              <Link to={`/detail/${encodeURIComponent(item.title!)}`}>{item.상품명}</Link>
               <p>{item.가격}원</p>
             </ItemInfo>
             <DeleteButton onClick={() => onDelete(item.id as string)}>X</DeleteButton>
           </CartItem>
-        ))}
-        <h1>총 {data.length}개</h1>
-        <h1>합계 : {sum}원</h1>
+        )) : <h1>관심목록이 존재하지 않습니다.</h1>}
       </CartContainer>
     </>
   )
