@@ -1,4 +1,4 @@
-import { useEffect ,useMemo,useState} from 'react'
+import { useEffect ,useState} from 'react'
 import { db } from '../firebase';
 import styled from 'styled-components';
 import { IData } from '../type/ItemProps';
@@ -50,7 +50,7 @@ const Cart = () => {
           <CartItem key={item.id}>
             <ItemImage src={item.이미지 ? item.이미지 : noImg} alt={item.상품명} />
             <ItemInfo>
-              <Link to={`/detail/${encodeURIComponent(item.title!)}`}>{item.상품명}</Link>
+              <ItemLink to={`/detail/${encodeURIComponent(item.title!)}`}>{item.상품명}</ItemLink>
               <p>{item.가격}원</p>
             </ItemInfo>
             <DeleteButton onClick={() => onDelete(item.id as string)}>X</DeleteButton>
@@ -71,12 +71,16 @@ const CartItem = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 80%;
+  width: 60%;
   margin: 20px 0;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 10px;
 `;
+
+const ItemLink = styled(Link)`
+  text-decoration: none;
+`
 
 const ItemImage = styled.img`
   width: 100px;
