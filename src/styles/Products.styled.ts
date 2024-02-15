@@ -17,7 +17,7 @@ export const Item = styled.div`
   align-items: center;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  padding: 20px;
+  padding: 10px;
   background-color: white;
   transition: transform .2s;
 
@@ -30,6 +30,12 @@ export const Item = styled.div`
     text-align: center;
   }
 `;
+
+export const ItemInfo = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
 
 export const StyledLink = styled(Link)`
   display: flex;
