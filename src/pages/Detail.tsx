@@ -11,6 +11,8 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import "dayjs/locale/ko";
 import LoadingSpinner from "../Components/common/LoadingSpinner";
 import Title from "../Components/common/Title";
+import firebase from "firebase/compat/app";
+import "firebase/compat/firestore";
 dayjs.extend(relativeTime);
 dayjs.locale("ko");
 
@@ -20,8 +22,19 @@ const Detail = () => {
     const params = useParams();
     const nav = useNavigate();
     useEffect(() => {
-        db.collection('Product').doc(params.id).get().then((result)=> {setData(result.data())})
+        const productRef = db.collection('Product').doc(params.id);
+        productRef.get().then((result)=> {
+            setData(result.data());
+        });
     },[params.id])
+    useEffect(() => {
+        if (data) {
+            const productRef = db.collection('Product').doc(params.id);
+            productRef.update({
+                조회수: firebase.firestore.FieldValue.increment(1)
+            });
+        }
+    },[data, params.id])
     const isOwner = data?.올린사람 === user?.displayName;
     const onChat = () => {
         db.collection('chatroom').doc(`${data?.상품명}`).set({
@@ -79,6 +92,7 @@ const Detail = () => {
                             <p>{data.설명?.replace(/<br>/g, '\n')}</p>
                         </Description>
                         <p>{data?.상태}</p>
+                        <p>· 조회 {data?.조회수}</p>
                     </Content>
                     {isOwner ?
                         <ButtonGroup>

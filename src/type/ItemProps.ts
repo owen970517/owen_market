@@ -11,5 +11,6 @@ export interface IData {
     날짜? : string;
     상태? : string;
     product? : IData;
-    설명? : string
+    설명? : string;
+    조회수? : number;
 }

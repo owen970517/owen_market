@@ -51,6 +51,7 @@ const AddProduct = () => {
       날짜 : dayjs().format(),
       이미지 : urls,
       설명 : description,
+      조회수 : 0 ,
     });
     nav('/');
   }
