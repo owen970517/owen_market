@@ -84,15 +84,15 @@ const Detail = () => {
                 <ImageSlider images={data.이미지!}/>
                 <InfoContainer>
                     <Content>
-                        <h5>올린사람: {data?.올린사람}</h5>
-                        <h5>상품명: {data?.상품명}</h5>
-                        <p>올린날짜: {dayjs(data.날짜).fromNow()}</p>
-                        <p>{data?.가격}원</p>
+                        <h2>{data?.올린사람}</h2>
+                        <h3>{data.지역} {data.세부지역}</h3>
+                        <hr/>
+                        <h1>{data?.상품명}</h1>
+                        <h2>{data?.가격}원</h2>
                         <Description>
-                            <p>{data.설명?.replace(/<br>/g, '\n')}</p>
+                            <h3>{data.설명?.replace(/<br>/g, '\n')}</h3>
                         </Description>
-                        <p>{data?.상태}</p>
-                        <p>· 조회 {data?.조회수}</p>
+                        <p>조회 {data?.조회수} · {dayjs(data.날짜).fromNow()}</p>
                     </Content>
                     {isOwner ?
                         <ButtonGroup>
