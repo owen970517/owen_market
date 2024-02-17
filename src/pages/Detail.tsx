@@ -13,6 +13,7 @@ import LoadingSpinner from "../Components/common/LoadingSpinner";
 import Title from "../Components/common/Title";
 import firebase from "firebase/compat/app";
 import "firebase/compat/firestore";
+import Heart from "../Components/common/Heart";
 dayjs.extend(relativeTime);
 dayjs.locale("ko");
 
@@ -58,15 +59,6 @@ const Detail = () => {
         }
         nav('/');
     }
-    const onAddCart = () => {
-        const ok = window.confirm('관심목록에 추가하시겠습니까?')
-        if(ok) {
-            db.collection('Cart').doc(user.uid).collection('items').add({
-                title : params.id,
-                ...data
-            }).then(()=> alert('관심목록에 추가되었습니다.'))
-        }
-    }
     const onDelete = async (id : string) => {
         const ok = window.confirm("정말 삭제하시겠습니까??");
         if (ok) {
@@ -77,6 +69,7 @@ const Detail = () => {
     if (!data) {
         return <LoadingSpinner/>;
     }
+
     return (
         <>
             <Title title={data.상품명}/>
@@ -101,8 +94,8 @@ const Detail = () => {
                             <Button onClick={() => onDelete(params.id!)}>삭제</Button>
                         </ButtonGroup> : isLogin ?
                         <ButtonGroup>
-                            <Button onClick={onChat}>채팅</Button>
-                            <Button onClick={onAddCart}>관심</Button>
+                            <Heart data={data}/>
+                            <Button onClick={onChat}>채팅하기</Button>
                         </ButtonGroup> : ''
                     }
                 </InfoContainer>

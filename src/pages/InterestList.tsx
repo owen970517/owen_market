@@ -50,10 +50,10 @@ const Cart = () => {
           <CartItem key={item.id}>
             <ItemImage src={item.이미지 ? item.이미지 : noImg} alt={item.상품명} />
             <ItemInfo>
-              <ItemLink to={`/detail/${encodeURIComponent(item.title!)}`}>{item.상품명}</ItemLink>
+              <ItemLink to={`/detail/${item.title}`}>{item.상품명}</ItemLink>
               <p>{item.가격}원</p>
             </ItemInfo>
-            <DeleteButton onClick={() => onDelete(item.id as string)}>X</DeleteButton>
+            <DeleteButton onClick={() => onDelete(item.상품명!)}>X</DeleteButton>
           </CartItem>
         )) : <h1>관심목록이 존재하지 않습니다.</h1>}
       </CartContainer>
