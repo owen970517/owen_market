@@ -7,6 +7,7 @@ const initialRegionState:any = {
     allProducts : [], 
     filteredProducts : [],
     filteredAllProducts : [],
+    currentPos : '',
     region : '',
     district : '',
 }
@@ -51,6 +52,9 @@ const regionSlice = createSlice({
         },
         setDistrict(state,action) {
             state.district = action.payload
+        }, 
+        setCurrentPos(state,action) {
+            state.currentPos = action.payload
         }
     }
 })
