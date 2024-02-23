@@ -168,14 +168,16 @@
     </div>
 </details>
 
+### 5. 초기 로딩 속도 개선
 
+- 문제 : 실제 위치와 보여주는 위치가 다르게 나오는 현상이 발생
+- 원인 : 찾아본 바로는 건물, wifi 네트워크 등 요소로 인해 다른 위치를 반환할 수 있다고 함
 
-## 개선한 점  
-
-- firebase를 typescript로 개선
-- 기존 form-input을 useForm hook을 사용하여 개선
-- redux-toolkit을 사용하여 상태 관리
-- react-helmet-async를 사용하여 웹 사이트 타이틀 변경
-- React.lazy를 사용하여 라우터 코드 분할로 성능 개선 
-- react-lazy-load-image 라이브러리를 사용하여 이미지 로딩 개선
-
+<details>
+    <summary><b>👈코드 보기</b></summary>
+    <div markdown="1">
+        <ul>
+            https://github.com/owen970517/carrot_clone/blob/968542386d6b3e9313f386b7fcd1b7c5ec50fc2c/src/Components/common/Map.tsx#L12-L113
+        </ul>
+    </div>
+</details>
