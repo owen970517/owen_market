@@ -6,21 +6,33 @@ import searchIcon from '../../assets/search-icon.svg'
 import { useDispatch, useSelector } from 'react-redux';
 import { userActions } from '../../store/userSlice';
 import { RootState } from '../../store/store';
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { IData } from '../../type/ItemProps';
 import { regionActions } from '../../store/regionSlice';
+import React from 'react';
+import Latest from './Latest';
+import RelatedProducts from './RelatedProducts';
 
 const SearchBar = () => {
   const dispatch = useDispatch();
   const {isSearchBar} = useSelector((state:RootState) => state.user)
   const { allProducts } = useSelector((state: RootState) => state.region);
-  const {register , handleSubmit , setValue, setFocus } = useForm<IForm>();
+  const {register , handleSubmit , setValue, setFocus, watch } = useForm<IForm>();
+  const [isFocus, setIsFocus] = useState(false);
+  const searchValue = watch('search')
+  const prevSearched = JSON.parse(localStorage.getItem('latest') || '[]')
   const onSearch = handleSubmit((e) => {
     const searchedData = allProducts.filter((item: IData) => item.상품명?.includes(e.search))
     dispatch(regionActions.setFilteredProducts(searchedData));
     dispatch(regionActions.setFilteredAllProducts(searchedData));
     dispatch(regionActions.resetIndex());
     dispatch(userActions.searchToggle(false))
+    const updatedData = prevSearched.filter((data:string) => data !== searchValue);
+    updatedData.unshift(searchValue);
+    if (updatedData.length > 5) {
+      updatedData.pop();
+    }
+    localStorage.setItem('latest', JSON.stringify(updatedData));
     setValue('search' , '')
   })
   const toggleSearch = useCallback(() => {
@@ -32,16 +44,33 @@ const SearchBar = () => {
     if (isSearchBar) {
       setTimeout(() => {
         setFocus('search');
+        setIsFocus(true);
       }, 300);  
+    } else {
+      setIsFocus(false);
     }
   }, [isSearchBar, setFocus]);
+
   return (
-    <SearchForm isopen={isSearchBar} onSubmit={onSearch}>
-      <img src={searchIcon} alt='search' style={{width : '30px' , height : '30px' }} onClick={toggleSearch}/>
-      <SearchInput {...register("search" , {required : true})} placeholder='찾고 싶은 상품을 입력하시오' isopen={isSearchBar}/>
-    </SearchForm>
+    <SearchContainer>
+      <SearchForm isopen={isSearchBar} onSubmit={onSearch}>
+        <img src={searchIcon} alt='search' style={{width : '30px' , height : '30px' }} onClick={toggleSearch}/>
+        <SearchInput {...register("search" , {required : true})} placeholder='찾고 싶은 상품을 입력하시오' autoComplete='off' isopen={isSearchBar} onFocus={() => setIsFocus(true)} onBlur={() => setIsFocus(false)}/>
+      </SearchForm>
+      {isFocus && (
+        <SearchBox>
+          <SectionTitle>{searchValue ? '관련 검색어' : '최근 검색어'}</SectionTitle>
+          {searchValue ? <RelatedProducts searchValue={searchValue}/> : <Latest/>}
+        </SearchBox>
+      )}
+    </SearchContainer>
   )
 }
+const SearchContainer = styled.div`
+  position: relative;
+  display: inline-block; 
+`
+
 const SearchForm = styled.form`
   display: flex;
   align-items: center;
@@ -70,4 +99,23 @@ const SearchInput = styled.input`
     color : white
   }
 `
+const SearchBox = styled.div`
+  position: absolute;
+  top: 50px;
+  left: 10px;
+  border-radius: 20px;
+  width : 25rem;
+  height : 500px;
+  background-color: #fff;
+`
+const SectionTitle = styled.div`
+  width: 90%;
+  padding: 15px 4px 8px 4px;
+  margin: 6px auto;
+  margin-bottom: 0;
+  font-size: 14px;
+  font-weight: 700;
+  color: #53585d;
+  border-bottom: 1px solid #e7e7e7;
+`;
 export default SearchBar
