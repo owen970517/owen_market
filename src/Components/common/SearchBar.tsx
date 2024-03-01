@@ -12,6 +12,7 @@ import { regionActions } from '../../store/regionSlice';
 import React from 'react';
 import Latest from './Latest';
 import RelatedProducts from './RelatedProducts';
+import useKeyboard from '../../hooks/useKeyboard';
 
 const SearchBar = () => {
   const dispatch = useDispatch();
@@ -19,28 +20,37 @@ const SearchBar = () => {
   const { allProducts } = useSelector((state: RootState) => state.region);
   const {register , handleSubmit , setValue, setFocus, watch } = useForm<IForm>();
   const [isFocus, setIsFocus] = useState(false);
+  const [searchedData, setSearchedData] = useState<IData[]>([]); 
   const searchValue = watch('search')
   const prevSearched = JSON.parse(localStorage.getItem('latest') || '[]')
-  const onSearch = handleSubmit((e) => {
-    const searchedData = allProducts.filter((item: IData) => item.상품명?.includes(e.search))
-    dispatch(regionActions.setFilteredProducts(searchedData));
-    dispatch(regionActions.setFilteredAllProducts(searchedData));
+  const { onKeyDown, nowIndex, initIndex, value } = useKeyboard(searchValue ? searchedData : prevSearched);
+  let nowValue = nowIndex !== null ? value : searchValue
+  const onSearch = handleSubmit(() => {
+    const now = allProducts.filter((item: IData) => item.상품명?.includes(nowValue));
+    dispatch(regionActions.setFilteredProducts(now));
+    dispatch(regionActions.setFilteredAllProducts(now));
     dispatch(regionActions.resetIndex());
     dispatch(userActions.searchToggle(false))
-    const updatedData = prevSearched.filter((data:string) => data !== searchValue);
-    updatedData.unshift(searchValue);
+    const updatedData = prevSearched.filter((data:string) => data !== nowValue);
+    updatedData.unshift(nowValue);
     if (updatedData.length > 5) {
       updatedData.pop();
     }
     localStorage.setItem('latest', JSON.stringify(updatedData));
     setValue('search' , '')
+    initIndex();
   })
   const toggleSearch = useCallback(() => {
     dispatch(userActions.searchToggle(!isSearchBar))
     setFocus('search');
     setValue('search' , '')
   },[dispatch, isSearchBar, setFocus, setValue])
+  const handleInputKeyDown = (e:React.KeyboardEvent) => {
+    onKeyDown(e)
+  }
   useEffect(() => {
+    const productNames = allProducts.map((item: IData) => item.상품명);
+    setSearchedData(productNames.filter((name:string) => name.includes(searchValue)));
     if (isSearchBar) {
       setTimeout(() => {
         setFocus('search');
@@ -49,18 +59,31 @@ const SearchBar = () => {
     } else {
       setIsFocus(false);
     }
-  }, [isSearchBar, setFocus]);
-
+  }, [allProducts, initIndex, isSearchBar, searchValue, setFocus, setValue, value]);
+  useEffect(() => {
+    if (!isFocus) {
+      initIndex();
+    }
+    initIndex();
+  },[initIndex, isFocus, searchValue])
+  
   return (
     <SearchContainer>
       <SearchForm isopen={isSearchBar} onSubmit={onSearch}>
         <img src={searchIcon} alt='search' style={{width : '30px' , height : '30px' }} onClick={toggleSearch}/>
-        <SearchInput {...register("search" , {required : true})} placeholder='찾고 싶은 상품을 입력하시오' autoComplete='off' isopen={isSearchBar} onFocus={() => setIsFocus(true)} onBlur={() => setIsFocus(false)}/>
+        <SearchInput {...register("search")} 
+          placeholder='찾고 싶은 상품을 입력하시오' 
+          autoComplete='off' 
+          isopen={isSearchBar} 
+          onFocus={() => setIsFocus(true)} 
+          onBlur={() => setIsFocus(false)}
+          onKeyDown={e => handleInputKeyDown(e)}
+        />
       </SearchForm>
       {isFocus && (
         <SearchBox>
           <SectionTitle>{searchValue ? '관련 검색어' : '최근 검색어'}</SectionTitle>
-          {searchValue ? <RelatedProducts searchValue={searchValue}/> : <Latest/>}
+          {searchValue ? <RelatedProducts searchValue={searchValue} idx={nowIndex!}/> : <Latest idx={nowIndex!}/>}
         </SearchBox>
       )}
     </SearchContainer>
