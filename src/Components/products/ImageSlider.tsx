@@ -48,7 +48,7 @@ const SliderWrapper = styled.div`
   justify-content: center;
   align-items: center;
   width: 60%;
-  height: 400px;
+  height: 500px;
   overflow: hidden;
 `;
 

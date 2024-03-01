@@ -118,6 +118,7 @@ const Description = styled.div`
 `
 
 const Content = styled.div`
+    height: 400px;
     padding: 20px;
     background-color: #f8f8f8;
     border-radius: 10px;
