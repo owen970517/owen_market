@@ -1,4 +1,4 @@
-# 당근마켓 클론코딩
+# 오웬 마켓
 
 ## 배포 주소 
 
@@ -6,7 +6,7 @@
 
 ## 설치 방법 및 실행
 
-- git clone https://github.com/owen970517/carrot_clone.git
+- git clone https://github.com/owen970517/owen_market.git
 - npm install
 - npm start
 
@@ -79,10 +79,10 @@
     <summary><b>👈코드 보기</b></summary>
     <div markdown="1">
         <ul>
-            https://github.com/owen970517/carrot_clone/blob/47bbc85eb9507df782ad0d9008b6188817f27b99/src/Components/auth/Profile.tsx#L39-L50
+            https://github.com/owen970517/owen_market/blob/47bbc85eb9507df782ad0d9008b6188817f27b99/src/Components/auth/Profile.tsx#L39-L50
         </ul>
         <ul>
-            https://github.com/owen970517/carrot_clone/blob/39f4c342597a283f5e9c65a8354e060a0ff0e440/src/Components/auth/Profile.tsx#L97-L103
+            https://github.com/owen970517/owen_market/blob/39f4c342597a283f5e9c65a8354e060a0ff0e440/src/Components/auth/Profile.tsx#L97-L103
         </ul>
     </div>
 </details>
@@ -92,10 +92,10 @@
     <summary><b>👈코드 보기</b></summary>
     <div markdown="1">
         <ul>
-            https://github.com/owen970517/carrot_clone/blob/39f4c342597a283f5e9c65a8354e060a0ff0e440/src/Components/auth/Profile.tsx#L52-L65
+            https://github.com/owen970517/owen_market/blob/39f4c342597a283f5e9c65a8354e060a0ff0e440/src/Components/auth/Profile.tsx#L52-L65
         </ul>
         <ul>
-            https://github.com/owen970517/carrot_clone/blob/39f4c342597a283f5e9c65a8354e060a0ff0e440/src/Components/auth/Profile.tsx#L97-L103
+            https://github.com/owen970517/owen_market/blob/39f4c342597a283f5e9c65a8354e060a0ff0e440/src/Components/auth/Profile.tsx#L97-L103
         </ul>
     </div>
 </details>
@@ -109,7 +109,7 @@
         <summary><b>👈코드 보기</b></summary>
         <div markdown="1">
             <ul>
-                https://github.com/owen970517/carrot_clone/blob/6329b77130013278cb5aa1170e8d8e894c984c64/src/hooks/useCompressImage.tsx#L1-L32
+                https://github.com/owen970517/owen_market/blob/6329b77130013278cb5aa1170e8d8e894c984c64/src/hooks/useCompressImage.tsx#L1-L32
             </ul>
         </div>
     </details>
@@ -119,7 +119,7 @@
         <summary><b>👈코드 보기</b></summary>
         <div markdown="1">
             <ul>
-                https://github.com/owen970517/carrot_clone/blob/6329b77130013278cb5aa1170e8d8e894c984c64/src/pages/AddProduct.tsx#L33-L55
+                https://github.com/owen970517/owen_market/blob/6329b77130013278cb5aa1170e8d8e894c984c64/src/pages/AddProduct.tsx#L33-L55
             </ul>
         </div>
     </details>
@@ -129,7 +129,7 @@
         <summary><b>👈코드 보기</b></summary>
         <div markdown="1">
             <ul>
-                https://github.com/owen970517/carrot_clone/blob/6329b77130013278cb5aa1170e8d8e894c984c64/src/pages/Profile.tsx#L70-L80
+                https://github.com/owen970517/owen_market/blob/6329b77130013278cb5aa1170e8d8e894c984c64/src/pages/Profile.tsx#L70-L80
             </ul>
         </div>
     </details>
@@ -139,7 +139,7 @@
         <summary><b>👈코드 보기</b></summary>
         <div markdown="1">
             <ul>
-                https://github.com/owen970517/carrot_clone/blob/6329b77130013278cb5aa1170e8d8e894c984c64/src/pages/ModifyProduct.tsx#L42-L65
+                https://github.com/owen970517/owen_market/blob/6329b77130013278cb5aa1170e8d8e894c984c64/src/pages/ModifyProduct.tsx#L42-L65
             </ul>
         </div>
     </details>
@@ -151,19 +151,19 @@
 
 - 적용 전 
     <br/>
-    <img width='100%' src='https://github.com/owen970517/carrot_clone/assets/75247323/cb657ed0-3b90-4cbf-a6f7-fa81b7b67291'>
+    <img width='100%' src='https://github.com/owen970517/owen_markget/assets/75247323/cb657ed0-3b90-4cbf-a6f7-fa81b7b67291'>
     <br/>
 
 - 적용 후 
     <br/>
-    <img width='100%' src='https://github.com/owen970517/carrot_clone/assets/75247323/56549f6b-f463-4972-bd3e-89983d59b48f'>
+    <img width='100%' src='https://github.com/owen970517/owen_markget/assets/75247323/56549f6b-f463-4972-bd3e-89983d59b48f'>
     <br/>
 
 <details>
     <summary><b>👈코드 보기</b></summary>
     <div markdown="1">
         <ul>
-            https://github.com/owen970517/carrot_clone/blob/99c0e73e9ec0250769436bf0c660308c14b05bae/src/Components/Layout/Pages.tsx#L7-L31
+            https://github.com/owen970517/owen_market/blob/99c0e73e9ec0250769436bf0c660308c14b05bae/src/Components/Layout/Pages.tsx#L7-L31
         </ul>
     </div>
 </details>
@@ -176,7 +176,7 @@
     <summary><b>👈코드 보기</b></summary>
     <div markdown="1">
         <ul>
-            https://github.com/owen970517/carrot_clone/blob/968542386d6b3e9313f386b7fcd1b7c5ec50fc2c/src/Components/common/Map.tsx#L12-L113
+            https://github.com/owen970517/owen_market/blob/968542386d6b3e9313f386b7fcd1b7c5ec50fc2c/src/Components/common/Map.tsx#L12-L113
         </ul>
     </div>
 </details>
