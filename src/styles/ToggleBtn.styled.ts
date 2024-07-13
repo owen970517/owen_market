@@ -30,4 +30,8 @@ export const Button = styled.button<{active:boolean}>`
     &:hover {
         color: #007BFF;
     }
+
+    @media (max-width:768px) {
+        font-size: 12px;
+    }
 `

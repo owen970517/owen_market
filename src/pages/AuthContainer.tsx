@@ -24,6 +24,12 @@ const Container = styled.div`
     background-color: #f8f8f8;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     margin : 0 auto;
+    
+    @media (max-width: 768px) {
+        width: 90%;
+        padding: 10px;
+
+    }
 `
 
 export default AuthContainer;
