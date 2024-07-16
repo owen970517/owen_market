@@ -95,6 +95,12 @@ const ChatRoomContainer = styled.div`
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   margin : 0 auto;
+
+  @media (max-width:768px) {
+    h1 {
+      font-size: 16px;
+    }
+  }
 `;
 
 const ChatRoomItem = styled.div`
@@ -112,6 +118,12 @@ const ChatRoomItem = styled.div`
 
   & > p {
     font-size: 17px;
+  }
+
+  @media (max-width:768px) {
+    span {
+      font-size: 12px;
+    }
   }
 `;
 
@@ -143,6 +155,11 @@ const OutBtn = styled.button`
   position: absolute;
   right: 20px;
   top : 25px;
+
+  @media (max-width:768px) {
+    font-size: 12px;
+    right: 10px;
+  }
 `
 
 export default ChatRooms

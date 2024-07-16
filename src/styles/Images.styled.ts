@@ -38,6 +38,10 @@ export const DeleteBtn = styled.div`
   border-radius: 50%;
   background-color: #000;
   cursor : pointer;
+
+  @media (max-width:768px) {
+    right : 0px;
+  }
 ` 
 
 export const PreviewImg = styled.img`
