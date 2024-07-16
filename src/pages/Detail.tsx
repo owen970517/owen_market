@@ -81,23 +81,25 @@ const Detail = () => {
                         <h3>{data.지역} {data.세부지역}</h3>
                         <hr/>
                         <h1>{data?.상품명}</h1>
-                        <h2>{data?.가격}원</h2>
                         <Description>
                             <h3>{data.설명?.replace(/<br>/g, '\n')}</h3>
                         </Description>
+                        <p>{data?.가격}원</p>
                         <p>조회 {data?.조회수} · {dayjs(data.날짜).fromNow()}</p>
                     </Content>
-                    {isOwner ?
-                        <ButtonGroup>
-                            <Button onClick={onModify}>수정</Button>
-                            <Button onClick={onSoldOut}>판매완료</Button>
-                            <Button onClick={() => onDelete(params.id!)}>삭제</Button>
-                        </ButtonGroup> : isLogin ?
-                        <ButtonGroup>
-                            <Heart data={data}/>
-                            <Button onClick={onChat}>채팅하기</Button>
-                        </ButtonGroup> : ''
-                    }
+                    <ButtonContainer>
+                        {isOwner ?
+                            <ButtonGroup>
+                                <Button onClick={onModify}>수정</Button>
+                                <Button onClick={onSoldOut}>판매완료</Button>
+                                <Button onClick={() => onDelete(params.id!)}>삭제</Button>
+                            </ButtonGroup> : isLogin ?
+                            <ButtonGroup>
+                                <Heart data={data}/>
+                                <Button onClick={onChat}>채팅하기</Button>
+                            </ButtonGroup> : ''
+                        }
+                    </ButtonContainer>
                 </InfoContainer>
             </Container>
         </>
@@ -107,10 +109,18 @@ const Container = styled.div`
     display: flex;
     justify-content: space-between;
     padding: 20px;
+    @media (max-width:768px) {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
 `;
 
 const InfoContainer = styled.div`
     width: 50%;
+    @media (max-width:768px) {
+        width: 80%;
+    }
 `;
 
 const Description = styled.div`
@@ -123,14 +133,38 @@ const Content = styled.div`
     background-color: #f8f8f8;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
+    margin-bottom: 10px;
+
+    @media (max-width:768px) {
+        h1 {
+            font-size: 18px;
+        }
+        h2 {
+        font-size: 16px;
+        }
+        h3 {
+            font-size: 12px;
+        }
+        p {
+            font-size: 14px;
+        }
+    }
 `;
+
+const ButtonContainer = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`
 
 const ButtonGroup = styled.div`
     display: flex;
     justify-content: space-around;
     margin: 0 auto;
     width: 300px;
+    @media (max-width:768px) {
+        padding: 10px;
+    }
 `;
 
 const Button = styled.button`

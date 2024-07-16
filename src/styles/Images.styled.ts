@@ -6,10 +6,25 @@ export const Container = styled.div`
   flex-wrap: wrap;
   justify-content: space-around;
   margin: 0 auto;
+  @media (max-width: 767px) {
+    width: 100%;
+    justify-content: center;
+  }
 `
 
 export const PreviewWrapper = styled.div`
   position: relative;
+  width: 100px;
+  margin-bottom: 20px;
+
+  @media (max-width: 767px) {
+    width: calc(33.33% - 10px);
+    margin-right: 10px;
+
+    &:nth-child(3n) {
+      margin-right: 0;
+    }
+  }
 `
 export const DeleteBtn = styled.div`
   position: absolute;
@@ -23,7 +38,7 @@ export const DeleteBtn = styled.div`
   border-radius: 50%;
   background-color: #000;
   cursor : pointer;
-`
+` 
 
 export const PreviewImg = styled.img`
   width: 100px;

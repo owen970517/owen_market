@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import styled from 'styled-components';
 import noImg from '../../assets/noimage.jpg'
+import LeftArrow from '../../assets/left-arrow.svg'
+import RightArrow from '../../assets/right-arrow.svg'
 
 interface SliderProps {
   images: string[];
@@ -29,9 +31,13 @@ const ImageSlider: React.FC<SliderProps> = ({ images })=> {
         </Modal>
       )}
       <SliderWrapper>
-        <PrevButton onClick={prevImage}>이전</PrevButton>
+        <PrevButton onClick={prevImage}>
+          <img src={LeftArrow} alt='arrow'/>
+        </PrevButton>
         <Image src={images.length > 0 ? images[current] : noImg} alt="Slide" onClick={imageClick}/>
-        <NextButton onClick={nextImage}>다음</NextButton>
+        <NextButton onClick={nextImage}>
+          <img src={RightArrow} alt='arrow'/>
+        </NextButton>
         <DotWrapper>
           {images.map((_, index) => (
             <Dot key={index} active={current === index} />
@@ -50,14 +56,21 @@ const SliderWrapper = styled.div`
   width: 60%;
   height: 500px;
   overflow: hidden;
+  @media (max-width:768px) {
+    width: 80%;
+    height: 350px;
+  }
 `;
 
 const Image = styled.img`
   cursor: pointer;
-  width: 100%;
-  height: 500px;
+  width: 500px;
+  height: 300px;
   object-fit: contain;
   border-radius: 10px;
+  @media (max-width:768px) {
+    height: 300px;
+  }
 `;
 
 const Button = styled.button`
@@ -72,10 +85,18 @@ const Button = styled.button`
 
 const PrevButton = styled(Button)`
   left: 10px;
+  img {
+    width:20px;
+    height: 20px;
+  }
 `;
 
 const NextButton = styled(Button)`
   right: 10px;
+  img {
+    width:20px;
+    height: 20px;
+  }
 `;
 
 const DotWrapper = styled.div`
@@ -85,6 +106,9 @@ const DotWrapper = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
+  @media (max-width:786px) {
+    bottom: 10px;
+  }
 `;
 
 const Dot = styled.div<{ active: boolean }>`
