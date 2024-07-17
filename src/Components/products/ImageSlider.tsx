@@ -34,7 +34,13 @@ const ImageSlider: React.FC<SliderProps> = ({ images })=> {
         <PrevButton onClick={prevImage}>
           <img src={LeftArrow} alt='arrow'/>
         </PrevButton>
-        <Image src={images.length > 0 ? images[current] : noImg} alt="Slide" onClick={imageClick}/>
+        <ImageContainer>
+          <Image
+            src={images.length > 0 ? images[current] : noImg}
+            alt="Slide"
+            onClick={imageClick}
+          />
+        </ImageContainer>
         <NextButton onClick={nextImage}>
           <img src={RightArrow} alt='arrow'/>
         </NextButton>
@@ -62,15 +68,17 @@ const SliderWrapper = styled.div`
   }
 `;
 
+const ImageContainer = styled.div`
+  width: 500px;
+  height: 500px;
+`;
+
 const Image = styled.img`
   cursor: pointer;
-  width: 500px;
-  height: 300px;
+  width: 100%;
+  height: 100%;
   object-fit: contain;
   border-radius: 10px;
-  @media (max-width:768px) {
-    height: 300px;
-  }
 `;
 
 const Button = styled.button`
@@ -89,6 +97,9 @@ const PrevButton = styled(Button)`
     width:20px;
     height: 20px;
   }
+  @media (max-width:768px) {
+    left:0
+  }
 `;
 
 const NextButton = styled(Button)`
@@ -96,6 +107,9 @@ const NextButton = styled(Button)`
   img {
     width:20px;
     height: 20px;
+  }
+  @media (max-width:768px) {
+    right:0
   }
 `;
 
@@ -136,6 +150,10 @@ const ZoomedImage = styled.img`
   width: 70%;
   height : 90%;
   object-fit: contain;
+  @media (max-width:768px) {
+    width: 80%;
+    height: 100%;
+  }
 `;
 
 export default ImageSlider
