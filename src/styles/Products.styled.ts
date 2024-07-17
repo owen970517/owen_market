@@ -38,7 +38,7 @@ export const Item = styled.div`
     text-align: center;
   }
 
-  img {
+  span,img {
     width: 300px;
     height: 300px;
   }
@@ -54,7 +54,7 @@ export const Item = styled.div`
       font-size: 14px;
     }
 
-    img {
+    span,img {
       width : 100px;
       height: 100px;
     }
