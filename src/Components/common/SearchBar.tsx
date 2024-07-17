@@ -104,8 +104,12 @@ const SearchForm = styled.form`
   cursor: ${(props:IStyleProps)=> (props.isopen ? "auto" : "pointer")};
   padding: 10px;
   height: 20px;
-  border-radius: 40px;
+  border-radius: 20px;
   transition: width 300ms cubic-bezier(0.645, 0.045, 0.355, 1);
+
+  @media (max-width:768px) {
+    width: ${(props:IStyleProps) => (props.isopen ? "20rem" : "2rem")};
+  }
 `
 const SearchInput = styled.input`
   font-size: 20px;
@@ -128,8 +132,12 @@ const SearchBox = styled.div`
   left: 10px;
   border-radius: 20px;
   width : 25rem;
-  height : 500px;
+  height : 450px;
   background-color: #fff;
+  z-index: 2;
+  @media (max-width:768px) {
+    width: 20rem;
+  }
 `
 const SectionTitle = styled.div`
   width: 90%;

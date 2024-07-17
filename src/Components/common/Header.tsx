@@ -95,11 +95,6 @@ const HeaderItem =  styled.li`
   display: block;
   @media screen and (max-width: 768px) {
     margin-bottom: 10px;
-    &:hover {
-      cursor: pointer;
-      background: #44a8f4;
-      border-radius: 10px;
-    }
   }
 `
 
