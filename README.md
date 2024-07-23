@@ -143,3 +143,16 @@
             </ul>
         </div>
     </details>
+
+### 4. 상품 제목에 공백, 특수 문자 포함되어 있을 때 상세 페이지로 이동이 안되는 현상 발생
+
+- 원인 : 상세 페이지의 URL은 제목을 쿼리 파라미터로 받아오기 때문에 공백, 쿼리스트링을 사용했을 때 에러 발생 
+- 해결 방법 : encodeURIcomponent를 사용하여 제목을 인코딩하여 전달
+<details>
+    <summary><b>👈코드 보기</b></summary>
+    <div markdown="1">
+        <ul>
+            https://github.com/owen970517/owen_market/blob/de78001b4c5e5f65e495bddf91865178bc67b61c/src/Components/common/ProductItem.tsx#L15-L30
+        </ul>
+    </div>
+</details>
